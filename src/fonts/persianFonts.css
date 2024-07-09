@@ -1,0 +1,15 @@
+@font-face {
+	font-family: "Farang";
+	font-style: normal;
+	font-weight: 900;
+	src: url('./Farang.eot') format('eot'),
+	url('./Farang.ttf') format('ttf'),
+	url('./Farang.woff') format('woff'),
+	url('./Farang.woff2') format('woff2'),
+	url('./FarangGeometric.eot') format('eot'),
+	url('./FarangGeometric.ttf') format('ttf'),
+	url('./FarangGeometric.woff') format('woff2'),
+	url('./FarangGeometric.woff2') format('woff2');
+	text-rendering: optimizeLegibility;
+	font-display: swap;
+}
