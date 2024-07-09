@@ -4,7 +4,7 @@ import "./globals.css";
 import Layout from "@/components/layout/Layout";
 
 export const metadata: Metadata = {
-  title: '451663',
+  title: 'آکادمی کَن آی کُد',
   description: "اولین ارائه دهنده متد آموزش معکوس در حوزه برنامه نویسی وب",
 };
 
