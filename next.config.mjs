@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "canicode.storage.iran.liara.space",
+        hostname: "canicode-app.storage.iran.liara.space",
         port: "",
       },
     ],

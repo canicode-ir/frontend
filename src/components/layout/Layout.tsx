@@ -1,4 +1,7 @@
-import React from "react"
+'use client';
+
+//Context
+import {AuthProvider} from '../../context/AuthContext';
 
 import ButtonAppBar from "../modules/layoutModules/NavBar";
 import Footer from "../modules/layoutModules/Footer";
@@ -8,11 +11,13 @@ type MyComponentProps = React.PropsWithChildren<{}>;
 function Layout({ children, ...other}: MyComponentProps) {
 
   return (
-    <div>
-      <ButtonAppBar />
-          {children}
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div>
+        <ButtonAppBar />
+            {children}
+        <Footer />
+      </div>
+    </AuthProvider>
   )
 }
 

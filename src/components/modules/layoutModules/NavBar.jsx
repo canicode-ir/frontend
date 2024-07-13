@@ -22,6 +22,7 @@ import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import TransitionsModal from "../../elements/Modal";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 //Images
 import logo from '../../../../public/logo/whiteTransparent.svg'
@@ -47,10 +48,10 @@ export default function ButtonAppBar() {
     <Box sx={{ position: 'relative', zIndex: 20 }}>
       <AppBar position="static">
         <Toolbar className='flex justify-content items-center bg-gradient-to-l from-indigo500 via-indigo400 to-indigo500'>
-          <Image className='hidden w-[110px] min-[380px]:w-[130px] cursor-pointer min-[962px]:block'
+          <Image className='hidden w-[110px] min-[415px]:w-[130px] cursor-pointer min-[1000px]:block'
             onClick={() => router.push('/')} src={logo} width={600} height={600} alt='logo' />
           <IconButton
-            className='block mr-0 min-[962px]:hidden'
+            className='block mr-0 min-[1000px]:hidden'
             size="large"
             edge="start"
             color="inherit"
@@ -60,28 +61,30 @@ export default function ButtonAppBar() {
             {isOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
           <Container className='w-fit mx-auto my-0 justify-center items-center'>
-            <ul className='hidden w-fit justify-center items-center mx-auto min-[962px]:flex'>
+            <ul className='hidden w-fit justify-center items-center mx-auto min-[1000px]:flex'>
                 {
                     navItems.map(item => 
                     <Link className='w-fit font-extrabold text-white text-[14px] ml-3 duration-300 
-                      last:ml-0 p-1 rounded-min-[962px] hover:opacity-70' 
+                      last:ml-0 p-1 rounded-min-[1000px] hover:opacity-70' 
                       key={item.title} href={`${item.url}`}>
                       {item.name}
                     </Link>)
                 }
             </ul>
-            <Image className='block w-[110px] min-[380px]:w-[130px] max-[356px]:hidden min-[962px]:hidden' src={logo} width={600} height={600} alt='logo' />
+            <Image className='block w-[110px] min-[415px]:w-[130px] max-[383px]:hidden min-[1000px]:hidden' src={logo} width={600} height={600} alt='logo' />
           </Container>
+          <Button className='font-title text-inherit text-center ml-2 duration-400 backdrop-blur-2xl bg-white/20 
+            hover:bg-white/40'><ShoppingCartIcon /></Button>
           <Button className='font-title text-inherit duration-400 backdrop-blur-2xl bg-white/20 
             hover:bg-white/40'>ورود | ثبت نام</Button>
         </Toolbar>
       </AppBar>
       <Container className='hidden open:absolute open:flex w-[240px] h-screen translate-x-full mr-0 justify-center bg-white overflow-y-auto
-        items-center duration-700 ease-in open:translate-x-0 open:border-l-[2px] border-gray300 min-[962px]:hidden' open={isOpen}>
+        items-center duration-700 ease-in open:translate-x-0 open:border-l-[2px] border-gray300 min-[1000px]:hidden' open={isOpen}>
         <ul className='flex flex-col w-fit justify-center items-center mx-auto mb-auto mt-5'>
             {
                 navItems.map(item => 
-                <Link className='w-fit font-extrabold text-gray600 p-1 rounded-min-[962px] ml-auto my-3 hover:opacity-70' onClick={() => setIsOpen(false)} 
+                <Link className='w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70' onClick={() => setIsOpen(false)} 
                   key={item.title} href={`${item.url}`}>
                   {item.icon}{' '}{item.name}
                 </Link>)
