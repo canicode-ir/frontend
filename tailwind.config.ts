@@ -275,7 +275,7 @@ const config: Config = {
       rose950: '#4c0519',
     },
     boxShadow: {
-      neomorphism: " 5px 5px 10px #c8c4cc, -5px -5px 10px #faf5ff",
+      neomorphism: "5px 5px 10px #c8c4cc, -5px -5px 10px #faf5ff",
     },
   },
   plugins: [],
