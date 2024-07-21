@@ -1,4 +1,4 @@
-import Academy from '../../components/templates/academy';
+import Academy from '../../components/templates/Academy';
 
 async function getData() {
   const res = await fetch('https://cnc.liara.run/course?page=1&limit=20', {cache: 'no-store'})

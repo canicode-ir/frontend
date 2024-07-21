@@ -17,7 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 function Card({course}) {
   const imageUrl = 'https://canicode-app.storage.iran.liara.space/'
   return (
-    <div className="flex flex-col h-fit shadow-neomorphism p-4 rounded-2xl mt-5">
+    <div className="flex flex-col h-fit shadow-neomorphism p-4 rounded-2xl">
       <div className="relative flex flex-col justify-center items-center p-1">
         <span className='absolute top-0 right-0 bg-indigo50 text-indigo500 text-[13px] p-1 rounded-lg'>{course.level === 'starter' ? 'سطح جونیور' : 
          course.level === 'mid-level' ? 'سطح میدلول' : 'سطح سنیور'}</span>
