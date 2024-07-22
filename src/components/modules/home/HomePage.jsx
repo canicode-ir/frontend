@@ -8,12 +8,13 @@ import Image from 'next/image';
 //Images & Icons
 import banner from '../../../../public/homepage/banner.jpg'
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import arrow from '../../../../public/homepage/arrow.svg';
 
 function HomePage() {
   const router = useRouter()
 
   return (
-    <Container sx={{display: 'flex', flexDirection: 'column' ,m: '40px 0 0', p: 0, justifyContent: 'center', alignItems: 'center',
+    <Container sx={{position: 'relative', display: 'flex', flexDirection: 'column' ,m: '40px 0 0', p: 0, justifyContent: 'center', alignItems: 'center',
       '@media (min-width: 872px)' : {
         flexDirection: 'row-reverse',
         p: 0,
@@ -48,6 +49,7 @@ function HomePage() {
           <button className='w-fit text-center mr-3 bg-indigo50 p-3 rounded-2xl font-demibold text-indigo700 duration-500 hover:bg-indigo100'>مشاوره استارت</button>
         </div>
       </Container>
+      <Image className='hidden absolute w-40 right-20 -bottom-20 min-[872px]:block' src={arrow} width={600} height={600} alt='arrow'/>
     </Container>
   )
 }

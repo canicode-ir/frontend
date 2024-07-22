@@ -94,7 +94,7 @@ function SwipeableTextMobileStepper({courses}) {
           <p className='text-justify p-2 text-detail text-md md:text-lg'>در این بخش؛ ما اسم چند کسب و کار موفق دنیا رو آوردیم و همچنین در کادر بالای هر عکس؛ تکنولوژی اصلی به کار برده شده در اون کسب و کار رو نام بردیم.</p>
           <section className='flex flex-row-reverse w-fit items-center justify-between mt-5 mx-auto px-2 mx-auto min-[600px]:w-full'>
             {courses.map(course => 
-              <Image className={`peer relative w-[40px] bg-white p-1 rounded-full z-[1] ring-2 
+              <Image key={course._id} className={`peer relative w-[40px] bg-white p-1 rounded-full z-[1] ring-2 
                 ${course.name === 'htmlcss' ? 'ring-red400' : course.name === 'javascript' ? 'ring-yellow500' : 
                   course.name === 'reactjs' ? 'ring-sky400' : course.name === 'nextjs' ? 'ring-gray800' : course.name === 'tailwindcss' ? 'ring-teal600' : 
                   course.name === 'materialUi' ? 'ring-blue600' : 'ring-stone700'} 

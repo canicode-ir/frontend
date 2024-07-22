@@ -1,5 +1,8 @@
+//Components
+import Academy from '../components/templates/Academy';
 import HomePage from '../components/modules/home/HomePage';
 import WebsiteSamples from "../components/modules/home/WebsiteSamples";
+import RoadMap from '../components/modules/home/RoadMap';
 
 async function getData() {
   const res = await fetch('https://cnc.liara.run/course?page=1&limit=20', {cache: 'no-store'})
@@ -17,6 +20,8 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center">
       <HomePage />
       <WebsiteSamples courses={courses}/>
+      <RoadMap />
+      <Academy courses={courses}/>
     </main>
   );
 }
