@@ -12,6 +12,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import ViewStreamIcon from '@mui/icons-material/ViewStream';
+import Image from 'next/image';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -65,11 +66,10 @@ const images = [
   },
 ];
 
-function SwipeableTextMobileStepper() {
+function SwipeableTextMobileStepper({courses}) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
-  console.log(theme);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -84,14 +84,31 @@ function SwipeableTextMobileStepper() {
   };
 
   return (
-    <div className='flex flex-col w-[90%] justify-center items-center mt-20 min-[872px]:mt-0 min-[872px]:w-[95%]'>
-        <div className='flex w-fit ml-auto justify-center items-center'>
+    <div className='flex flex-col justify-center items-center mt-20 px-6
+        min-[872px]:mt-10 min-[872px]:flex-row lg:p-0'>
+        <div className='flex flex-col justify-between items-center mx-auto'>
+          <div className='flex w-fit ml-auto justify-center items-center'>
             <ViewStreamIcon sx={{color: '#1f2937', fontSize: '20px', m: '0 0 0 7px'}} />
             <h5 className='font-heavey text-title text-md md:text-lg'>کدام کسب و کار؟ | کدام بَستر؟</h5>
+          </div>
+          <p className='text-justify p-2 text-detail text-md md:text-lg'>در این بخش؛ ما اسم چند کسب و کار موفق دنیا رو آوردیم و همچنین در کادر بالای هر عکس؛ تکنولوژی اصلی به کار برده شده در اون کسب و کار رو نام بردیم.</p>
+          <section className='flex flex-row-reverse w-fit items-center justify-between mt-5 mx-auto px-2 mx-auto min-[600px]:w-full'>
+            {courses.map(course => 
+              <Image className={`peer relative w-[40px] bg-white p-1 rounded-full z-[1] ring-2 
+                ${course.name === 'htmlcss' ? 'ring-red400' : course.name === 'javascript' ? 'ring-yellow500' : 
+                  course.name === 'reactjs' ? 'ring-sky400' : course.name === 'nextjs' ? 'ring-gray800' : course.name === 'tailwindcss' ? 'ring-teal600' : 
+                  course.name === 'materialUi' ? 'ring-blue600' : 'ring-stone700'} 
+                  outline outline-offset-2 outline-3 outline-white min-[500px]:w-[60px] hover:scale-[1.07] min-[390px]:w-[45px]
+                  peer-hover:backdrop-filter peer-hover:blur-sm peer-hover:animate-bounce hover:animate-pulse cursor-pointer duration-300`} src={`${imageUrl}${course.image}`} width={600} height={600} alt='course-image'/>
+            )}
+          </section>
         </div>
-        <p className='text-justify p-2 text-detail text-md md:text-lg'>در این بخش؛ ما اسم چند کسب و کار موفق دنیا رو آوردیم و همچنین در کادر بالای هر عکس؛ تکنولوژی اصلی به کار برده شده در اون کسب و کار رو نام بردیم.</p>
         <Box sx={{ flexGrow: 1, p: '30px 30px 5px', borderRadius: '18px', m: '30px auto 0',
-            boxShadow:  '5px 5px 8px #dfdfdf, -5px -5px 8px #fbfbfb'}}>
+            boxShadow:  '5px 5px 8px #dfdfdf, -5px -5px 8px #fbfbfb', 
+            '@media (min-width: 872px)' : {
+              maxWidth: '50%',
+              m: '0 10px auto 0',
+            },}}>
             <Paper
                 square
                 elevation={0}
@@ -126,8 +143,9 @@ function SwipeableTextMobileStepper() {
                         '@media (min-width: 650px)' : {
                             height: 300,
                         },
-                        '@media (min-width: 800px)' : {
-                            height: 430,
+                        '@media (min-width: 872px)' : {
+                            aspectRatio: '3/2',
+                            height: 250
                         },
                         borderRadius: '10px',
                         display: 'block',

@@ -1,11 +1,22 @@
 import HomePage from '../components/modules/home/HomePage';
 import WebsiteSamples from "../components/modules/home/WebsiteSamples";
 
-export default function Home() {
+async function getData() {
+  const res = await fetch('https://cnc.liara.run/course?page=1&limit=20', {cache: 'no-store'})
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+  return res.json()
+}
+
+export default async function Home() {
+  const apiData = await getData();
+  const courses = apiData.result;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="flex min-h-screen flex-col items-center">
       <HomePage />
-      <WebsiteSamples />
+      <WebsiteSamples courses={courses}/>
     </main>
   );
 }

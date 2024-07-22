@@ -4,16 +4,12 @@ import React from 'react'
 import { useRouter } from 'next/navigation';
 import { Container, Typography } from '@mui/material';
 import Image from 'next/image';
-import { useContext } from 'react';
-import { AuthContext } from '@/context/AuthContext';
 
 //Images & Icons
 import banner from '../../../../public/homepage/banner.jpg'
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
 function HomePage() {
-  const imageUrl = 'https://canicode-app.storage.iran.liara.space/'
-  const {courses} = useContext(AuthContext);
   const router = useRouter()
 
   return (
@@ -52,16 +48,6 @@ function HomePage() {
           <button className='w-fit text-center mr-3 bg-indigo50 p-3 rounded-2xl font-demibold text-indigo700 duration-500 hover:bg-indigo100'>مشاوره استارت</button>
         </div>
       </Container>
-      {/* {courses.length > 0 && courses.map(course => 
-        <div key={course._id} className='flex flex-col'>
-          <div className='flex justify-between'>
-            <Image className='w-[40px] h-[40px]' src={`${imageUrl}${course.image}`} width={600} height={600} alt='course-avatar' />
-            <h5>{course.title}</h5>
-          </div>
-          <p>{course.description}</p>
-        </div>
-      ) 
-      } */}
     </Container>
   )
 }
