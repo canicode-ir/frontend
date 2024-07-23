@@ -23,12 +23,14 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import TransitionsModal from "../../elements/Modal";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LoginModal from '../userAuthentication/LoginModal';
 
 //Images
 import logo from '../../../../public/logo/whiteTransparent.svg'
 
 export default function ButtonAppBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenLoginModal, setIsOpenLoginModal] = useState(false);
   const router = useRouter();
 
   const navItems = [
@@ -76,7 +78,7 @@ export default function ButtonAppBar() {
           <Button className='font-title text-inherit text-center ml-2 duration-400 backdrop-blur-2xl bg-white/20 
             hover:bg-white/40'><ShoppingCartIcon /></Button>
           <Button className='font-title text-inherit duration-400 backdrop-blur-2xl bg-white/20 
-            hover:bg-white/40'>ورود | ثبت نام</Button>
+            hover:bg-white/40' onClick={() => setIsOpenLoginModal(true)}>ورود | ثبت نام</Button>
         </Toolbar>
       </AppBar>
       <Container className='hidden open:absolute open:flex w-[240px] h-screen translate-x-full mr-0 justify-center bg-white overflow-y-auto
@@ -92,6 +94,7 @@ export default function ButtonAppBar() {
         </ul>
       </Container>
       <TransitionsModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+      {isOpenLoginModal && <LoginModal open={isOpenLoginModal} setOpen={setIsOpenLoginModal}/>}
     </Box>
   );
 }
