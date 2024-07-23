@@ -37,18 +37,16 @@ const Academy = ({ courses }) => {
 
   return (
     <>
-      <div className='flex flex-col justify-between items-center mt-20 ml-auto px-6 lg:p-0'>
+      <div className={`flex flex-col justify-between items-center ${pathName === '/academy' ? 'mt-10' : 'mt-20'} ml-auto px-6 lg:p-0`}>
         <div className='flex w-fit ml-auto justify-center items-center'>
           <ViewStreamIcon sx={{color: '#1f2937', fontSize: '20px', m: '0 0 0 7px'}} />
           <h5 className='font-heavey text-title text-md md:text-lg'>دوره های آموزشی: </h5>
         </div>
-        <p className='text-justify py-2 text-detail text-md mt-5 md:text-lg'>
-          {
-            pathName === '/academy' ? 
-            'ما در آکادمی آموزشی کَن آی کُد؛ سعی کرده ایم تا به روز ترین و پرکاربرد ترین مفاهیم را در حوزه تخصصی برنامه نویسی فرانت اند، در اختیار شما همکاران و کارآموزان عزیز قرار دهیم. شما می توانید دوره های آکادمی ما رو در پایین مشاهده فرمایید.'
-            : 'می تونید از منو زیر سطح آموزش مورد نظر خودتون رو فیلتر کنید؛ تا دوره های مناسب به سطحتون رو راحت تر ببینید. یک راهنمایی، کارموزانی که هیچ پیش زمینه ای در حوزه برنامه نویسی ندارند، سطحشون جونیور هستش که باید از دوره ها مقدماتی شروع به یادگیری کنند.'
-          }
-        </p>
+        {pathName === '/academy' && 
+          <p className='text-justify py-2 text-detail text-md mt-5 md:text-lg'>
+            ما در آکادمی آموزشی کَن آی کُد؛ سعی کرده ایم تا به روز ترین و پرکاربرد ترین مفاهیم را در حوزه تخصصی برنامه نویسی فرانت اند،
+            در اختیار شما همکاران و کارآموزان عزیز قرار دهیم. شما می توانید دوره های آکادمی ما رو در پایین مشاهده فرمایید.
+          </p>}
       </div>
       {/* <div className='flex flex-col justify-between items-center mt-10 px-6 min-[1000px]:p-0'>
         <div className='flex w-fit ml-auto justify-center items-center'>
