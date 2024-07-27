@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //Components
-import { FieldLevelValidationExample } from "../../modules/userAuthentication/LoginForm";
+import CheckOtpForm from "../../../components/modules/userAuthentication/CheckOtpForm";
 
 //Images & Icons
 import logo from "../../../../public/logo/transparentLogo.svg";
@@ -23,7 +23,7 @@ const style = {
   borderRadius: "24px",
 };
 
-export default function LoginPage() {
+export default function CheckOtp() {
   return (
     <div
       className="flex flex-col w-full justify-center items-center mt-20 mb-40 mx-auto px-2
@@ -39,7 +39,7 @@ export default function LoginPage() {
         />
       </div>
       <Box sx={style}>
-        <FieldLevelValidationExample />
+        <CheckOtpForm />
       </Box>
       <ToastContainer
         style={{
