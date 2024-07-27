@@ -3,6 +3,7 @@
 import Image from "next/image" 
 import Link from "next/link";
 import { Box, Container, Typography } from "@mui/material";
+import { usePathname } from "next/navigation";
 
 //Logo, Icons
 import logo from "../../../../public/logo/transparentLogo.svg"
@@ -11,6 +12,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
 function Footer() {
+  const pathName = usePathname();
 
   const footerComponents = [
     {id: 'sections', name: 'بخش های سایت', links: [
@@ -29,10 +31,11 @@ function Footer() {
 
   return (
     <Container sx={{background: 'linear-gradient(to right bottom, #f5f5f5, #ede9fe, #f5f5f5)', borderTopLeftRadius: '4px', borderTopRightRadius: '4px',
-      justifyContent: 'center', alignItems: 'center', p: '20px', m: '50px auto 0'}}>
+      justifyContent: 'center', alignItems: 'center', p: '20px', m: `${pathName !== '/userAuthentication' && pathName !== '/userCheckOtp' ? '50px auto 0' : '0 auto'}`}}>
       <Container sx={{display: 'flex', flexDirection: 'column', p: 0, justifyContent: 'center', alignItems: 'center'}}>
-        <Image className="w-[180px] mx-auto cursor-pointer" src={logo} width={600} height={600} alt="logo" onClick={() => window.scrollTo(0,0)}/>
-        <Typography sx={{color: '#4b5563', textAlign: 'justify', m: '30px auto 0', fontWeight: 'light'}} variant="p" component='p'>
+        {pathName !== '/userAuthentication' && pathName !== '/userCheckOtp' && 
+          <Image className="w-[180px] mx-auto cursor-pointer" src={logo} width={600} height={600} alt="logo" onClick={() => window.scrollTo(0,0)}/>}
+          <Typography sx={{color: '#4b5563', textAlign: 'justify', m: '30px auto 0', fontWeight: 'light'}} variant="p" component='p'>
           <b className="text-sky900 font-extrabold text-lg">آکادمی آموزشی کَن آی کُد،</b>
           احتمالاً همونجایی هستش که شاید همیشه دنبالش می گشتی، ما در این آکادمی نه تنها برای آموزش برنامه نویسی؛ بلکه در تمام طول مسیر کاریِ  حرفه ای و همچنین زندگیتون مثل یک دوست صمیمی کنارتون هستیم ☝  
         </Typography>

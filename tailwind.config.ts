@@ -276,6 +276,8 @@ const config: Config = {
     },
     boxShadow: {
       neomorphism: "5px 5px 10px #c8c4cc, -5px -5px 10px #faf5ff",
+      normal: '5px 5px 8px #dfdfdf, -5px -5px 8px #fbfbfb',
+      formShadow: '0px 0px 300px -55px rgba(30,27,75,1)',
     },
   },
   plugins: [],

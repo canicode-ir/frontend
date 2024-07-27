@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 //Components
-import Card from '../modules/academy/Card';
-import CourseFilter from '../modules/academy/CourseFilter'
+import Card from '../../modules/academy/Card';
+import CourseFilter from '../../modules/academy/CourseFilter'
 
 //Images & Icons
 import ViewStreamIcon from '@mui/icons-material/ViewStream';

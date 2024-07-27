@@ -1,5 +1,5 @@
 //Components
-import Academy from '../components/templates/Academy';
+import Academy from '../components/templates/academy/Academy';
 import HomePage from '../components/modules/home/HomePage';
 import WebsiteSamples from "../components/modules/home/WebsiteSamples";
 import RoadMap from '../components/modules/home/RoadMap';

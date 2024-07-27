@@ -42,6 +42,7 @@ export default function TextMobileStepper() {
   };
   return (
     <Box sx={{display: 'flex', flexDirection: 'column', m: '24px auto 0', 
+        boxShadow: '5px 5px 8px #dfdfdf, -5px -5px 8px #fbfbfb', borderRadius: '8px',
         '@media (min-width: 800px)' : {maxWidth: 400, m: '24px 0 0 auto'},
         '@media (min-width: 1024px)' : {maxWidth: 500, m: '24px 0 0 auto'}}}>
       <Paper
@@ -73,12 +74,14 @@ export default function TextMobileStepper() {
         steps={3}
         position="static"
         activeStep={activeStep}
-        sx={{flexGrow: 1, p: 0, m: '20px 0 0', '& .MuiMobileStepper-progress': {bgcolor: '#ddd6fe', borderRadius: '8px', 
-            '@media (min-width: 600px)': {width: '70%'},
+        sx={{flexGrow: 1, p: 0, m: '20px 0 10px', borderRadius: '8px', 
+            '& .MuiMobileStepper-progress': {width: '25%', bgcolor: '#ddd6fe', borderRadius: '8px', 
+            '@media (min-width: 364px)': {width: '40%'},
+            '@media (min-width: 572px)': {width: '60%'},
             '@media (min-width: 800px)': {width: '50%'}}}}
         nextButton={
             <Button sx={{fontFamily: 'dana', fontWeight: '110', color: '#3730a3'}} size="small" onClick={handleNext} disabled={activeStep === 2}>
-            بعدی
+            سطح بعدی
             {theme.direction === 'rtl' ? (
                 <KeyboardArrowLeft />
             ) : (
@@ -93,7 +96,7 @@ export default function TextMobileStepper() {
             ) : (
                 <KeyboardArrowLeft />
             )}
-            قبلی
+            سطح قبلی
             </Button>
         }
     />
