@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Formik, Form, useField } from "formik";
 import { TextField } from "@mui/material";
 import axios from "axios";
 import { BASE_URL } from "../../../services/api";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 // Images & Icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -39,6 +40,17 @@ function validateUsername(value) {
 export const FieldLevelValidationExample = () => {
   const [isRegister, setIsRegister] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   const authToRegister = async (values) => {
     const { username, phone, instagram } = values;
@@ -64,9 +76,13 @@ export const FieldLevelValidationExample = () => {
     try {
       const result = await axios.post(`${BASE_URL}auth/login`, data);
       console.log(result);
-      router.replace("/userCheckOtp");
+      router.replace(
+        "/userCheckOtp" + "?" + createQueryString("phone", data.mobile)
+      );
     } catch (error) {
-      if (error.response.status === 404) {
+      if (error.response.status === 400) {
+        notify("!کد ارسال شده قبلی هنوز منقضی نشده است", "error");
+      } else if (error.response.status === 404) {
         notify("!شما هنوز ثبت نام نکرده اید", "error");
         setIsRegister(true);
       } else if (error.response.status === 500) {
@@ -121,7 +137,8 @@ export const FieldLevelValidationExample = () => {
     <div className="flex flex-col w-full justify-center items-center rounded-2xl shadow-inset py-4">
       <h1
         className="w-full mt-5 p-1 font-heavey text-center text-[20px]
-        text-transparent bg-gradient-to-l from-indigo950 to-indigo800 bg-clip-text"
+        text-transparent bg-gradient-to-l from-indigo800 
+        to-indigo600 bg-clip-text"
       >
         {isRegister ? "فرم ثبت نام در کَن آی کُد" : "فرم ورود به حساب کاربری"}
       </h1>
@@ -167,7 +184,7 @@ export const FieldLevelValidationExample = () => {
                   key={input.name}
                   className="flex flex-col my-3 w-full justify-center items-center"
                 >
-                  <label className="ml-auto mb-2 font-extrabold text-title">
+                  <label className="ml-auto mb-2 font-bold text-title">
                     {input.label}
                   </label>
                   <CustomTextField
@@ -184,7 +201,7 @@ export const FieldLevelValidationExample = () => {
                       key={input.name}
                       className="flex flex-col my-4 w-full justify-center items-center"
                     >
-                      <label className="ml-auto mb-2 font-extrabold text-title">
+                      <label className="ml-auto mb-2 font-bold text-title">
                         {input.label}
                       </label>
                       <CustomTextField

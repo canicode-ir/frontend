@@ -1,11 +1,16 @@
 "use client";
 
-import React from "react";
 import { Formik, Form, useField } from "formik";
+import { useEffect } from "react";
 import { TextField } from "@mui/material";
 import axios from "axios";
 import { BASE_URL } from "../../../services/api";
-import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//Components
+import CountDownTimer from "../../elements/CountDownTimer";
 
 // Images & Icons
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
@@ -33,14 +38,15 @@ function validateOtp(value) {
 }
 
 export default function CheckOtpForm() {
-  const router = useRouter();
-
   const authToCheckOtp = async (values) => {
     const data = { mobile: values.phone, otp_code: values.code };
     try {
-      await axios.post(`${BASE_URL}auth/check-otp`, data);
-      router.replace("/client-dashboard");
-      console.log(data);
+      const result = await axios.post(`${BASE_URL}auth/check-otp`, data);
+      console.log(result);
+      const token = result.data.access_token;
+      console.log(token);
+      Cookies.set("token", token, { expires: 7 });
+      window.location.href = "/client-dashboard";
     } catch (error) {
       if (error.response.status === 400) {
         notify("!کد ارسالی و یا شماره موبایل را اشتباه وارد کرده اید", "error");
@@ -83,11 +89,26 @@ export default function CheckOtpForm() {
     },
   ];
 
+  useEffect(() => {
+    if (window.performance) {
+      const navigationEntries = performance.getEntriesByType("navigation");
+      if (navigationEntries.length > 0) {
+        const navType = navigationEntries[0].type;
+        if (navType === "reload") {
+          window.location.href = "/userAuthentication";
+        } else {
+          return;
+        }
+      }
+    }
+  }, []);
+
   return (
     <div className="flex flex-col w-full justify-center items-center rounded-2xl shadow-inset py-4">
       <h1
         className="w-full mt-5 p-1 font-heavey text-center text-[20px]
-        text-transparent bg-gradient-to-l from-indigo950 to-indigo800 bg-clip-text"
+        text-transparent bg-gradient-to-l from-indigo800 
+        to-indigo600 bg-clip-text"
       >
         فرم تایید کد پیامکی ارسال شده
       </h1>
@@ -104,7 +125,7 @@ export default function CheckOtpForm() {
               key={input.name}
               className="flex flex-col my-3 w-full justify-center items-center"
             >
-              <label className="ml-auto mb-2 font-extrabold text-title">
+              <label className="ml-auto mb-2 font-bold text-title">
                 {input.label}
               </label>
               <CustomTextField
@@ -114,6 +135,7 @@ export default function CheckOtpForm() {
               />
             </div>
           ))}
+          <CountDownTimer />
           <button
             type="submit"
             className="mt-5 w-full text-center text-white rounded-md bg-gradient-to-l from-indigo700 
@@ -124,6 +146,23 @@ export default function CheckOtpForm() {
           </button>
         </Form>
       </Formik>
+      <ToastContainer
+        style={{
+          width: "fit-content",
+          margin: "80px 0 0 auto",
+          boxShadow: "none",
+        }}
+        closeButton={false}
+        autoClose={2000}
+        bodyStyle={{
+          width: "fit-content",
+          color: "",
+          fontFamily: "dana",
+        }}
+        progressStyle={{
+          backgroundColor: "rgba(26, 103, 103, 0.2)",
+        }}
+      />
     </div>
   );
 }
