@@ -3,6 +3,10 @@
 import React, { useCallback, useState } from "react";
 import { Formik, Form, useField } from "formik";
 import { TextField } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import { BASE_URL } from "../../../services/api";
 import { useRouter } from "next/navigation";
@@ -12,6 +16,10 @@ import { useSearchParams } from "next/navigation";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import BadgeIcon from "@mui/icons-material/Badge";
+import SettingsCellIcon from "@mui/icons-material/SettingsCell";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 
 //Functions
 import { notify } from "../../../utils/Toast";
@@ -116,18 +124,21 @@ export const FieldLevelValidationExample = () => {
   const inputs = [
     {
       name: "username",
+      badge: <BadgeIcon fontSize="small" sx={{ ml: 0.2 }} />,
       label: "نام و نام خانوادگی: ",
       placeholder: "مثال: سعید جلیلی",
       validate: validateUsername,
     },
     {
       name: "phone",
+      badge: <SettingsCellIcon fontSize="small" sx={{ ml: 0.2 }} />,
       label: "شماره موبایل: ",
       placeholder: "مثال: 09121234567",
       validate: validatePhone,
     },
     {
       name: "instagram",
+      badge: <InstagramIcon fontSize="small" sx={{ ml: 0.2 }} />,
       label: "اکانت اینستاگرام شما: ",
       placeholder: "مثال: canicode.ir",
     },
@@ -184,9 +195,26 @@ export const FieldLevelValidationExample = () => {
                   key={input.name}
                   className="flex flex-col my-3 w-full justify-center items-center"
                 >
-                  <label className="ml-auto mb-2 font-bold text-title">
-                    {input.label}
-                  </label>
+                  <div className="flex w-full justify-between items-center mx-auto mb-2">
+                    <label className="flex ml-auto font-bold text-gray700 items-center justify-center">
+                      {input.badge}
+                      {input.label}
+                    </label>
+                    {input.name === "phone" && (
+                      <Tooltip
+                        title={
+                          <span className="bg-white text-gray800 my-1 leading-6">
+                            جهت دریافت پیام های پشتیبانی، شماره موبایلی را وارد
+                            کنید که تلگرام داشته باشد.{" "}
+                          </span>
+                        }
+                      >
+                        <IconButton>
+                          <HelpCenterIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                  </div>
                   <CustomTextField
                     name={input.name}
                     validate={input.validate}
@@ -201,9 +229,24 @@ export const FieldLevelValidationExample = () => {
                       key={input.name}
                       className="flex flex-col my-4 w-full justify-center items-center"
                     >
-                      <label className="ml-auto mb-2 font-bold text-title">
-                        {input.label}
-                      </label>
+                      <div className="flex w-full justify-between items-center mx-auto mb-2">
+                        <label className="flex ml-auto font-bold text-gray700 items-center justify-center">
+                          {input.badge}
+                          {input.label}
+                        </label>
+                        <Tooltip
+                          title={
+                            <span className="bg-white text-gray800 my-1 leading-6">
+                              جهت دریافت پیام های پشتیبانی، شماره موبایلی را
+                              وارد کنید که تلگرام داشته باشد.{" "}
+                            </span>
+                          }
+                        >
+                          <IconButton>
+                            <HelpCenterIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
                       <CustomTextField
                         name={input.name}
                         validate={input.validate}

@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
+    "@mui/styles": "^5.16.5",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.2",
     "formik": "^2.4.6",
@@ -23,6 +24,8 @@
     "react-swipeable-views": "^0.14.0",
     "react-toastify": "^10.0.5",
     "sharp": "^0.33.4",
+    "stylis": "^4.3.2",
+    "stylis-plugin-rtl": "^2.1.1",
     "swr": "^2.2.5",
     "yup": "^1.4.0"
   },

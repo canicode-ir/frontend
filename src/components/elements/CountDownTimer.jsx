@@ -34,8 +34,7 @@ function CountDownTimer() {
   const authToLogin = async () => {
     const data = { mobile: userMobile };
     try {
-      const result = await axios.post(`${BASE_URL}auth/login`, data);
-      console.log(result);
+      await axios.post(`${BASE_URL}auth/login`, data);
       notify("کد تایید مجدداً ارسال شد", "success");
       setTimeLeft(60);
     } catch (error) {

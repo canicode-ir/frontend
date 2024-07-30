@@ -14,6 +14,8 @@ import CountDownTimer from "../../elements/CountDownTimer";
 
 // Images & Icons
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import PasswordIcon from "@mui/icons-material/Password";
+import SettingsCellIcon from "@mui/icons-material/SettingsCell";
 
 //Functions
 import { notify } from "../../../utils/Toast";
@@ -77,12 +79,14 @@ export default function CheckOtpForm() {
   const inputs = [
     {
       name: "phone",
+      badge: <SettingsCellIcon fontSize="small" sx={{ ml: 0.2 }} />,
       label: "شماره موبایل: ",
       placeholder: "مثال: 09121234567",
       validate: validatePhone,
     },
     {
       name: "code",
+      badge: <PasswordIcon fontSize="small" sx={{ ml: 0.2 }} />,
       label: "کد تایید را وارد کنید: ",
       placeholder: "مثال: 12345 ",
       validate: validateOtp,
@@ -125,7 +129,8 @@ export default function CheckOtpForm() {
               key={input.name}
               className="flex flex-col my-3 w-full justify-center items-center"
             >
-              <label className="ml-auto mb-2 font-bold text-title">
+              <label className="flex ml-auto mb-2 font-bold text-gray700 items-center justify-center">
+                {input.badge}
                 {input.label}
               </label>
               <CustomTextField

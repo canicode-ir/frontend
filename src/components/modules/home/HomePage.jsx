@@ -10,6 +10,9 @@ import banner from "../../../../public/homepage/banner.jpg";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import arrow from "../../../../public/homepage/arrow.svg";
 
+//Components
+import FormDialog from "../../elements/FormDialog";
+
 function HomePage() {
   const router = useRouter();
 
@@ -109,16 +112,19 @@ function HomePage() {
           </b>{" "}
           کنی و درآمد داشته باشی 😉
         </Typography>
-        <div className="flex w-fit mt-7 justify-center items-center ml-auto p-0">
+        <div
+          className="flex flex-col w-full mt-7 justify-center items-center ml-auto p-0 min-[390px]:flex-row
+          min-[390px]:w-fit min-[390px]:ml-auto"
+        >
           <button
-            className="w-fit text-center bg-indigo700 p-3 rounded-2xl font-demibold text-white duration-500 hover:opacity-70"
+            className="w-full text-center bg-gradient-to-l from-indigo600 to-indigo800 p-3 rounded-2xl 
+            font-demibold text-white duration-500 hover:opacity-70
+            min-[390px]:w-fit"
             onClick={() => router.push("/academy")}
           >
             مشاهده دوره ها <OndemandVideoIcon sx={{ m: "0 5px 0 0" }} />
           </button>
-          <button className="w-fit text-center mr-3 bg-indigo50 p-3 rounded-2xl font-demibold text-indigo700 duration-500 hover:bg-indigo100">
-            مشاوره استارت
-          </button>
+          <FormDialog />
         </div>
       </Container>
       <Image
