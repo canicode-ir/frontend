@@ -19,10 +19,10 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
-  const [age, setAge] = React.useState("");
+  const [courseLevel, setCourseLevel] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setCourseLevel(event.target.value);
   };
 
   const handleClickOpen = () => {
@@ -110,10 +110,10 @@ export default function FormDialog() {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            console.log(formJson);
             const username = formJson.username;
             const tel = formJson.tel;
-            const age = formJson.age;
+            const followedCourse = formJson.followedCourse;
+            console.log(formJson);
             handleClose();
           },
         }}
@@ -121,9 +121,9 @@ export default function FormDialog() {
         <DialogTitle>فرم مشاوره آموزش</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ text: "center", textAlign: "justify" }}>
-            عرض ارادت ✋، دوستان عزیزم اگر برای شروع مسیر برنامه نویسی هنوز
-            تصمیم نهایی نگرفتی و دوست داری قبل از استارت شرایطت رو بسنجی؛ بهترین
-            کار اینه که اطلاعات زیر رو تکمیل کنی تا ما با شما تماس بگیریم.
+            عرض ارادت ✋، دوست عزیزم اگر برای شروع مسیر برنامه نویسی هنوز تصمیم
+            نهایی نگرفتی و دوست داری قبل از استارت شرایطت رو بسنجی؛ بهترین کار
+            اینه که اطلاعات زیر رو تکمیل کنی تا ما با شما تماس بگیریم.
           </DialogContentText>
           <DialogContentText
             sx={{
@@ -189,8 +189,8 @@ export default function FormDialog() {
                 <Select
                   labelId="demo-simple-select-required-label"
                   id="demo-simple-select-required"
-                  name="age"
-                  value={age}
+                  name="followedCourse"
+                  value={courseLevel}
                   label="متقاضی شرکت در کدام سطح هستید؟ *"
                   onChange={handleChange}
                   dir="rtl"
@@ -222,7 +222,7 @@ export default function FormDialog() {
                     </MenuItem>
                   ))}
                 </Select>
-                {age ? null : (
+                {courseLevel ? null : (
                   <FormHelperText sx={{ color: "#ef4444" }}>
                     لطفاً یک گزینه را انتخاب کنید
                   </FormHelperText>

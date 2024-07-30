@@ -68,12 +68,20 @@ export default function ButtonAppBar({ token }) {
     },
   ];
 
+  const scrollToContact = () => {
+    setIsOpen(false);
+    const contactZone = document.getElementById("contact-us");
+    if (contactZone) {
+      contactZone.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <Box sx={{ position: "relative", zIndex: 20 }}>
+    <Box sx={{ position: "relative", zIndex: 20 }} id="navigation-bar">
       <AppBar position="static">
         <Toolbar className="flex justify-content items-center bg-gradient-to-l from-indigo500 via-indigo400 to-indigo500">
           <Image
@@ -96,16 +104,26 @@ export default function ButtonAppBar({ token }) {
           </IconButton>
           <Container className="w-fit mx-auto my-0 justify-center items-center">
             <ul className="hidden w-fit justify-center items-center mx-auto min-[1000px]:flex">
-              {navItems.map((item) => (
-                <Link
-                  className="w-fit font-extrabold text-white text-[14px] ml-3 duration-300 
+              {navItems.map((item) =>
+                item.url !== "/contact" ? (
+                  <Link
+                    className="w-fit font-extrabold text-white text-[14px] ml-3 duration-300 
                       last:ml-0 p-1 rounded-min-[1000px] hover:opacity-70"
-                  key={item.title}
-                  href={`${item.url}`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+                    key={item.title}
+                    href={`${item.url}`}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <li
+                    className="w-fit font-extrabold text-white text-[14px] ml-3 duration-300 cursor-pointer 
+                      last:ml-0 p-1 rounded-min-[1000px] hover:opacity-70"
+                    onClick={scrollToContact}
+                  >
+                    {item.name}
+                  </li>
+                )
+              )}
             </ul>
             {pathName !== "/userAuthentication" &&
               pathName !== "/userCheckOtp" && (
@@ -149,16 +167,25 @@ export default function ButtonAppBar({ token }) {
         open={isOpen}
       >
         <ul className="flex flex-col w-fit justify-center items-center mx-auto mb-auto mt-5">
-          {navItems.map((item) => (
-            <Link
-              className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
-              onClick={() => setIsOpen(false)}
-              key={item.title}
-              href={`${item.url}`}
-            >
-              {item.icon} {item.name}
-            </Link>
-          ))}
+          {navItems.map((item) =>
+            item.url !== "/contact" ? (
+              <Link
+                className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
+                onClick={() => setIsOpen(false)}
+                key={item.title}
+                href={`${item.url}`}
+              >
+                {item.icon} {item.name}
+              </Link>
+            ) : (
+              <li
+                className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
+                onClick={scrollToContact}
+              >
+                {item.icon} {item.name}
+              </li>
+            )
+          )}
         </ul>
       </Container>
       <TransitionsModal isOpen={isOpen} setIsOpen={setIsOpen} />
