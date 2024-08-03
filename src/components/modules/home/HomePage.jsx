@@ -4,6 +4,8 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Container, Typography } from "@mui/material";
 import Image from "next/image";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Images & Icons
 import banner from "../../../../public/homepage/banner.jpg";
@@ -133,6 +135,23 @@ function HomePage() {
         width={600}
         height={600}
         alt="arrow"
+      />
+      <ToastContainer
+        style={{
+          width: "fit-content",
+          margin: "80px 0 0 auto",
+          boxShadow: "none",
+        }}
+        closeButton={false}
+        autoClose={5000}
+        bodyStyle={{
+          width: "fit-content",
+          color: "",
+          fontFamily: "dana",
+        }}
+        progressStyle={{
+          backgroundColor: "rgba(26, 103, 103, 0.2)",
+        }}
       />
     </Container>
   );

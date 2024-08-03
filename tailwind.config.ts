@@ -279,6 +279,8 @@ const config: Config = {
       normal: '5px 5px 8px #dfdfdf, -5px -5px 8px #fbfbfb',
       formShadow: '0px 0px 300px -55px rgba(30,27,75,.35)',
       inset: 'inset 0px 0px 4px 1px rgba(0, 0, 0, .152)',
+      specific: '0 0 2px #155e75',
+      specificOnFocus: '0 0 20px 4px #d1d5db',
     },
   },
   plugins: [],

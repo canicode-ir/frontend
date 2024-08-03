@@ -116,6 +116,7 @@ export default function ButtonAppBar({ token }) {
                   </Link>
                 ) : (
                   <li
+                    key={item.title}
                     className="w-fit font-extrabold text-white text-[14px] ml-3 duration-300 cursor-pointer 
                       last:ml-0 p-1 rounded-min-[1000px] hover:opacity-70"
                     onClick={scrollToContact}
@@ -179,6 +180,7 @@ export default function ButtonAppBar({ token }) {
               </Link>
             ) : (
               <li
+                key={item.title}
                 className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
                 onClick={scrollToContact}
               >

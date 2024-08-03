@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -12,6 +13,15 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import DatePicker from "react-multi-date-picker";
+import { useForm, Controller } from "react-hook-form";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import InputIcon from "react-multi-date-picker/components/input_icon";
+import "react-multi-date-picker/styles/layouts/mobile.css";
+import "react-multi-date-picker/styles/colors/teal.css";
+import weekends from "react-multi-date-picker/plugins/highlight_weekends";
+import { notify } from "../../utils/Toast";
 
 //Icons & Images
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
@@ -20,6 +30,7 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [courseLevel, setCourseLevel] = React.useState("");
+  const { control } = useForm();
 
   const handleChange = (event) => {
     setCourseLevel(event.target.value);
@@ -114,6 +125,7 @@ export default function FormDialog() {
             const tel = formJson.tel;
             const followedCourse = formJson.followedCourse;
             console.log(formJson);
+            notify("درخواست تایم مشاوره شما، با موفقیت ثبت گردید", "success");
             handleClose();
           },
         }}
@@ -228,6 +240,46 @@ export default function FormDialog() {
                   </FormHelperText>
                 )}
               </FormControl>
+              <Controller
+                control={control}
+                name="date"
+                rules={{ required: true }} //optional
+                render={({
+                  field: { onChange, name, value },
+                  fieldState: { invalid, isDirty }, //optional
+                  formState: { errors }, //optional, but necessary if you want to show an error message
+                }) => (
+                  <div className="flex w-full mt-4 justify-between items-center">
+                    <span className="text-[12px] font-bold text-detail min-[400px]:text-[14px] min-[500px]:text-[15px]">
+                      * تاریخ پیشنهادی شما؟{" "}
+                    </span>
+                    <DatePicker
+                      className="rmdp-mobile teal"
+                      plugins={[weekends()]}
+                      value={value || ""}
+                      onChange={(date) => {
+                        onChange(date?.isValid ? date : "");
+                      }}
+                      render={
+                        <InputIcon
+                          className="w-[130px] ring-2 ring-cyan700 rounded-[16px] py-1 px-3 transition-all cursor-pointer
+                          duration-500 shadow-specific hover:shadow-specificOnFocus hover:ring-1 text-cyan800 text-[14px] min-[400px]:w-[160px]"
+                          name="demandedDate"
+                          id="selectedDate"
+                        />
+                      }
+                      calendar={persian}
+                      locale={persian_fa}
+                      calendarPosition="bottom-right"
+                    />
+                    {errors &&
+                      errors[name] &&
+                      errors[name].type === "required" && (
+                        <span>your error message !</span>
+                      )}
+                  </div>
+                )}
+              />
             </div>
           </Rtl>
         </DialogContent>
