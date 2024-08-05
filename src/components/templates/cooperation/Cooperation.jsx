@@ -1,7 +1,12 @@
-import React from "react";
+//Components
+import CooperationMain from "../../modules/cooperation/CooperationMain";
 
 function Cooperation() {
-  return <div>Cooperation</div>;
+  return (
+    <>
+      <CooperationMain />
+    </>
+  );
 }
 
 export default Cooperation;

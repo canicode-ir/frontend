@@ -105,7 +105,7 @@ function Card({ course }) {
         <div className="flex w-full justify-between items-center mt-3 px-1 text-[13px]">
           <div className="flex items-center">
             <div className="bg-gradient-to-b from-sky700 to-amber600 rounded-full ml-2 p-[2px]">
-              <div className="w-[60px] h-[60px] bg-[url('/card/teacher.jpg')] bg-cover bg-center rounded-full"></div>
+              <div className="w-[50px] h-[50px] bg-[url('/card/teacher.jpg')] bg-cover bg-center rounded-full"></div>
             </div>
             <span>مدرس دوره: </span>
           </div>
