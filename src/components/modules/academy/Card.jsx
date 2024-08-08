@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 //Components
 import Acordion from "../../elements/Acordion";
@@ -16,6 +18,19 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 function Card({ course }) {
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   return (
     <div
       className={`flex h-fit shadow-neomorphism rounded-2xl p-[3px] ${
@@ -128,6 +143,13 @@ function Card({ course }) {
           <button
             className="w-fit flex justify-center items-center bg-indigo50 font-bold 
           text-indigo600 text-[13px] p-2 rounded-md duration-500 hover:ring-1 ring-indigo600 hover:bg-white"
+            onClick={() =>
+              router.push(
+                `/academy/course-details/${course.name}` +
+                  "?" +
+                  createQueryString("cId", `${course._id}`)
+              )
+            }
           >
             <MoreVertIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
             بیشتر
