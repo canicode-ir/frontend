@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
 //Images & Icons & animations
@@ -14,6 +15,8 @@ import AvTimerIcon from "@mui/icons-material/AvTimer";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 //Functions
 import { addCommas } from "../../../../helpers/functions";
@@ -32,6 +35,7 @@ function CourseDetailsMain({
   name,
   level,
 }) {
+  const [expandMore, setExpandMore] = useState(false);
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
   const studentsCount = 34;
   const titlesCount = headlines.length;
@@ -117,11 +121,39 @@ function CourseDetailsMain({
           id="course-mainDetails"
           className="flex flex-col justify-center items-center mt-5 px-4"
         >
-          <h2 className="font-fat w-full text-center text-title text-xl">
+          <h2 className="font-fat w-full text-center text-title text-md min-[320px]:text-lg">
             {title}
           </h2>
-          <p className="w-full mt-3 text-justify text-detail">{description}</p>
-          <div className="flex w-full justify-between items-center mt-5">
+          <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
+            <p className="px-2">
+              {expandMore ? description : description.substring(0, 175)}
+            </p>
+            {!expandMore && (
+              <div className="absolute flex w-full h-[80%] bottom-0 bg-gradient-to-t from-white to-white/30 mx-auto"></div>
+            )}
+          </div>
+          <div className="relative w-full flex justify-center items-center mt-10">
+            <div className="w-[35%] h-[1px] bg-gray200 ml-auto"></div>
+            <div
+              className="absolute flex w-[50px] h-[50px] rounded-full bg-white shadow-normal 
+            outline outline-offset-4 outline-2 outline-white justify-cente items-center"
+              onClick={() => setExpandMore(!expandMore)}
+            >
+              {expandMore ? (
+                <ExpandLessIcon
+                  fontSize="small"
+                  sx={{ m: "0 auto", color: "#374151" }}
+                />
+              ) : (
+                <ExpandMoreIcon
+                  fontSize="small"
+                  sx={{ m: "0 auto", color: "#374151" }}
+                />
+              )}
+            </div>
+            <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
+          </div>
+          <div className="flex w-full justify-between items-center mt-10">
             <button
               className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
              hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
@@ -136,7 +168,7 @@ function CourseDetailsMain({
             </div>
           </div>
         </div>
-        <div id="course-features" className="grid grid-cols-2 gap-4 mt-8 px-4">
+        <div id="course-features" className="grid grid-cols-2 gap-4 mt-10 px-4">
           {courseFeatures.map((feature) => (
             <div
               key={feature.id}
