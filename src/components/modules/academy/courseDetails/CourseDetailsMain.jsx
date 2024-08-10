@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 
+//Components
+import MyResume from "../../../elements/MyResume";
+
 //Images & Icons & animations
 import htmlCssBanner from "../../../../../public/coursesBanners/HTMLCSSBanner.jpg";
 import jsBanner from "../../../../../public/coursesBanners/JSBanner.jpg";
@@ -168,36 +171,39 @@ function CourseDetailsMain({
             </div>
           </div>
         </div>
-        <div id="course-features" className="grid grid-cols-2 gap-4 mt-10 px-4">
-          {courseFeatures.map((feature) => (
-            <div
-              key={feature.id}
-              className="flex flex-col justify-center items-center p-2 rounded-lg transition-all duration-300 
+        <div className="flex flex-col justify-center items-center mt-10 px-4">
+          <div id="course-features" className="grid grid-cols-2 gap-4">
+            {courseFeatures.map((feature) => (
+              <div
+                key={feature.id}
+                className="flex flex-col justify-center items-center p-2 rounded-lg transition-all duration-300 
               bg-purple50 text-indigo950 shadow-normal hover:shadow-inset hover:ring-2 ring-purple50"
-            >
-              {feature.img}
-              <span className="mt-2 text-[12px] font-demibold min-[370px]:text-sm">
-                {feature.id === "students"
-                  ? `${feature.value}${" "}دانشجو`
-                  : feature.id === "episodes"
-                  ? `${feature.value}${" "}اپیزود | در ${titlesCount} سرفصل`
-                  : feature.id === "duration" &&
-                    feature.value.remainingInMinutes <= 0
-                  ? `${feature.value}${" "}ساعت`
-                  : feature.id === "duration" &&
-                    feature.value.remainingInMinutes > 0
-                  ? `${feature.value.totalDurationHours}${" "}ساعت و ${
-                      feature.value.remainingInMinutes
-                    } دقیقه`
-                  : `پشتیبانی دائمی${" "}(${feature.value})`}
-              </span>
-            </div>
-          ))}
-        </div>
-        <p
-          className="flex w-[92%] p-2 mt-5 mx-auto rounded-lg items-center justify-center
+              >
+                {feature.img}
+                <span className="mt-2 text-[12px] font-demibold min-[370px]:text-sm">
+                  {feature.id === "students"
+                    ? `${feature.value}${" "}دانشجو`
+                    : feature.id === "episodes"
+                    ? `${feature.value}${" "}اپیزود | در ${titlesCount} سرفصل`
+                    : feature.id === "duration" &&
+                      feature.value.remainingInMinutes <= 0
+                    ? `${feature.value}${" "}ساعت`
+                    : feature.id === "duration" &&
+                      feature.value.remainingInMinutes > 0
+                    ? `${feature.value.totalDurationHours}${" "}ساعت و ${
+                        feature.value.remainingInMinutes
+                      } دقیقه`
+                    : `پشتیبانی دائمی${" "}(${feature.value})`}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p
+            className="flex w-[92%] p-2 mt-5 mx-auto rounded-lg items-center justify-center
         text-[12px] text-slate600 ring-1 ring-slate600 text-center font-regular min-[370px]:text-sm"
-        >{`هر اپیزود به طور میانگین: ${eachEpisodeOnAve} دقیقه فقط زمان می بره ⌚`}</p>
+          >{`هر اپیزود به طور میانگین: ${eachEpisodeOnAve} دقیقه فقط زمان می بره ⌚`}</p>
+          <MyResume data={teacherName} />
+        </div>
       </div>
     </div>
   );
