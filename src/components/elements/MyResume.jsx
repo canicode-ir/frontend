@@ -8,6 +8,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Link from "next/link";
+import VerifiedIcon from '@mui/icons-material/Verified';
 
 function MyResume({ data: teacherName }) {
   const [expandMore, setExpandMore] = useState(false);
@@ -60,6 +61,7 @@ function MyResume({ data: teacherName }) {
             <div className="flex flex-col justify-center items-center">
               <span className="font-extrabold text-title text-md mt-3">
                 {teacherName}
+<VerifiedIcon fontsize='small' sx={{mr: 1, color: '#0ea5e9'}}/>
               </span>
               <span className="font-regular text-detail text-sm">
                 مدرس دوره
