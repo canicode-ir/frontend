@@ -8,7 +8,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import VerifiedIcon from "@mui/icons-material/Verified";
 
 function MyResume({ data: teacherName }) {
   const [expandMore, setExpandMore] = useState(false);
