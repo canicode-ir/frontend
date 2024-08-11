@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 //Images & Icons
 import CloseIcon from "@mui/icons-material/Close";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import Link from "next/link";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 function MyResume({ data: teacherName }) {
   const [expandMore, setExpandMore] = useState(false);
@@ -58,10 +59,14 @@ function MyResume({ data: teacherName }) {
              outline outline-offset-4 outline-2 outline-white rounded-full"
             ></div>
             <div className="flex flex-col justify-center items-center">
-              <span className="font-extrabold text-title text-md mt-3">
-                {teacherName}
-              </span>
-              <span className="font-regular text-detail text-sm">
+              <div className="flex justify-center items-center font-extrabold text-title text-md mt-3">
+                <span>{teacherName}</span>
+                <VerifiedIcon
+                  fontSize="small"
+                  sx={{ color: "#0284c7", mr: 1 }}
+                />
+              </div>
+              <span className="font-regular text-detail text-sm ml-auto">
                 مدرس دوره
               </span>
             </div>

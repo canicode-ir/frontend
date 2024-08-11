@@ -5,6 +5,10 @@ import Image from "next/image";
 
 //Components
 import MyResume from "../../../elements/MyResume";
+import ScrollableTabsButtonAuto from "../../../elements/CourseSectionFilter";
+import CourseDescription from "../courseDetails/modules/CourseDescription";
+import CourseTitles from "../courseDetails/modules/CourseTitles";
+import CourseFAQ from "../courseDetails/modules/CourseFAQ";
 
 //Images & Icons & animations
 import htmlCssBanner from "../../../../../public/coursesBanners/HTMLCSSBanner.jpg";
@@ -38,6 +42,15 @@ function CourseDetailsMain({
   name,
   level,
 }) {
+  const [showCourseDescription, setShowCourseDescription] = useState(true);
+  const [showCourseTitles, setShowCourseTitles] = useState(false);
+  const [showCourseFAQ, setShowCourseFAQ] = useState(false);
+  const showSections = {
+    setShowCourseDescription,
+    setShowCourseTitles,
+    setShowCourseFAQ,
+  };
+
   const [expandMore, setExpandMore] = useState(false);
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
   const studentsCount = 34;
@@ -93,118 +106,131 @@ function CourseDetailsMain({
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="flex flex-col mr-auto">
-        <div className="relative flex flex-col">
-          <Image
-            className="rounded-b-md shadow-inset"
-            src={
-              name === "htmlcss"
-                ? htmlCssBanner
-                : name === "javascript"
-                ? jsBanner
-                : name === "reactjs"
-                ? reactBanner
-                : name === "nextjs"
-                ? nextBanner
-                : name === "materialUi"
-                ? materialUiBanner
-                : name === "tailwindcss"
-                ? tailwindBanner
-                : name === "github"
-                ? githubBanner
-                : `${imageUrl}${image}`
-            }
-            width={600}
-            height={600}
-            alt="course-banner"
-          />
+    <div className="relative flex flex-col h-full w-full justify-center items-center">
+      <div className="relative flex flex-col">
+        <Image
+          className="rounded-b-md shadow-inset"
+          src={
+            name === "htmlcss"
+              ? htmlCssBanner
+              : name === "javascript"
+              ? jsBanner
+              : name === "reactjs"
+              ? reactBanner
+              : name === "nextjs"
+              ? nextBanner
+              : name === "materialUi"
+              ? materialUiBanner
+              : name === "tailwindcss"
+              ? tailwindBanner
+              : name === "github"
+              ? githubBanner
+              : `${imageUrl}${image}`
+          }
+          width={600}
+          height={600}
+          alt="course-banner"
+        />
+      </div>
+      <div
+        id="course-mainDetails"
+        className="flex flex-col justify-center items-center mt-5 px-4"
+      >
+        <h2 className="font-fat w-full text-center text-title text-md min-[320px]:text-lg">
+          {title}
+        </h2>
+        <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
+          <p className="px-2 font-regular">
+            {expandMore ? description : description.substring(0, 175)}
+          </p>
+          {!expandMore && (
+            <div className="absolute flex w-full h-[80%] bottom-0 bg-gradient-to-t from-white to-white/30 mx-auto"></div>
+          )}
         </div>
-        <div
-          id="course-mainDetails"
-          className="flex flex-col justify-center items-center mt-5 px-4"
-        >
-          <h2 className="font-fat w-full text-center text-title text-md min-[320px]:text-lg">
-            {title}
-          </h2>
-          <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
-            <p className="px-2">
-              {expandMore ? description : description.substring(0, 175)}
-            </p>
-            {!expandMore && (
-              <div className="absolute flex w-full h-[80%] bottom-0 bg-gradient-to-t from-white to-white/30 mx-auto"></div>
+        <div className="relative w-full flex justify-center items-center mt-10">
+          <div className="w-[35%] h-[1px] bg-gray200 ml-auto"></div>
+          <div
+            className="absolute flex w-[50px] h-[50px] rounded-full bg-white shadow-normal 
+            outline outline-offset-4 outline-2 outline-white justify-cente items-center"
+            onClick={() => setExpandMore(!expandMore)}
+          >
+            {expandMore ? (
+              <ExpandLessIcon
+                fontSize="small"
+                sx={{ m: "0 auto", color: "#374151" }}
+              />
+            ) : (
+              <ExpandMoreIcon
+                fontSize="small"
+                sx={{ m: "0 auto", color: "#374151" }}
+              />
             )}
           </div>
-          <div className="relative w-full flex justify-center items-center mt-10">
-            <div className="w-[35%] h-[1px] bg-gray200 ml-auto"></div>
-            <div
-              className="absolute flex w-[50px] h-[50px] rounded-full bg-white shadow-normal 
-            outline outline-offset-4 outline-2 outline-white justify-cente items-center"
-              onClick={() => setExpandMore(!expandMore)}
-            >
-              {expandMore ? (
-                <ExpandLessIcon
-                  fontSize="small"
-                  sx={{ m: "0 auto", color: "#374151" }}
-                />
-              ) : (
-                <ExpandMoreIcon
-                  fontSize="small"
-                  sx={{ m: "0 auto", color: "#374151" }}
-                />
-              )}
-            </div>
-            <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
-          </div>
-          <div className="flex w-full justify-between items-center mt-10">
-            <button
-              className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
-             hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
-            >
-              ثبت نام در دوره
-            </button>
-            <div className="flex justify-center items-center">
-              <p className="font-black ml-1 text-slate800 text-lg">
-                {addCommas(priceAfterDiscount)}
-              </p>
-              <span className="text-slate500">تومان</span>
-            </div>
-          </div>
+          <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
         </div>
-        <div className="flex flex-col justify-center items-center mt-10 px-4">
-          <div id="course-features" className="grid grid-cols-2 gap-4">
-            {courseFeatures.map((feature) => (
-              <div
-                key={feature.id}
-                className="flex flex-col justify-center items-center p-2 rounded-lg transition-all duration-300 
-              bg-purple50 text-indigo950 shadow-normal hover:shadow-inset hover:ring-2 ring-purple50"
-              >
-                {feature.img}
-                <span className="mt-2 text-[12px] font-demibold min-[370px]:text-sm">
-                  {feature.id === "students"
-                    ? `${feature.value}${" "}دانشجو`
-                    : feature.id === "episodes"
-                    ? `${feature.value}${" "}اپیزود | در ${titlesCount} سرفصل`
-                    : feature.id === "duration" &&
-                      feature.value.remainingInMinutes <= 0
-                    ? `${feature.value}${" "}ساعت`
-                    : feature.id === "duration" &&
-                      feature.value.remainingInMinutes > 0
-                    ? `${feature.value.totalDurationHours}${" "}ساعت و ${
-                        feature.value.remainingInMinutes
-                      } دقیقه`
-                    : `پشتیبانی دائمی${" "}(${feature.value})`}
-                </span>
-              </div>
-            ))}
+        <div className="flex w-full justify-between items-center mt-10">
+          <button
+            className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+             hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
+          >
+            ثبت نام در دوره
+          </button>
+          <div className="flex justify-center items-center">
+            <p className="font-black ml-1 text-slate800 text-lg">
+              {addCommas(priceAfterDiscount)}
+            </p>
+            <span className="text-slate500">تومان</span>
           </div>
-          <p
-            className="flex w-[92%] p-2 mt-5 mx-auto rounded-lg items-center justify-center
-        text-[12px] text-slate600 ring-1 ring-slate600 text-center font-regular min-[370px]:text-sm"
-          >{`هر اپیزود به طور میانگین: ${eachEpisodeOnAve} دقیقه فقط زمان می بره ⌚`}</p>
-          <MyResume data={teacherName} />
         </div>
       </div>
+      <div className="flex flex-col justify-center items-center mt-10 px-4">
+        <div id="course-features" className="grid grid-cols-2 gap-4">
+          {courseFeatures.map((feature) => (
+            <div
+              key={feature.id}
+              className="flex flex-col justify-center items-center p-2 rounded-lg transition-all duration-300 
+              bg-purple50 text-indigo950 shadow-normal hover:shadow-inset hover:ring-2 ring-purple50"
+            >
+              {feature.img}
+              <span className="mt-2 text-[12px] font-demibold min-[370px]:text-sm">
+                {feature.id === "students"
+                  ? `${feature.value}${" "}دانشجو`
+                  : feature.id === "episodes"
+                  ? `${feature.value}${" "}اپیزود | در ${titlesCount} سرفصل`
+                  : feature.id === "duration" &&
+                    feature.value.remainingInMinutes <= 0
+                  ? `${feature.value}${" "}ساعت`
+                  : feature.id === "duration" &&
+                    feature.value.remainingInMinutes > 0
+                  ? `${feature.value.totalDurationHours}${" "}ساعت و ${
+                      feature.value.remainingInMinutes
+                    } دقیقه`
+                  : `پشتیبانی دائمی${" "}(${feature.value})`}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p
+          className="flex w-[92%] p-2 mt-5 mx-auto rounded-lg items-center justify-center
+        text-[12px] text-slate600 ring-1 ring-slate600 text-center font-regular min-[370px]:text-sm"
+        >{`هر اپیزود به طور میانگین: ${eachEpisodeOnAve} دقیقه فقط زمان می بره ⌚`}</p>
+        <MyResume data={teacherName} />
+      </div>
+      <section
+        id="course-sections"
+        className="sticky top-5 flex flex-col w-full justify-center items-center px-4"
+      >
+        <ScrollableTabsButtonAuto data={name} {...showSections} />
+        <main className="flex w-full justify-center items-center mx-auto mt-5 shadow-normal rounded-lg z-[10]">
+          {showCourseDescription ? (
+            <CourseDescription data={name} />
+          ) : showCourseTitles ? (
+            <CourseTitles data={headlines} />
+          ) : (
+            <CourseFAQ />
+          )}
+        </main>
+      </section>
     </div>
   );
 }

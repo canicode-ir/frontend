@@ -24,15 +24,10 @@ const Academy = ({ courses }) => {
   const pathName = usePathname();
 
   const showCourses = {
-    isAllCourses,
     setIsAllCourses,
-    isJuniorCourses,
     setIsJuniorCourses,
-    isMidLevelCourses,
     setIsMidLevelCourses,
-    isSeniorcourses,
     setIsSeniorCourses,
-    isBootcamp,
     setIsBootcamp,
   };
 

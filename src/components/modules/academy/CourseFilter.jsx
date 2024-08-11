@@ -4,14 +4,12 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 
 export default function ScrollableTabsButtonAuto({
   setIsAllCourses,
   setIsJuniorCourses,
   setIsMidLevelCourses,
   setIsSeniorCourses,
-  isBootcamp,
   setIsBootcamp,
 }) {
   const [value, setValue] = React.useState(0);
