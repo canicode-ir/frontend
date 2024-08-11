@@ -152,7 +152,7 @@ function CourseDescription({ data: name }) {
                   </p>
                   <ul className="w-full flex flex-col justify-center items-center">
                     {item.advantages.map((advantage) => (
-                      <li className="my-3 w-full">
+                      <li key={advantage.id} className="my-3 w-full">
                         <h2 className="font-bold text-white bg-gradient-to-r from-indigo700 to-sky600 rounded-sm">
                           <ScatterPlotIcon fontSize="small" sx={{ ml: 1 }} />
                           {advantage.title}
