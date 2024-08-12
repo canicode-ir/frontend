@@ -116,6 +116,18 @@ function CourseDescription({ data: name }) {
       ],
     },
   ];
+  const scrollToCourseSectionsNav = () => {
+    const courseSectionsNav = document.getElementById("course-sections");
+    if (courseSectionsNav) {
+      courseSectionsNav.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const buttonHandler = () => {
+    setShowMore(!showMore);
+    if (showMore) scrollToCourseSectionsNav();
+  };
+
   return (
     <div className="flex flex-col w-full justify-center items-center shadow-normal rounded-lg py-4 px-6">
       {name === "bootcamp" ? (
@@ -152,7 +164,7 @@ function CourseDescription({ data: name }) {
                   </p>
                   <ul className="w-full flex flex-col justify-center items-center">
                     {item.advantages.map((advantage) => (
-                      <li className="my-3 w-full">
+                      <li key={advantage.title} className="my-3 w-full">
                         <h2 className="font-bold text-white bg-gradient-to-r from-indigo700 to-sky600 rounded-sm">
                           <ScatterPlotIcon fontSize="small" sx={{ ml: 1 }} />
                           {advantage.title}
@@ -177,7 +189,7 @@ function CourseDescription({ data: name }) {
                 : "ring-1 ring-blue700 bg-gradient-to-l from-blue600 via-blue500 to-blue400"
             } px-4 py-1 text-white rounded-lg
         text-sm`}
-            onClick={() => setShowMore(!showMore)}
+            onClick={buttonHandler}
           >
             {showMore ? (
               <span className="flex text-red600 justify-center items-center">
