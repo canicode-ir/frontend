@@ -227,7 +227,7 @@ function CourseDetailsMain({
           ) : showCourseTitles ? (
             <CourseTitles data={headlines} />
           ) : (
-            <CourseFAQ />
+            <CourseFAQ data={name} />
           )}
         </main>
       </section>
