@@ -74,6 +74,12 @@ export default function FormDialog() {
     },
     {
       id: "4",
+      level: "bootcamp",
+      title: "جهت شرکت در بوت کمپ صفر تا صد فرانت",
+      subTitles: [],
+    },
+    {
+      id: "5",
       level: "other",
       title: "دوره های تکی",
       subTitles: [],

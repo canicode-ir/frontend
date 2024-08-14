@@ -16,22 +16,32 @@ export default function ScrollableTabsButtonAuto({
     setValue(newValue);
   };
 
+  const scrollToCourseSectionsNav = () => {
+    const courseSectionsNav = document.getElementById("course-sections");
+    if (courseSectionsNav) {
+      courseSectionsNav.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const showDescriptionHandler = () => {
     setShowCourseDescription(true);
     setShowCourseTitles(false);
     setShowCourseFAQ(false);
+    scrollToCourseSectionsNav();
   };
 
   const showTitlesHandler = () => {
     setShowCourseTitles(true);
     setShowCourseDescription(false);
     setShowCourseFAQ(false);
+    scrollToCourseSectionsNav();
   };
 
   const showFAQHandler = () => {
     setShowCourseFAQ(true);
     setShowCourseTitles(false);
     setShowCourseDescription(false);
+    scrollToCourseSectionsNav();
   };
 
   const tabs = [
@@ -50,6 +60,7 @@ export default function ScrollableTabsButtonAuto({
 
   return (
     <Box
+      id="course-section-nav"
       sx={{
         position: "relative",
         display: "flex",
@@ -62,6 +73,9 @@ export default function ScrollableTabsButtonAuto({
         borderRadius: "8px",
         zIndex: 20,
         bgcolor: "whitesmoke",
+        "@media(min-width: 830px)": {
+          m: "0 auto",
+        },
       }}
     >
       <Tabs

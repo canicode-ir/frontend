@@ -106,10 +106,14 @@ function CourseDetailsMain({
   ];
 
   return (
-    <div className="relative flex flex-col h-full w-full justify-center items-center">
-      <div className="relative flex flex-col">
+    <div className="relative flex flex-col h-full w-full justify-center items-center min-[900px]:p-4 lg:p-0">
+      <div
+        className="flex flex-col justify-between items-center w-full 
+      min-[900px]:flex-row min-[900px]:mt-10 min-[900px]:px-4 min-[900px]:py-8 min-[900px]:shadow-normal min-[900px]:rounded-2xl"
+      >
         <Image
-          className="rounded-b-md shadow-inset"
+          className="rounded-b-md shadow-inset w-full min-[900px]:max-w-[50%] min-[900px]:aspect-video 
+          min-[900px]:mb-auto min-[900px]:ml-10 min-[900px]:rounded-lg"
           src={
             name === "htmlcss"
               ? htmlCssBanner
@@ -131,106 +135,120 @@ function CourseDetailsMain({
           height={600}
           alt="course-banner"
         />
-      </div>
-      <div
-        id="course-mainDetails"
-        className="flex flex-col justify-center items-center mt-5 px-4"
-      >
-        <h2 className="font-fat w-full text-center text-title text-md min-[320px]:text-lg">
-          {title}
-        </h2>
-        <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
-          <p className="px-2 font-regular">
-            {expandMore ? description : description.substring(0, 175)}
-          </p>
-          {!expandMore && (
-            <div className="absolute flex w-full h-[80%] bottom-0 bg-gradient-to-t from-white to-white/30 mx-auto"></div>
-          )}
-        </div>
-        <div className="relative w-full flex justify-center items-center mt-10">
-          <div className="w-[35%] h-[1px] bg-gray200 ml-auto"></div>
-          <div
-            className="absolute flex w-[50px] h-[50px] rounded-full bg-white shadow-normal 
-            outline outline-offset-4 outline-2 outline-white justify-cente items-center"
-            onClick={() => setExpandMore(!expandMore)}
+        <div
+          id="course-mainDetails"
+          className="flex flex-col justify-center items-center mt-5 px-4 min-[900px]:mt-0 min-[900px]:p-0"
+        >
+          <h2
+            className="font-fat w-full text-center text-title text-md min-[320px]:text-lg min-[600px]:text-2xl 
+          min-[900px]:text-lg min-[930px]:text-xl min-[900px]:text-right"
           >
-            {expandMore ? (
-              <ExpandLessIcon
-                fontSize="small"
-                sx={{ m: "0 auto", color: "#374151" }}
-              />
-            ) : (
-              <ExpandMoreIcon
-                fontSize="small"
-                sx={{ m: "0 auto", color: "#374151" }}
-              />
+            {title}
+          </h2>
+          <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
+            <p className="px-2 font-regular min-[600px]:text-lg min-[900px]:text-md">
+              {expandMore ? description : description.substring(0, 175)}
+            </p>
+            {!expandMore && (
+              <div className="absolute flex w-full h-[80%] bottom-0 bg-gradient-to-t from-white to-white/30 mx-auto"></div>
             )}
           </div>
-          <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
-        </div>
-        <div className="flex w-full justify-between items-center mt-10">
-          <button
-            className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+          <div className="relative w-full flex justify-center items-center mt-10">
+            <div className="w-[35%] h-[1px] bg-gray200 ml-auto"></div>
+            <div
+              className="absolute flex w-[50px] h-[50px] rounded-full bg-white shadow-normal cursor-pointer 
+            outline outline-offset-4 outline-2 outline-white justify-cente items-center"
+              onClick={() => setExpandMore(!expandMore)}
+            >
+              {expandMore ? (
+                <ExpandLessIcon
+                  fontSize="small"
+                  sx={{ m: "0 auto", color: "#374151" }}
+                />
+              ) : (
+                <ExpandMoreIcon
+                  fontSize="small"
+                  sx={{ m: "0 auto", color: "#374151" }}
+                />
+              )}
+            </div>
+            <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
+          </div>
+          <div className="flex w-full justify-between items-center mt-10">
+            <button
+              className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
              hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
-          >
-            ثبت نام در دوره
-          </button>
-          <div className="flex justify-center items-center">
-            <p className="font-black ml-1 text-slate800 text-lg">
-              {addCommas(priceAfterDiscount)}
-            </p>
-            <span className="text-slate500">تومان</span>
+            >
+              ثبت نام در دوره
+            </button>
+            <div className="flex justify-center items-center">
+              <p className="font-black ml-1 text-slate800 text-lg">
+                {addCommas(priceAfterDiscount)}
+              </p>
+              <span className="text-slate500">تومان</span>
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center mt-10 px-4">
-        <div id="course-features" className="grid grid-cols-2 gap-4">
-          {courseFeatures.map((feature) => (
-            <div
-              key={feature.id}
-              className="flex flex-col justify-center items-center p-2 rounded-lg transition-all duration-300 
-              bg-purple50 text-indigo950 shadow-normal hover:shadow-inset hover:ring-2 ring-purple50"
-            >
-              {feature.img}
-              <span className="mt-2 text-[12px] font-demibold min-[370px]:text-sm">
-                {feature.id === "students"
-                  ? `${feature.value}${" "}دانشجو`
-                  : feature.id === "episodes"
-                  ? `${feature.value}${" "}اپیزود | در ${titlesCount} سرفصل`
-                  : feature.id === "duration" &&
-                    feature.value.remainingInMinutes <= 0
-                  ? `${feature.value}${" "}ساعت`
-                  : feature.id === "duration" &&
-                    feature.value.remainingInMinutes > 0
-                  ? `${feature.value.totalDurationHours}${" "}ساعت و ${
-                      feature.value.remainingInMinutes
-                    } دقیقه`
-                  : `پشتیبانی دائمی${" "}(${feature.value})`}
-              </span>
-            </div>
-          ))}
-        </div>
-        <p
-          className="flex w-[92%] p-2 mt-5 mx-auto rounded-lg items-center justify-center
-        text-[12px] text-slate600 ring-1 ring-slate600 text-center font-regular min-[370px]:text-sm"
-        >{`هر اپیزود به طور میانگین: ${eachEpisodeOnAve} دقیقه فقط زمان می بره ⌚`}</p>
-        <MyResume data={teacherName} />
-      </div>
-      <section
-        id="course-sections"
-        className="sticky top-5 flex flex-col w-full justify-center items-center px-4"
+      <div
+        className="flex flex-col w-full justify-centre items-center mx-auto mt-10 p-4 
+      min-[900px]:flex-row-reverse min-[900px]:p-0"
       >
-        <ScrollableTabsButtonAuto data={name} {...showSections} />
-        <main className="flex w-full justify-center items-center mx-auto mt-5 shadow-normal rounded-lg z-[10]">
-          {showCourseDescription ? (
-            <CourseDescription data={name} />
-          ) : showCourseTitles ? (
-            <CourseTitles data={headlines} />
-          ) : (
-            <CourseFAQ data={name} />
-          )}
-        </main>
-      </section>
+        <div
+          className="flex flex-col w-full justify-center items-center min-[900px]:mb-auto min-[900px]:shadow-normal 
+        min-[900px]:rounded-2xl min-[900px]:px-4 min-[900px]:py-6"
+        >
+          <div id="course-features" className="grid grid-cols-2 gap-4 w-full">
+            {courseFeatures.map((feature) => (
+              <div
+                key={feature.id}
+                className="flex flex-col justify-center items-center p-2 rounded-lg transition-all duration-300 
+                bg-purple50 text-indigo950 shadow-normal hover:shadow-inset hover:ring-2 ring-purple50 min-[600px]:py-4"
+              >
+                {feature.img}
+                <span className="mt-2 text-[12px] font-demibold min-[370px]:text-sm">
+                  {feature.id === "students"
+                    ? `${feature.value}${" "}دانشجو`
+                    : feature.id === "episodes"
+                    ? `${feature.value}${" "}اپیزود | در ${titlesCount} سرفصل`
+                    : feature.id === "duration" &&
+                      feature.value.remainingInMinutes <= 0
+                    ? `${feature.value}${" "}ساعت`
+                    : feature.id === "duration" &&
+                      feature.value.remainingInMinutes > 0
+                    ? `${feature.value.totalDurationHours}${" "}ساعت و ${
+                        feature.value.remainingInMinutes
+                      } دقیقه`
+                    : `پشتیبانی دائمی${" "}(${feature.value})`}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p
+            className="flex w-full p-2 mt-5 mx-auto rounded-lg items-center justify-center
+          text-[12px] rounded-lg transition-all duration-300 bg-purple50 text-indigo950 shadow-normal 
+          hover:shadow-inset hover:ring-2 ring-purple50 text-center font-regular min-[370px]:text-sm min-[600px]:text-lg
+          min-[900px]:text-sm"
+          >{`هر اپیزود به طور میانگین: ${eachEpisodeOnAve} دقیقه فقط زمان می بره ⌚`}</p>
+          <MyResume data={teacherName} />
+        </div>
+        <section
+          id="course-sections"
+          className="sticky top-5 flex flex-col w-full justify-center items-center w-full mt-10 min-[900px]:mt-0
+          min-[900px]:mb-auto min-[900px]:ml-5 min-[900px]:shadow-normal min-[900px]:rounded-2xl min-[900px]:px-4 min-[900px]:py-6"
+        >
+          <ScrollableTabsButtonAuto data={name} {...showSections} />
+          <main className="flex w-full justify-center items-center mx-auto mt-5 shadow-normal rounded-lg z-[10]">
+            {showCourseDescription ? (
+              <CourseDescription data={name} />
+            ) : showCourseTitles ? (
+              <CourseTitles data={headlines} />
+            ) : (
+              <CourseFAQ data={name} />
+            )}
+          </main>
+        </section>
+      </div>
     </div>
   );
 }

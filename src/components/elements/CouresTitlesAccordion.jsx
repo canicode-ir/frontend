@@ -26,6 +26,7 @@ export default function AccordionUsage({ title, episode }) {
     <Accordion
       sx={{
         width: "100%",
+        p: "8px",
       }}
       expanded={open}
       onChange={() => setOpen(!open)}
@@ -50,9 +51,11 @@ export default function AccordionUsage({ title, episode }) {
           open={open}
         ></div>
         <p className="flex items-center justify-center">
-          <span className="font-extrabold text-[13px] text-title">{title}</span>
-          <span className="hidden mx-1 min-[370px]:block">|</span>
-          <span className="hidden font-regular text-[12px] text-title min-[370px]:block">
+          <span className="font-extrabold text-[13px] text-title min-[600px]:text-[15px]">
+            {title}
+          </span>
+          <span className="hidden mx-1 min-[385px]:block">|</span>
+          <span className="hidden font-regular text-[12px] text-title min-[385px]:block">
             {totalDurationInMinutes} دقیقه
           </span>
         </p>

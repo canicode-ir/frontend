@@ -10,11 +10,11 @@ import Image from "next/image";
 
 function FAQAccordion({ data }) {
   const [open, setOpen] = React.useState(false);
-  console.log(data);
   return (
     <Accordion
       sx={{
         width: "100%",
+        p: "8px",
       }}
       expanded={open}
       onChange={() => setOpen(!open)}
@@ -38,7 +38,7 @@ function FAQAccordion({ data }) {
           open:bg-indigo500 open:ring-2 ring-indigo100 transition-all duration-500"
           open={open}
         ></div>
-        <p className="flex items-center justify-center font-extrabold text-[13px] text-title">
+        <p className="flex items-center justify-center font-extrabold text-[13px] text-title min-[500px]:text-[15px]">
           {data.question}
         </p>
       </AccordionSummary>

@@ -5,7 +5,7 @@ import Layout from "@/components/layout/Layout";
 import GoToTopDiv from '../components/elements/GoTotopDiv'
 
 export const metadata: Metadata = {
-  title: 'آکادمی کَن آی کُد',
+  title: 'آکادمی برنامه نویسی کَن آی کُد',
   description: "اولین ارائه دهنده متد آموزش معکوس در حوزه برنامه نویسی وب",
 };
 

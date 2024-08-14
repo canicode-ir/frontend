@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Autocomplete from "@mui/material/Autocomplete";
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import CircularProgress from "@mui/material/CircularProgress";
 let iranCity = require("iran-city");
 
@@ -387,7 +388,7 @@ export default function CooperationForm() {
               )}
             />
           </div>
-          <textarea
+          <TextareaAutosize
             id="description"
             name="description"
             className="w-full flex min-h-20 shadow-inset my-5 py-1 px-2 rounded-t-md rounded-br-md 
@@ -399,7 +400,7 @@ export default function CooperationForm() {
             onBlur={formik.handleBlur}
             aria-label="empty textarea"
             placeholder="حداقل یک پاراگراف در مورد پروژه برامون بنویسید: "
-          ></textarea>
+          ></TextareaAutosize>
           <Button
             sx={{
               fontFamily: "dana",
