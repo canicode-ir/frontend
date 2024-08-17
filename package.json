@@ -28,6 +28,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
     "react-multi-date-picker": "^4.5.2",
+    "react-scroll-parallax": "^3.4.5",
     "react-swipeable-views": "^0.14.0",
     "react-toastify": "^10.0.5",
     "sharp": "^0.33.4",

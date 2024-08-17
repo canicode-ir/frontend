@@ -4,6 +4,9 @@ import "./globals.css";
 import Layout from "@/components/layout/Layout";
 import GoToTopDiv from '../components/elements/GoTotopDiv'
 
+//Providers
+import {Providers} from './providers'
+
 export const metadata: Metadata = {
   title: 'آکادمی برنامه نویسی کَن آی کُد',
   description: "اولین ارائه دهنده متد آموزش معکوس در حوزه برنامه نویسی وب",
@@ -21,7 +24,7 @@ export default function RootLayout({
       </Head>
       <body className="relative mx-auto my-0 max-w-[1024px]">
         <Layout>
-          {children}
+          <Providers>{children}</Providers>
         </Layout>
         <GoToTopDiv />
       </body>

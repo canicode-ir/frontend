@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('../fonts/danaFont/Webfonts/css/fontiran.css'); /* لینک فایلی که وظیفه بارگذاری فونت ها را برعهده دارد */
+@import url('../fonts/danaFont/Webfonts/css/fontiran.css'); 
 
 html {
 	direction: rtl;

@@ -2,6 +2,9 @@ import ButtonAppBar from "../modules/layoutModules/NavBar";
 import Footer from "../modules/layoutModules/Footer";
 import { cookies } from 'next/headers';
 
+//Components
+import InstagramQR from '../elements/InstagramQR';
+
 
 type MyComponentProps = React.PropsWithChildren<{}>;
 
@@ -15,6 +18,7 @@ function Layout({ children, ...other}: MyComponentProps) {
       <div>
         <ButtonAppBar token={userToken} />
             {children}
+            <InstagramQR />
         <Footer />
       </div>
   )
