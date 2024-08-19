@@ -82,8 +82,8 @@ function MyResume({ data: teacherName }) {
           </ul>
         </div>
         <div className="flex w-[90%] h-[1px] bg-gray100 mt-4 mx-auto"></div>
-        <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
-          <p className="px-2">
+        <div className="relative flex w-full mt-3 justify-center items-center">
+          <p className="font-regular text-detail text-sm text-justify min-[320px]:text-md px-2">
             {expandMore ? myResumeText : myResumeText.substring(0, 110)}
           </p>
           {!expandMore && (
