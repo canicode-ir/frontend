@@ -60,12 +60,12 @@ export default function ButtonAppBar({ token }) {
       url: "/contact",
       icon: <ContactSupportIcon />,
     },
-    {
-      title: "articles",
-      name: "مقالات آموزشی",
-      url: "/articles",
-      icon: <NewspaperIcon />,
-    },
+    // {
+    //   title: "articles",
+    //   name: "مقالات آموزشی",
+    //   url: "/articles",
+    //   icon: <NewspaperIcon />,
+    // },
   ];
 
   const scrollToContact = () => {

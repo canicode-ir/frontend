@@ -32,12 +32,12 @@ function Footer() {
           name: "درخواست همکاری",
           url: "/cooperation",
         },
-        {
-          type: "section",
-          id: "articles",
-          name: "مقالات آموزشی",
-          url: "/articles",
-        },
+        // {
+        //   type: "section",
+        //   id: "articles",
+        //   name: "مقالات آموزشی",
+        //   url: "/articles",
+        // },
         {
           type: "section",
           id: "contactUs",
