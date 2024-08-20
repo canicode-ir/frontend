@@ -5,7 +5,7 @@ import Layout from "@/components/layout/Layout";
 import GoToTopDiv from '../components/elements/GoTotopDiv'
 
 //Providers
-import {Providers} from './providers'
+// import Providers from '../../redux/Providers'
 
 export const metadata: Metadata = {
   title: 'آکادمی برنامه نویسی کَن آی کُد',
@@ -24,7 +24,7 @@ export default function RootLayout({
       </Head>
       <body className="relative mx-auto my-0 max-w-[1024px]">
         <Layout>
-          <Providers>{children}</Providers>
+          {children}
         </Layout>
         <GoToTopDiv />
       </body>

@@ -1,14 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import Image from "next/image";
+import Cookies from "js-cookie";
+import { BASE_URL } from "../../../services/api";
+import axios from "axios";
 
 //Components
 import Acordion from "../../elements/Acordion";
 
 //Functions
 import { addCommas } from "../../../helpers/functions";
+import { notify } from "../../../utils/Toast";
 
 //Images & Icons
 import GraphicEqIcon from "@mui/icons-material/GraphicEq";
@@ -30,6 +34,38 @@ function Card({ course }) {
     },
     [searchParams]
   );
+
+  const addCourseToCart = async (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");
+    const id = course._id;
+    if (token) {
+      console.log(id);
+      // try {
+      //   const result = await axios.post(
+      //     `${BASE_URL}cart`,
+      //     {
+      //       courseId: id,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${token}`,
+      //       },
+      //     }
+      //   );
+      //   console.log(result);
+      //   notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
+      // } catch (error) {
+      //   if (error.response.status === 400) {
+      //     notify("دوره در سبد خرید موجود است", "error");
+      //   } else {
+      //     notify("لطفاً مجدد تلاش فرمایید", "error");
+      //   }
+      // }
+    } else {
+      router.push("/userAuthentication");
+    }
+  };
 
   return (
     <div
@@ -136,6 +172,7 @@ function Card({ course }) {
           <button
             className="w-fit flex justify-center items-center bg-indigo600 font-bold 
           text-white text-[13px] p-2 rounded-md duration-500 hover:opacity-70"
+            onClick={addCourseToCart}
           >
             <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
             ثبت نام

@@ -44,9 +44,7 @@ export default function CheckOtpForm() {
     const data = { mobile: values.phone, otp_code: values.code };
     try {
       const result = await axios.post(`${BASE_URL}auth/check-otp`, data);
-      console.log(result);
       const token = result.data.access_token;
-      console.log(token);
       Cookies.set("token", token, { expires: 7 });
       window.location.href = "/client-dashboard";
     } catch (error) {
@@ -93,19 +91,19 @@ export default function CheckOtpForm() {
     },
   ];
 
-  useEffect(() => {
-    if (window.performance) {
-      const navigationEntries = performance.getEntriesByType("navigation");
-      if (navigationEntries.length > 0) {
-        const navType = navigationEntries[0].type;
-        if (navType === "reload") {
-          window.location.href = "/userAuthentication";
-        } else {
-          return;
-        }
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.performance) {
+  //     const navigationEntries = performance.getEntriesByType("navigation");
+  //     if (navigationEntries.length > 0) {
+  //       const navType = navigationEntries[0].type;
+  //       if (navType === "reload") {
+  //         window.location.href = "/userAuthentication";
+  //       } else {
+  //         return;
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div className="flex flex-col w-full justify-center items-center rounded-2xl shadow-inset py-4">
