@@ -20,7 +20,13 @@ import InputIcon from "react-multi-date-picker/components/input_icon";
 import "react-multi-date-picker/styles/layouts/mobile.css";
 import "react-multi-date-picker/styles/colors/teal.css";
 import weekends from "react-multi-date-picker/plugins/highlight_weekends";
+const moment = require("jalali-moment");
+import axios from "axios";
+import { BASE_URL } from "../../services/api";
+
+//Functions
 import { notify } from "../../utils/Toast";
+import { convertPersianToEnglish } from "../../helpers/functions";
 
 //Icons & Images
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
@@ -86,6 +92,15 @@ export default function FormDialog() {
     },
   ];
 
+  const postCounselingRequest = async (data) => {
+    try {
+      await axios.post(`${BASE_URL}counseling`, data);
+      notify("درخواست تایم مشاوره شما، با موفقیت ثبت گردید", "success");
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <React.Fragment>
       <Button
@@ -122,15 +137,22 @@ export default function FormDialog() {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
+          onSubmit: async (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const username = formJson.username;
-            const tel = formJson.tel;
-            const followedCourse = formJson.followedCourse;
-            console.log(formJson);
-            notify("درخواست تایم مشاوره شما، با موفقیت ثبت گردید", "success");
+            const { username, tel, followedCourse, demandedDate } = formJson;
+            const demandedDateEnglish = convertPersianToEnglish(demandedDate);
+            const isoDate = moment(demandedDateEnglish, "jYYYY/jMM/jDD").format(
+              "YYYY-MM-DDTHH:mm:ss.SSS[Z]"
+            );
+            const counselingData = {
+              fullName: username,
+              mobile: tel,
+              courseName: followedCourse,
+              dateTime: isoDate,
+            };
+            await postCounselingRequest(counselingData);
             handleClose();
           },
         }}
@@ -251,7 +273,6 @@ export default function FormDialog() {
                 rules={{ required: true }} //optional
                 render={({
                   field: { onChange, name, value },
-                  fieldState: { invalid, isDirty }, //optional
                   formState: { errors }, //optional, but necessary if you want to show an error message
                 }) => (
                   <div className="flex w-full mt-4 justify-between items-center">

@@ -10,6 +10,7 @@ import logo from "../../../../public/logo/transparentLogo.svg";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import HeadphonesIcon from "@mui/icons-material/Headphones";
 
 function Footer() {
   const pathName = usePathname();
@@ -38,29 +39,44 @@ function Footer() {
         //   name: "مقالات آموزشی",
         //   url: "/articles",
         // },
-        {
-          type: "section",
-          id: "contactUs",
-          name: "تماس با ما",
-          url: "/contact",
-        },
       ],
     },
     {
       id: "contact-us",
-      name: "شبکه های اجتماعی",
+      name: "ارتباط با ما",
       links: [
         {
           id: "instagram",
           name: "اینستاگرام",
           url: "/",
-          icon: <InstagramIcon sx={{ m: "0 0 0 7px", color: "white" }} />,
+          icon: (
+            <InstagramIcon
+              fontSize="small"
+              sx={{ m: "0 0 0 7px", color: "white" }}
+            />
+          ),
         },
         {
           id: "telegram",
           name: "تلگرام",
           url: "/",
-          icon: <TelegramIcon sx={{ m: "0 0 0 7px", color: "white" }} />,
+          icon: (
+            <TelegramIcon
+              fontSize="small"
+              sx={{ m: "0 0 0 7px", color: "white" }}
+            />
+          ),
+        },
+        {
+          id: "support",
+          name: "پشتیبانی | 09331651902",
+          url: "",
+          icon: (
+            <HeadphonesIcon
+              fontSize="small"
+              sx={{ m: "0 0 0 7px", color: "#4b5563" }}
+            />
+          ),
         },
       ],
     },
@@ -124,11 +140,12 @@ function Footer() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
           alignItems: "start",
           justifyContent: "space-between",
           m: "40px auto 0",
-          "@media (max-width: 562px)": {
-            flexDirection: "column",
+          "@media (min-width: 782px)": {
+            flexDirection: "row",
           },
         }}
       >
@@ -139,16 +156,16 @@ function Footer() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              m: "0 0 0 auto",
+              m: "10px 0 0 auto",
               "@media (max-width: 562px)": {
                 m: item.id !== "sections" && "20px 0 0 auto",
               },
             }}
             key={item.id}
           >
-            <div className="flex flex-col w-fit justify-center items-center ml-auto">
+            <div className="group flex flex-col w-fit justify-center items-center ml-auto">
               <h4 className="font-bold text-sky900">{item.name}</h4>
-              <div className="w-full h-1 bg-gradient-to-l from-sky800 via-sky600 to-sky200 mt-1 mb-3 rounded-b-full"></div>
+              <div className="h-[2px] bg-gradient-to-l from-sky800 to-sky500 mt-1 mb-3 rounded-b-full group-hover:w-full"></div>
             </div>
             {item.links.length > 0 ? (
               <ul
@@ -162,8 +179,10 @@ function Footer() {
                         ? "pl-2 hover:bg-sky700 py-[2px] rounded-full "
                         : `bg-gradient-to-l ${
                             link.id === "instagram"
-                              ? "from-pink600 to-pink400"
-                              : "from-sky600 to-sky400"
+                              ? "from-indigo600 to-indigo400"
+                              : link.id === "telegram"
+                              ? "from-sky600 to-sky400"
+                              : ""
                           } p-1 rounded-md hover:opacity-70`
                     } 
                     transition-all duration-300`}
@@ -179,8 +198,12 @@ function Footer() {
                     )}
                     <Link
                       className={`${
-                        link.type === "section" ? "text-gray700" : "text-white"
-                      } text-md 
+                        link.type === "section"
+                          ? "text-gray700"
+                          : link.id === "support"
+                          ? "text-gray600"
+                          : "text-white"
+                      } text-md font-regular
                         group-hover:${
                           link.type === "section" ? "text-white" : ""
                         }`}

@@ -21,6 +21,7 @@
     "date-fns-jalali": "^3.6.0-1",
     "formik": "^2.4.6",
     "iran-city": "^1.2.1",
+    "jalali-moment": "^3.3.11",
     "js-cookie": "^3.0.5",
     "moment-jalaali": "^0.10.1",
     "next": "14.2.4",

@@ -1,4 +1,5 @@
 import ButtonAppBar from "../modules/layoutModules/NavBar";
+import Today from '../modules/layoutModules/Today'
 import Footer from "../modules/layoutModules/Footer";
 import { cookies } from 'next/headers';
 
@@ -17,6 +18,7 @@ function Layout({ children, ...other}: MyComponentProps) {
   return (
       <div>
         <ButtonAppBar token={userToken} />
+        <Today />
             {children}
             <InstagramQR />
         <Footer />

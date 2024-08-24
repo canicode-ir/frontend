@@ -13,6 +13,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import CircularProgress from "@mui/material/CircularProgress";
 let iranCity = require("iran-city");
+import axios from "axios";
+import { BASE_URL } from "../../../services/api";
 
 //Icons & Images
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -75,6 +77,16 @@ export default function CooperationForm() {
         (option) => option.name === newValue.name
       );
       formik.setFieldValue("city", city.name);
+    }
+  };
+
+  const postCooperationRequest = async (data) => {
+    try {
+      notify("در حال ارسال اطلاعات، لطفاً صبر کنید", "success");
+      const result = await axios.post(`${BASE_URL}cooperation`, data);
+      notify("اطلاعات شما با موفقیت ثبت گردید", "success");
+    } catch (error) {
+      console.log(error.response);
     }
   };
 
@@ -145,9 +157,16 @@ export default function CooperationForm() {
       city: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      notify("به زودی با شما تماس خواهیم گرفت", "success");
+    onSubmit: async (values) => {
+      const { username, phone, province, city, description } = values;
+      const cooperationFormData = {
+        fullName: username,
+        mobile: phone,
+        province,
+        city,
+        description,
+      };
+      await postCooperationRequest(cooperationFormData);
       values.username = "";
       values.phone = "";
       values.description = "";

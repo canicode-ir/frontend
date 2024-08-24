@@ -43,27 +43,27 @@ function Card({ course }) {
     const id = course._id;
     if (token) {
       console.log(id);
-      // try {
-      //   const result = await axios.post(
-      //     `${BASE_URL}cart`,
-      //     {
-      //       courseId: id,
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${token}`,
-      //       },
-      //     }
-      //   );
-      //   console.log(result);
-      //   notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
-      // } catch (error) {
-      //   if (error.response.status === 400) {
-      //     notify("دوره در سبد خرید موجود است", "error");
-      //   } else {
-      //     notify("لطفاً مجدد تلاش فرمایید", "error");
-      //   }
-      // }
+      try {
+        const result = await axios.post(
+          `${BASE_URL}cart/${id}`,
+          {
+            courseId: id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(result);
+        notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
+      } catch (error) {
+        if (error.response.status === 400) {
+          notify("دوره در سبد خرید موجود است", "error");
+        } else {
+          notify("لطفاً مجدد تلاش فرمایید", "error");
+        }
+      }
     } else {
       router.push("/userAuthentication");
     }
