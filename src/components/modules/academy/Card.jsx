@@ -6,6 +6,7 @@ import Image from "next/image";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../../../services/api";
 import axios from "axios";
+import IconButton from "@mui/material/IconButton";
 
 //Components
 import Acordion from "../../elements/Acordion";
@@ -19,6 +20,7 @@ import GraphicEqIcon from "@mui/icons-material/GraphicEq";
 import PaymentIcon from "@mui/icons-material/Payment";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ShareIcon from "@mui/icons-material/Share";
 
 function Card({ course }) {
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
@@ -67,6 +69,24 @@ function Card({ course }) {
     }
   };
 
+  const shareCardHandler = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: course.title,
+          text: "آکادمی برنامه نویسی کَن آی کُد",
+          url:
+            `https://canicode.ir/academy/course-details/${course.name}` +
+            "?" +
+            createQueryString("cId", `${course._id}`),
+        });
+        console.log("content shared successfully");
+      } catch (error) {
+        alert("Web Share API is not supported in your browser!");
+      }
+    }
+  };
+
   return (
     <div
       className={`flex h-fit shadow-neomorphism rounded-2xl p-[3px] ${
@@ -86,6 +106,17 @@ function Card({ course }) {
                 : "سطح سنیور"}
             </span>
           )}
+          <IconButton
+            sx={{
+              position: "absolute",
+              top: "-5px",
+              left: 0,
+              bgcolor: "#eef2ff",
+            }}
+            onClick={shareCardHandler}
+          >
+            <ShareIcon fontSize="small" sx={{ color: "#6366f1" }} />
+          </IconButton>
           <Image
             className={
               course.name !== "bootcamp"
