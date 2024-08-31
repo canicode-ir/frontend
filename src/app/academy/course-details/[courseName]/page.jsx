@@ -15,7 +15,6 @@ async function getData() {
 async function page({ searchParams }) {
   const apiData = await getData();
   const courses = apiData.result;
-  const coursesNames = courses.map((course) => course.name);
   const coursesIds = courses.map((course) => course._id);
   const courseData = courses.find((course) => course._id === searchParams.cId);
 

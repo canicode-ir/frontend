@@ -3,6 +3,7 @@ import Head from "next/head";
 import "./globals.css";
 import Layout from "@/components/layout/Layout";
 import GoToTopDiv from '../components/elements/GoTotopDiv'
+import Providers from '../../redux/Providers'
 
 //Providers
 // import Providers from '../../redux/Providers'
@@ -23,9 +24,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body className="relative mx-auto my-0 max-w-[1024px]">
-        <Layout>
-          {children}
-        </Layout>
+        <Providers>
+          <Layout>
+            {children}
+          </Layout>
+        </Providers>
         <GoToTopDiv />
       </body>
     </html>
