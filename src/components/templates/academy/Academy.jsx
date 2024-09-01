@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Components
 import Card from "../../modules/academy/Card";
@@ -92,6 +94,23 @@ const Academy = ({ courses }) => {
             bootcampCourses.map((course) => (
               <Card key={course._id} course={course} />
             ))}
+        <ToastContainer
+          style={{
+            width: "fit-content",
+            margin: "80px 0 0 auto",
+            boxShadow: "none",
+          }}
+          closeButton={false}
+          autoClose={5000}
+          bodyStyle={{
+            width: "fit-content",
+            color: "",
+            fontFamily: "dana",
+          }}
+          progressStyle={{
+            backgroundColor: "rgba(26, 103, 103, 0.2)",
+          }}
+        />
       </div>
     </>
   );

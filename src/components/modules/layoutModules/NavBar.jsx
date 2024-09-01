@@ -155,7 +155,7 @@ export default function ButtonAppBar({ token }) {
               >
                 <ShoppingCartIcon />
               </Button>
-              {!loading && cartItems.orders && (
+              {!loading && cartItems.orders && cartItems.orders.length > 0 && (
                 <span
                   className="absolute -bottom-2 -right-2 w-6 h-6 flex justify-center items-center
                 bg-indigo500 font-bold text-white text-sm rounded-full"

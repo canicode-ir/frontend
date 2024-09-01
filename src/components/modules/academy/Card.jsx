@@ -1,11 +1,16 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../../../services/api";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchUserCart,
+  selectUserCartItems,
+} from "../../../../redux/features/cartSlice";
 import IconButton from "@mui/material/IconButton";
 
 //Components
@@ -21,11 +26,23 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Card({ course }) {
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
   const router = useRouter();
   const searchParams = useSearchParams();
+  const authToken = Cookies.get("token");
+
+  //connecting RTK
+  const { cartItems, loading, error } = useSelector(selectUserCartItems);
+  const dispatch = useDispatch();
+
+  const selectedCourses = cartItems.orders && cartItems.orders;
+  const isInCartCoursesIds =
+    cartItems.orders &&
+    selectedCourses.length &&
+    selectedCourses.map((item) => item.course._id);
 
   const createQueryString = useCallback(
     (name, value) => {
@@ -42,9 +59,8 @@ function Card({ course }) {
     const token = Cookies.get("token");
     const id = course._id;
     if (token) {
-      console.log(id);
       try {
-        const result = await axios.post(
+        await axios.post(
           `${BASE_URL}cart/${id}`,
           {
             courseId: id,
@@ -55,7 +71,7 @@ function Card({ course }) {
             },
           }
         );
-        console.log(result);
+        dispatch(fetchUserCart());
         notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
       } catch (error) {
         if (error.response.status === 400) {
@@ -67,6 +83,12 @@ function Card({ course }) {
     } else {
       router.push("/userAuthentication");
     }
+  };
+
+  const deleteCourseFromCart = async (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");
+    const id = course._id;
   };
 
   const shareCardHandler = async () => {
@@ -86,6 +108,11 @@ function Card({ course }) {
       }
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchUserCart());
+  }, []);
 
   return (
     <div
@@ -200,14 +227,36 @@ function Card({ course }) {
           id="btn"
           className="flex w-full justify-between items-center mt-5 mb-2"
         >
-          <button
-            className="w-fit flex justify-center items-center bg-indigo600 font-bold 
+          {!authToken ? (
+            <button
+              className="w-fit flex justify-center items-center bg-indigo600 font-bold 
           text-white text-[13px] p-2 rounded-md duration-500 hover:opacity-70"
-            onClick={addCourseToCart}
-          >
-            <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
-            ثبت نام
-          </button>
+              onClick={addCourseToCart}
+            >
+              <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+              ثبت نام
+            </button>
+          ) : cartItems.orders &&
+            isInCartCoursesIds.length > 0 &&
+            isInCartCoursesIds.includes(course._id) ? (
+            <button
+              className="w-fit flex justify-center items-center bg-white font-medium
+          text-red500 text-[13px] p-2 rounded-md transition-all duration-500 hover:opacity-70"
+              onClick={addCourseToCart}
+            >
+              <DeleteIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+              <span>حذف از سبد خرید</span>
+            </button>
+          ) : (
+            <button
+              className="w-fit flex justify-center items-center bg-indigo600 font-bold 
+          text-white text-[13px] p-2 rounded-md duration-500 hover:opacity-70"
+              onClick={addCourseToCart}
+            >
+              <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+              ثبت نام
+            </button>
+          )}
           <button
             className="w-fit flex justify-center items-center bg-indigo50 font-bold 
           text-indigo600 text-[13px] p-2 rounded-md duration-500 hover:ring-1 ring-indigo600 hover:bg-white"

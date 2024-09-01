@@ -1,7 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { BASE_URL } from "../../../../services/api";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchUserCart,
+  selectUserCartItems,
+} from "../../../../../redux/features/cartSlice";
 
 //Components
 import MyResume from "../../../elements/MyResume";
@@ -24,9 +33,11 @@ import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 //Functions
 import { addCommas } from "../../../../helpers/functions";
+import { notify } from "../../../../utils/Toast";
 
 function CourseDetailsMain({
   title,
@@ -41,6 +52,7 @@ function CourseDetailsMain({
   image,
   name,
   level,
+  _id,
 }) {
   const [showCourseDescription, setShowCourseDescription] = useState(true);
   const [showCourseTitles, setShowCourseTitles] = useState(false);
@@ -50,6 +62,19 @@ function CourseDetailsMain({
     setShowCourseTitles,
     setShowCourseFAQ,
   };
+
+  const authToken = Cookies.get("token");
+  const router = useRouter();
+
+  //connecting RTK
+  const { cartItems, loading, error } = useSelector(selectUserCartItems);
+  const dispatch = useDispatch();
+
+  const selectedCourses = cartItems.orders && cartItems.orders;
+  const isInCartCoursesIds =
+    cartItems.orders &&
+    selectedCourses.length &&
+    selectedCourses.map((item) => item.course._id);
 
   const [expandMore, setExpandMore] = useState(false);
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
@@ -104,6 +129,42 @@ function CourseDetailsMain({
       img: <SupportAgentIcon fontSize="medium" />,
     },
   ];
+
+  const addCourseToCart = async (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");
+    const id = _id;
+    if (token) {
+      try {
+        await axios.post(
+          `${BASE_URL}cart/${id}`,
+          {
+            courseId: id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        dispatch(fetchUserCart());
+        notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
+      } catch (error) {
+        if (error.response.status === 400) {
+          notify("دوره در سبد خرید موجود است", "error");
+        } else {
+          notify("لطفاً مجدد تلاش فرمایید", "error");
+        }
+      }
+    } else {
+      router.push("/userAuthentication");
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchUserCart());
+  }, []);
 
   return (
     <div className="relative flex flex-col h-full w-full justify-center items-center min-[900px]:p-4 lg:p-0">
@@ -175,18 +236,58 @@ function CourseDetailsMain({
             <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
           </div>
           <div className="flex w-full justify-between items-center mt-10">
-            <button
-              className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+            {!authToken ? (
+              <>
+                <button
+                  className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
              hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
-            >
-              ثبت نام در دوره
-            </button>
-            <div className="flex justify-center items-center">
-              <p className="font-black ml-1 text-slate800 text-lg">
-                {addCommas(priceAfterDiscount)}
-              </p>
-              <span className="text-slate500">تومان</span>
-            </div>
+                  onClick={addCourseToCart}
+                >
+                  ثبت نام در دوره
+                </button>
+                <div className="flex justify-center items-center">
+                  <p className="font-black ml-1 text-slate800 text-lg">
+                    {addCommas(priceAfterDiscount)}
+                  </p>
+                  <span className="text-slate500">تومان</span>
+                </div>
+              </>
+            ) : cartItems.orders &&
+              isInCartCoursesIds.length > 0 &&
+              isInCartCoursesIds.includes(_id) ? (
+              <>
+                <button
+                  className="w-fit flex justify-center items-center bg-white font-medium ring-1 ring-red400
+          text-red500 text-[13px] p-2 rounded-md transition-all duration-500 hover:opacity-70"
+                  onClick={addCourseToCart}
+                >
+                  <DeleteIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+                  <span>حذف از سبد خرید</span>
+                </button>
+                <div className="flex justify-center items-center">
+                  <p className="font-black ml-1 text-slate800 text-lg">
+                    {addCommas(priceAfterDiscount)}
+                  </p>
+                  <span className="text-slate500">تومان</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+             hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
+                  onClick={addCourseToCart}
+                >
+                  ثبت نام در دوره
+                </button>
+                <div className="flex justify-center items-center">
+                  <p className="font-black ml-1 text-slate800 text-lg">
+                    {addCommas(priceAfterDiscount)}
+                  </p>
+                  <span className="text-slate500">تومان</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
