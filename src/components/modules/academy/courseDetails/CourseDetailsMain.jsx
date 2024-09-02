@@ -161,6 +161,30 @@ function CourseDetailsMain({
     }
   };
 
+  const deleteCourseFromCart = async (e) => {
+    e.preventDefault();
+    const token = Cookies.get("token");
+    if (token) {
+      try {
+        await axios.delete(
+          `${BASE_URL}cart/${_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+          {
+            courseId: _id,
+          }
+        );
+        dispatch(fetchUserCart());
+        notify("دوره از سبد خرید حذف شد", "success");
+      } catch (error) {
+        notify("خطایی در سیستم رخ داده است، لطفاً مجدد امتحان کنید", "error");
+      }
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserCart());
@@ -259,7 +283,7 @@ function CourseDetailsMain({
                 <button
                   className="w-fit flex justify-center items-center bg-white font-medium ring-1 ring-red400
           text-red500 text-[13px] p-2 rounded-md transition-all duration-500 hover:opacity-70"
-                  onClick={addCourseToCart}
+                  onClick={deleteCourseFromCart}
                 >
                   <DeleteIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
                   <span>حذف از سبد خرید</span>

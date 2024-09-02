@@ -11,7 +11,7 @@ export default function TransitionsModal({ isOpen, setIsOpen }) {
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      sx={{ zIndex: 100 }}
+      sx={{ zIndex: 10 }}
       open={isOpen}
       onClose={handleClose}
       closeAfterTransition

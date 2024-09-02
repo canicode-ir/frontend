@@ -89,6 +89,25 @@ function Card({ course }) {
     e.preventDefault();
     const token = Cookies.get("token");
     const id = course._id;
+    if (token) {
+      try {
+        await axios.delete(
+          `${BASE_URL}cart/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+          {
+            courseId: id,
+          }
+        );
+        dispatch(fetchUserCart());
+        notify("دوره از سبد خرید حذف شد", "success");
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
   };
 
   const shareCardHandler = async () => {
@@ -242,7 +261,7 @@ function Card({ course }) {
             <button
               className="w-fit flex justify-center items-center bg-white font-medium
           text-red500 text-[13px] p-2 rounded-md transition-all duration-500 hover:opacity-70"
-              onClick={addCourseToCart}
+              onClick={deleteCourseFromCart}
             >
               <DeleteIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
               <span>حذف از سبد خرید</span>
