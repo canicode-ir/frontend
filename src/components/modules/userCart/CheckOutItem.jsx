@@ -69,7 +69,7 @@ function CheckOutItem({
           className={`${
             name === "bootcamp"
               ? "hidden"
-              : "block w-fit mr-1 ml-auto text-sm text-slate800"
+              : "block w-fit mr-1 ml-auto font-bold text-sm text-title min-[350px]:text-md min-[400px]:text-lg"
           }`}
         >
           {title}
@@ -82,7 +82,7 @@ function CheckOutItem({
             : "flex w-full justify-between items-center mt-2"
         }`}
       >
-        <span className="bg-indigo50 text-indigo500 text-[11px] p-1 rounded-sm">
+        <span className="bg-indigo50 text-indigo500 text-[11px] p-1 rounded-sm min-[390px]:text-[14px]">
           {level === "starter"
             ? "سطح مقدماتی"
             : level === "mid-level"
@@ -91,7 +91,7 @@ function CheckOutItem({
             ? "سطح ارشد"
             : "بوت کمپ فرانت"}
         </span>
-        <h5 className="font-demibold text-sm text-detail">
+        <h5 className="font-demibold text-sm text-detail min-[390px]:text-[15px]">
           {addCommas(price)} تومان
         </h5>
       </div>
@@ -108,14 +108,16 @@ function CheckOutItem({
           onClick={(e) => deleteCourseFromCart(e, _id)}
         >
           <DeleteIcon fontSize="small" sx={{ color: "#f87171" }} />
-          <span className="text-[12px] text-red400">حذف از سبد خرید</span>
+          <span className="text-[12px] text-red400 min-[390px]:text-[14px]">
+            حذف از سبد خرید
+          </span>
         </IconButton>
         <Link
           href="/academy"
           className="flex w-fit justify-center items-center text-[12px] text-indigo400"
         >
           <ManageSearchIcon fontSize="small" />
-          <span className="mr-1">سایر دوره ها</span>
+          <span className="mr-1 min-[390px]:text-[14px]">سایر دوره ها</span>
         </Link>
       </section>
     </main>
