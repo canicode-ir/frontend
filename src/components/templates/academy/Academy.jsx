@@ -101,7 +101,7 @@ const Academy = ({ courses }) => {
             boxShadow: "none",
           }}
           closeButton={false}
-          autoClose={5000}
+          autoClose={2000}
           bodyStyle={{
             width: "fit-content",
             color: "",
