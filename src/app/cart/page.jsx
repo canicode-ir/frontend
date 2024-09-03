@@ -28,6 +28,8 @@ async function getData() {
 }
 
 async function page() {
+  const cookieStore = cookies();
+  const authToken = cookieStore.get("token")?.value;
   const cartData = await getData();
   return (
     <div>
