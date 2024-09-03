@@ -151,7 +151,7 @@ export default function ButtonAppBar({ token }) {
               <Button
                 className="font-title text-inherit text-center ml-2 duration-400 backdrop-blur-2xl bg-white/20 
             hover:bg-white/40"
-                onClick={() => router.push("/cart")}
+                onClick={() => (window.location.href = "/cart")}
               >
                 <ShoppingCartIcon />
               </Button>

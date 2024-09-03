@@ -1,13 +1,14 @@
-"use client";
+import EmptyCart from "../userCart/EmptyCart";
+import CheckOut from "../userCart/CheckOut";
 
-function LoggedInCart({ userToken }) {
-  const logOutHandler = () => {
-    console.log(userToken);
-  };
-
+function LoggedInCart({ token, cartData }) {
   return (
     <div>
-      <button onClick={logOutHandler}>خروج</button>
+      {cartData.orders.length ? (
+        <CheckOut token={token} cartData={cartData} />
+      ) : (
+        <EmptyCart />
+      )}
     </div>
   );
 }
