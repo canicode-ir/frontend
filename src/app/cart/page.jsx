@@ -5,10 +5,9 @@ import { BASE_URL } from "../../services/api";
 //Components
 import UserCart from "../../components/templates/userCart/UserCart";
 
-const cookieStore = cookies();
-const authToken = cookieStore.get("token")?.value;
-
 async function getData() {
+  const cookieStore = cookies();
+  const authToken = cookieStore.get("token")?.value;
   if (authToken) {
     const res = await axios.get(
       `${BASE_URL}cart`,
