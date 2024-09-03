@@ -34,8 +34,8 @@ function CheckOut({ token }) {
   return (
     <div className="flex flex-col w-full justify-center items-center">
       {orders && orders.length ? (
-        <div className="flex flex-col mt-10 w-full justify-center items-center">
-          <main className="flex flex-col w-full justify-center items-center">
+        <div className="flex flex-col mt-10 w-full justify-center items-center md:flex-row">
+          <main className="flex flex-col w-full justify-center items-center md:mt-0 md:mb-auto">
             <div className="flex w-fit ml-auto justify-center items-center">
               <ViewStreamIcon
                 sx={{ color: "#1f2937", fontSize: "20px", m: "0 0 0 7px" }}
@@ -52,7 +52,10 @@ function CheckOut({ token }) {
               />
             ))}
           </main>
-          <aside className="flex flex-col w-full justify-center items-center mt-10">
+          <aside
+            className="flex flex-col w-full justify-center items-center mt-10 
+          md:mt-0 md:mb-auto md:max-w-[45%] md:mr-5"
+          >
             <div className="flex w-fit ml-auto justify-center items-center">
               <ViewStreamIcon
                 sx={{ color: "#1f2937", fontSize: "20px", m: "0 0 0 7px" }}

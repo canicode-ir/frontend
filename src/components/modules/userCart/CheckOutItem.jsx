@@ -64,6 +64,7 @@ function CheckOutItem({
           src={`${imageUrl}${image}`}
           width={600}
           height={600}
+          alt="course-avatar"
         />
         <p
           className={`${
