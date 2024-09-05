@@ -151,7 +151,7 @@ export default function ButtonAppBar({ token, userRole }) {
             {token && userRole === "admin" && (
               <IconButton
                 className="font-title text-white text-center ml-2"
-                onClick={() => router.push("/client-dashboard")}
+                onClick={() => router.push("/admin-panel")}
               >
                 <AdminPanelSettingsIcon />
               </IconButton>
