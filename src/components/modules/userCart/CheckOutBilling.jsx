@@ -72,6 +72,26 @@ function CheckOutBilling({ orders, totalPrice, token }) {
     },
   ];
 
+  const postToPayment = async (e) => {
+    if (token) {
+      try {
+        const res = await axios.post(
+          `${BASE_URL}payment`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const gatewayURL = res.data.gatewayURL;
+        window.location.href = gatewayURL;
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+  };
+
   return (
     <main
       className="flex flex-col w-full justify-between items-center mt-7 p-4
@@ -167,6 +187,7 @@ function CheckOutBilling({ orders, totalPrice, token }) {
           p-2 rounded-[10px] font-demibold text-[14px] text-indigo700
           hover:bg-indigo700 hover:text-white hover:ring-4 ring-indigo200 hover:scale-[0.95]
           hover:rounded-lg transition-all duration-500"
+            onClick={postToPayment}
           >
             <PaymentsIcon fontSize="small" sx={{ ml: 0.5 }} />
             مبلغ قابل پرداخت | {addCommas(totalPrice)} تومان
