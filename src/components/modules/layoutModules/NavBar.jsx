@@ -148,6 +148,14 @@ export default function ButtonAppBar({ token, userRole }) {
                   />
                 )}
             </Container>
+            {token && userRole === "admin" && (
+              <IconButton
+                className="font-title text-white text-center ml-2"
+                onClick={() => router.push("/client-dashboard")}
+              >
+                <AdminPanelSettingsIcon />
+              </IconButton>
+            )}
             <div className="relative w-fit flex justify-center items-center">
               <Button
                 className="font-title text-inherit text-center ml-2 duration-400 backdrop-blur-2xl bg-white/20 
@@ -183,14 +191,6 @@ export default function ButtonAppBar({ token, userRole }) {
               </Button>
             )}
           </Toolbar>
-          {/* {token && userRole === "admin" && (
-            <IconButton
-              className="font-title text-white text-center ml-2"
-              onClick={() => router.push("/client-dashboard")}
-            >
-              <AdminPanelSettingsIcon />
-            </IconButton>
-          )} */}
         </AppBar>
         <Container
           className="hidden open:absolute open:flex w-[240px] h-screen translate-x-full mr-0 justify-center bg-white overflow-y-auto

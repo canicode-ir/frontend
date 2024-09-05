@@ -41,6 +41,8 @@ async function Layout({ children, ...other}: MyComponentProps) {
   const userProfile = userToken && await getUserProfile();
   const userRole = userProfile && userProfile.role;
 
+  console.log(userRole);
+
   return (
       <div>
         <ButtonAppBar token={userToken} userRole={userRole}/>
