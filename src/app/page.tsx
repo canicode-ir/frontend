@@ -1,11 +1,17 @@
+import { BASE_URL } from '../services/api';
+import { cookies } from 'next/headers';
+
 //Components
 import Academy from '../components/templates/academy/Academy';
 import HomePage from '../components/modules/home/HomePage';
 import WebsiteSamples from "../components/modules/home/WebsiteSamples";
 import RoadMap from '../components/modules/home/RoadMap';
 
+const cookieStore = cookies(); 
+const token = cookieStore.get('token')?.value;
+
 async function getData() {
-  const res = await fetch('https://cnc.liara.run/course?page=1&limit=20', {cache: 'no-store'})
+  const res = await fetch(`${BASE_URL}course?page=1&limit=20`, {cache: 'no-store'})
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }

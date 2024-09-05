@@ -80,8 +80,7 @@ export const FieldLevelValidationExample = () => {
   const authToLogin = async (values) => {
     const data = { mobile: values.phone };
     try {
-      const result = await axios.post(`${BASE_URL}auth/login`, data);
-      console.log(result);
+      await axios.post(`${BASE_URL}auth/login`, data);
       router.replace(
         "/userCheckOtp" + "?" + createQueryString("phone", data.mobile)
       );

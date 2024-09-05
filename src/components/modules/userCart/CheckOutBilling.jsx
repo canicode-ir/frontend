@@ -1,8 +1,10 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { BASE_URL } from "../../../services/api";
 import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 import { fetchUserCart } from "../../../../redux/features/cartSlice";
 import IconButton from "@mui/material/IconButton";
 
@@ -20,6 +22,7 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 
 function CheckOutBilling({ orders, totalPrice, token }) {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const deleteCourseFromCart = async (e, id) => {
     e.preventDefault;
@@ -73,6 +76,7 @@ function CheckOutBilling({ orders, totalPrice, token }) {
   ];
 
   const postToPayment = async (e) => {
+    e.preventDefault;
     if (token) {
       try {
         const res = await axios.post(
@@ -84,10 +88,18 @@ function CheckOutBilling({ orders, totalPrice, token }) {
             },
           }
         );
+        notify("در حال انتقال به درگاه پرداخت", "success");
         const gatewayURL = res.data.gatewayURL;
         window.location.href = gatewayURL;
       } catch (error) {
-        console.log(error.response);
+        if (error.response.status === 401) {
+          notify("امکان دسترسی برای شما وجود ندارد", "error");
+          Cookies.remove("token");
+          window.location.href = "/userAuthentication";
+        } else {
+          notify("مشکلی در ارتباط به سرور ایجاد شده است", "error");
+          window.location.href = "/";
+        }
       }
     }
   };

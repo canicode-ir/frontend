@@ -29,11 +29,12 @@ import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import TransitionsModal from "../../elements/Modal";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
 
-export default function ButtonAppBar({ token }) {
+export default function ButtonAppBar({ token, userRole }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
@@ -182,6 +183,14 @@ export default function ButtonAppBar({ token }) {
               </Button>
             )}
           </Toolbar>
+          {/* {token && userRole === "admin" && (
+            <IconButton
+              className="font-title text-white text-center ml-2"
+              onClick={() => router.push("/client-dashboard")}
+            >
+              <AdminPanelSettingsIcon />
+            </IconButton>
+          )} */}
         </AppBar>
         <Container
           className="hidden open:absolute open:flex w-[240px] h-screen translate-x-full mr-0 justify-center bg-white overflow-y-auto
