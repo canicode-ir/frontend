@@ -1,11 +1,14 @@
-import LoginPage from '../../components/templates/login/LoginPage';
+import LoginPage from "../../components/templates/login/LoginPage";
+import { Suspense } from "react";
 
 function page() {
   return (
-    <div className='flex h-full w-full mx-auto px-4'>
+    <Suspense>
+      <div className="flex h-full w-full mx-auto px-4">
         <LoginPage />
-    </div>
-  )
+      </div>
+    </Suspense>
+  );
 }
 
 export default page;
