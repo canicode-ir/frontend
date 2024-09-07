@@ -1,6 +1,7 @@
 import ButtonAppBar from "../modules/layoutModules/NavBar";
 import Today from '../modules/layoutModules/Today'
 import Footer from "../modules/layoutModules/Footer";
+import { cookies } from 'next/headers';
 import { BASE_URL } from '../../services/api';
 import Cookies from "js-cookie";
 
@@ -12,14 +13,17 @@ type MyComponentProps = React.PropsWithChildren<{}>;
 
 async function getUserProfile() {
   //Is User Logged In?
-const userToken = Cookies.get('token');
+const cookieStore = cookies()
+const tokenObj = cookieStore.get('token')
+const userToken = tokenObj?.value;
   if (userToken) {
     try {
       const res = await fetch(`${BASE_URL}user/profile`, {
         headers: {
           'Authorization': `Bearer ${userToken}`,
           'Content-Type': 'application/json'
-        }
+        },
+        cache: 'no-store'
       });
 
       if (!res.ok) {
@@ -36,10 +40,14 @@ const userToken = Cookies.get('token');
 }
 
 async function Layout({ children, ...other}: MyComponentProps) {
-   //Is User Logged In?
-const userToken = Cookies.get('token');
+  //Is User Logged In?
+const cookieStore = cookies()
+const tokenObj = cookieStore.get('token')
+const userToken = tokenObj?.value;
   const userProfile = userToken && await getUserProfile();
   const userRole = userProfile && userProfile.role;
+  console.log(userRole);
+
 
   return (
       <div>

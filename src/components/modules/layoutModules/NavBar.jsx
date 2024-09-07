@@ -148,7 +148,7 @@ export default function ButtonAppBar({ token, userRole }) {
                   />
                 )}
             </Container>
-            {token && userRole === "admin" && (
+            {userRole === "admin" && (
               <IconButton
                 className="font-title text-white text-center ml-2"
                 onClick={() => router.push("/admin-panel")}
