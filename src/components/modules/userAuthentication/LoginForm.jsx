@@ -9,6 +9,7 @@ import axios from "axios";
 import { BASE_URL } from "../../../services/api";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 // Images & Icons
 import LoginIcon from "@mui/icons-material/Login";
@@ -18,6 +19,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import SettingsCellIcon from "@mui/icons-material/SettingsCell";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import buttonLoading from "../../../../public/general/buttonLoading.gif";
 
 //Functions
 import { notify } from "../../../utils/Toast";
@@ -45,6 +47,7 @@ function validateUsername(value) {
 
 export const FieldLevelValidationExample = () => {
   const [isRegister, setIsRegister] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -65,33 +68,46 @@ export const FieldLevelValidationExample = () => {
       mobile: phone,
       instagram_username: instagram,
     };
+    setLoading(!loading);
     try {
       await axios.post(`${BASE_URL}auth/register`, data);
       values.username = "";
       values.phone = "";
       values.instagram = "";
+      setLoading(false);
       notify("ثبت نام شما با موفقیت انجام شد", "success");
       setIsRegister(false);
     } catch (error) {
-      console.log(error);
+      setLoading(!loading);
     }
   };
 
   const authToLogin = async (values) => {
     const data = { mobile: values.phone };
+    setLoading(!loading);
     try {
       await axios.post(`${BASE_URL}auth/login`, data);
+      setLoading(false);
       router.replace(
         "/userCheckOtp" + "?" + createQueryString("phone", data.mobile)
       );
     } catch (error) {
       if (error.response.status === 400) {
+        setLoading(false);
         notify("!کد ارسال شده قبلی هنوز منقضی نشده است", "error");
       } else if (error.response.status === 404) {
+        setLoading(false);
         notify("!شما هنوز ثبت نام نکرده اید", "error");
         setIsRegister(true);
       } else if (error.response.status === 500) {
+        setLoading(false);
         notify("!مشکلی در ارتباط با سرور رخ داده است", "error");
+      } else {
+        // setTimeout(
+        //   () => notify("مشکلی در ارتباط با سرور رخ داده است", "error"),
+        //   1000
+        // );
+        console.log(error.response);
       }
     }
   };
@@ -257,8 +273,30 @@ export const FieldLevelValidationExample = () => {
             className="mt-5 w-full text-center text-white rounded-md bg-gradient-to-l from-indigo700 
               to-indigo500 outline outline-offset-1 outline-2 outline-violet200 py-2 transition-all duration-300 hover:opacity-80"
           >
-            {isRegister ? "ادامه ثبت نام" : "ورود به پنل کاربری"}
-            <ArrowCircleLeftIcon sx={{ mr: 1 }} />
+            {isRegister ? (
+              !loading ? (
+                "ادامه ثبت نام"
+              ) : (
+                <Image
+                  className="w-6 mx-auto"
+                  src={buttonLoading}
+                  width={600}
+                  height={600}
+                  alt="buttonLoading"
+                />
+              )
+            ) : loading ? (
+              <Image
+                className="w-6 mx-auto"
+                src={buttonLoading}
+                width={600}
+                height={600}
+                alt="buttonLoading"
+              />
+            ) : (
+              "ورود به پنل کاربری"
+            )}
+            {!loading && <ArrowCircleLeftIcon sx={{ mr: 1 }} />}
           </button>
         </Form>
       </Formik>

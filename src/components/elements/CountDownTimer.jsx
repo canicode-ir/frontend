@@ -1,18 +1,22 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "../../services/api";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import QrCode2Icon from "@mui/icons-material/QrCode2";
-import UTurnLeftIcon from "@mui/icons-material/UTurnLeft";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "../../services/api";
 
 //Functions
 import { notify } from "../../utils/Toast";
 
+//Icons, Images
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import UTurnLeftIcon from "@mui/icons-material/UTurnLeft";
+
 function CountDownTimer() {
-  const [timeLeft, setTimeLeft] = useState(60); // Initial time in seconds
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [isLoading, setIsLoading] = useState(false);
 
   const searchParams = useSearchParams();
   const userMobile = searchParams.get("phone");
@@ -31,14 +35,18 @@ function CountDownTimer() {
     }
   }, [timeLeft]);
 
-  const authToLogin = async () => {
+  const authToLogin = async (e) => {
+    e.preventDefault();
     const data = { mobile: userMobile };
+    setIsLoading(true);
     try {
       await axios.post(`${BASE_URL}auth/login`, data);
+      setIsLoading(false);
       notify("کد تایید مجدداً ارسال شد", "success");
       setTimeLeft(60);
     } catch (error) {
-      console.log(error.response);
+      setIsLoading(false);
+      notify("مشکلی در ارتباط با سرور رخ داده است", "error");
     }
   };
 
@@ -50,6 +58,7 @@ function CountDownTimer() {
       "0"
     )}`;
   };
+
   return (
     <div className="flex w-full ml-auto mt-4 mb-2 justify-between items-center">
       {timeLeft > 0 ? (
@@ -64,11 +73,17 @@ function CountDownTimer() {
       ) : (
         <button
           type="submit"
-          className="w-fit text-indigo900 font-demibold text-sm transition-all duration-500 hover:bg-purple100 hover:px-2 hover:py-1 rounded-md"
+          className={`w-fit ${
+            !isLoading
+              ? "text-indigo900 hover:bg-purple100 hover:px-2 hover:py-1 transition-all duration-500"
+              : "text-white bg-sky700 p-1"
+          } font-demibold text-sm rounded-md`}
           onClick={authToLogin}
         >
-          درخواست ارسال مجدد کد
-          <QrCode2Icon sx={{ mr: 1 }} />
+          {!isLoading
+            ? "درخواست ارسال مجدد کد"
+            : "در حال ارسال مجدد کد تایید..."}
+          {!isLoading && <QrCode2Icon sx={{ mr: 1 }} />}
         </button>
       )}
       <button

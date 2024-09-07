@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Formik, Form, useField } from "formik";
-import { useEffect } from "react";
+import Image from "next/image";
 import { TextField } from "@mui/material";
 import axios from "axios";
 import { BASE_URL } from "../../../services/api";
@@ -16,6 +17,7 @@ import CountDownTimer from "../../elements/CountDownTimer";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import PasswordIcon from "@mui/icons-material/Password";
 import SettingsCellIcon from "@mui/icons-material/SettingsCell";
+import buttonLoading from "../../../../public/general/buttonLoading.gif";
 
 //Functions
 import { notify } from "../../../utils/Toast";
@@ -40,14 +42,20 @@ function validateOtp(value) {
 }
 
 export default function CheckOtpForm() {
+  const [loading, setLoading] = useState(false);
+
   const authToCheckOtp = async (values) => {
     const data = { mobile: values.phone, otp_code: values.code };
+    setLoading(!loading);
+    notify("در حال اعتبارسنجی اطلاعات", "success");
     try {
       const result = await axios.post(`${BASE_URL}auth/check-otp`, data);
+      setLoading(false);
       const token = result.data.access_token;
       Cookies.set("token", token, { expires: 7 });
       window.location.href = "/client-dashboard";
     } catch (error) {
+      setLoading(false);
       if (error.response.status === 400) {
         notify("!کد ارسالی و یا شماره موبایل را اشتباه وارد کرده اید", "error");
       }
@@ -130,8 +138,18 @@ export default function CheckOtpForm() {
             className="mt-5 w-full text-center text-white rounded-md bg-gradient-to-l from-indigo700 
               to-indigo500 outline outline-offset-1 outline-2 outline-violet200 py-2 transition-all duration-300 hover:opacity-80"
           >
-            ارسال اطلاعات
-            <ArrowCircleLeftIcon sx={{ mr: 1 }} />
+            {!loading ? (
+              "ارسال اطلاعات"
+            ) : (
+              <Image
+                className="w-6 mx-auto"
+                src={buttonLoading}
+                width={600}
+                height={600}
+                alt="buttonLoading"
+              />
+            )}
+            {!loading && <ArrowCircleLeftIcon sx={{ mr: 1 }} />}
           </button>
         </Form>
       </Formik>

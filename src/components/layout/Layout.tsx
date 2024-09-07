@@ -46,8 +46,6 @@ const tokenObj = cookieStore.get('token')
 const userToken = tokenObj?.value;
   const userProfile = userToken && await getUserProfile();
   const userRole = userProfile && userProfile.role;
-  console.log(userRole);
-
 
   return (
       <div>
