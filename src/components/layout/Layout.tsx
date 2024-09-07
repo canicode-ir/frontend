@@ -1,19 +1,18 @@
 import ButtonAppBar from "../modules/layoutModules/NavBar";
 import Today from '../modules/layoutModules/Today'
 import Footer from "../modules/layoutModules/Footer";
-import { cookies } from 'next/headers';
 import { BASE_URL } from '../../services/api';
+import Cookies from "js-cookie";
 
 //Components
 import InstagramQR from '../elements/InstagramQR';
 
 type MyComponentProps = React.PropsWithChildren<{}>;
-//Is User Logged In?
-const cookieStore = cookies()
-const tokenObj = cookieStore.get('token')
-const userToken = tokenObj?.value;
+
 
 async function getUserProfile() {
+  //Is User Logged In?
+const userToken = Cookies.get('token');
   if (userToken) {
     try {
       const res = await fetch(`${BASE_URL}user/profile`, {
@@ -37,11 +36,10 @@ async function getUserProfile() {
 }
 
 async function Layout({ children, ...other}: MyComponentProps) {
-  
+   //Is User Logged In?
+const userToken = Cookies.get('token');
   const userProfile = userToken && await getUserProfile();
   const userRole = userProfile && userProfile.role;
-
-  console.log(userRole);
 
   return (
       <div>
