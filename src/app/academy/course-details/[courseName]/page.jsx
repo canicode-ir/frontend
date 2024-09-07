@@ -1,9 +1,10 @@
 //Components
 import CourseDetails from "../../../../components/templates/courseDetails/CourseDetails";
 import CourseNotFound from "../../../../components/modules/CourseNotFound";
+import { BASE_URL } from "../../../../services/api";
 
 async function getData() {
-  const res = await fetch("https://cnc.liara.run/course?page=1&limit=20", {
+  const res = await fetch(`${BASE_URL}course?page=1&limit=20`, {
     cache: "no-store",
   });
   if (!res.ok) {
