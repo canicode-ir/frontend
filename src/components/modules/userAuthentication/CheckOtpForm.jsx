@@ -49,7 +49,9 @@ export default function CheckOtpForm() {
     setLoading(!loading);
     notify("در حال اعتبارسنجی اطلاعات", "success");
     try {
-      const result = await axios.post(`${BASE_URL}auth/check-otp`, data);
+      const result = await axios.post(`${BASE_URL}auth/check-otp`, data, {
+        withCredentials: true,
+      });
       setLoading(false);
       const token = result.data.access_token;
       Cookies.set("token", token, { expires: 7 });

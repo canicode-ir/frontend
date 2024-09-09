@@ -16,6 +16,7 @@ function page() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
       Cookies.remove("token");
