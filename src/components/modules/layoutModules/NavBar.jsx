@@ -81,6 +81,14 @@ export default function ButtonAppBar({ token, userRole }) {
     }
   };
 
+  const hamburgerClickHandler = (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+    const goToTopDiv = document.getElementById("goTotop");
+    if (goToTopDiv && isOpen) goToTopDiv.style.display = "block";
+    if (!isOpen) goToTopDiv.style.display = "none";
+  };
+
   //connecting RTK
   const { cartItems, loading, error } = useSelector(selectUserCartItems);
   const dispatch = useDispatch();
@@ -109,7 +117,7 @@ export default function ButtonAppBar({ token, userRole }) {
               edge="start"
               color="inherit"
               aria-label="menu"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={hamburgerClickHandler}
             >
               {isOpen ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
