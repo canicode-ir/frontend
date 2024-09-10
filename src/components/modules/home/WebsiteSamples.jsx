@@ -86,7 +86,7 @@ function SwipeableTextMobileStepper({ courses }) {
   return (
     <div
       className="flex flex-col justify-center items-center mt-20 px-6
-        min-[872px]:mt-10 min-[872px]:flex-row lg:p-0"
+        min-[872px]:flex-row lg:p-0"
     >
       <div className="flex flex-col justify-between items-center mx-auto">
         <div className="flex w-fit ml-auto justify-center items-center">

@@ -115,6 +115,7 @@ function HomePage() {
           کنی و درآمد داشته باشی 😉
         </Typography>
         <div
+          id="homepage-btn"
           className="flex flex-col w-full mt-7 justify-center items-center ml-auto p-0 min-[390px]:flex-row
           min-[390px]:w-fit min-[390px]:ml-auto"
         >
