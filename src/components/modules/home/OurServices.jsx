@@ -4,7 +4,7 @@
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 
 //Components
-import Swiper from "../../elements/Swiper";
+import OurServicesSwiper from "../../elements/OurServicesSwiper";
 
 function OurServices() {
   return (
@@ -20,7 +20,7 @@ function OurServices() {
           خدمات آکادمی کَن آی کُد:{" "}
         </h5>
       </div>
-      <Swiper />
+      <OurServicesSwiper />
     </div>
   );
 }

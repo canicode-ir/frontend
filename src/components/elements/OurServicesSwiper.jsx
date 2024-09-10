@@ -18,7 +18,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import WorkIcon from "@mui/icons-material/Work";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 
-export default function () {
+export default function OurServicesSwiper() {
   const ourServicesData = [
     {
       id: "education",
