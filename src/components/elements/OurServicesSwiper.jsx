@@ -11,6 +11,7 @@ import { EffectCube, Pagination } from "swiper/modules";
 
 //Components
 import SwiperCard from "./SwiperCard";
+import OurServicesAutoPlay from "./OurServicesAutoPlay";
 
 //Icons & Images
 import PsychologyAltIcon from "@mui/icons-material/PsychologyAlt";
@@ -66,24 +67,29 @@ export default function OurServicesSwiper() {
   ];
 
   return (
-    <div className="flex w-[95%] h-[550px] mx-auto mt-10 min-[600px]:hidden">
-      <Swiper
-        effect={"cube"}
-        grabCursor={true}
-        cubeEffect={{
-          shadow: false,
-          slideShadows: true,
-        }}
-        pagination={true}
-        modules={[EffectCube, Pagination]}
-        className="w-full rounded-xl min-[482px]:max-w-[412px]"
-      >
-        {ourServicesData.map((service) => (
-          <SwiperSlide key={service.id}>
-            <SwiperCard {...service} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <>
+      <div className="flex w-[95%] h-[550px] mx-auto mt-10 min-[600px]:hidden">
+        <Swiper
+          effect={"cube"}
+          grabCursor={true}
+          cubeEffect={{
+            shadow: false,
+            slideShadows: true,
+          }}
+          pagination={true}
+          modules={[EffectCube, Pagination]}
+          className="w-full rounded-xl min-[482px]:max-w-[412px]"
+        >
+          {ourServicesData.map((service) => (
+            <SwiperSlide key={service.id}>
+              <SwiperCard {...service} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      <div className="hidden w-[95%] mx-auto mt-10 min-[600px]:flex">
+        <OurServicesAutoPlay ourServicesData={ourServicesData} />
+      </div>
+    </>
   );
 }

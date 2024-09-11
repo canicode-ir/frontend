@@ -23,8 +23,9 @@ function SwiperCard({ id, avatar, title, description, url, buttonText, icon }) {
       return null;
     }
   };
+
   return (
-    <div className="flex flex-col h-[510px] rounded-xl shadow-normal min-[482px]:max-w-[412px]">
+    <div className="flex flex-col h-[510px] rounded-xl shadow-normal min-[482px]:max-w-[412px] min-[600px]:ml-10">
       <Image
         className="w-full aspect-[2/1.3] rounded-t-xl"
         src={`${imageUrl}${avatar}`}
