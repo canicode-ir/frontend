@@ -131,7 +131,8 @@ function HomePage() {
         </div>
       </Container>
       <Image
-        className="hidden absolute w-40 right-20 -bottom-20 min-[872px]:block"
+        className="hidden absolute w-[200px] right-[300px] -bottom-40 min-[872px]:block
+        min-[940px]:w-[240px] lg:w-[280px]"
         src={arrow}
         width={600}
         height={600}

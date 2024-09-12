@@ -10,7 +10,7 @@ function OurServices() {
   return (
     <div
       className="relative w-full flex flex-col justify-between items-center 
-  mt-20 ml-auto px-6 lg:p-0 min-[872px]:mt-40"
+  mt-20 ml-auto px-6 lg:p-0"
     >
       <div className="flex w-fit ml-auto justify-center items-center">
         <ViewStreamIcon
