@@ -272,7 +272,7 @@ function Footer() {
           </Container>
         ))}
       </Box>
-      <div className="flex flex-col w-full justify-center items-center mt-10 lg:flex-row">
+      <div className="flex flex-col w-full justify-center items-center mt-20 lg:flex-row">
         <h5 className="w-fit mx-auto font-regular text-sm text-detail text-center lg:mr-0">
           ساخته شده با 💜 توسط تیم توسعه دهنده canicode &copy; | از 2023
         </h5>
