@@ -76,8 +76,10 @@ export default function ButtonAppBar({ token, userRole }) {
   const scrollToContact = () => {
     setIsOpen(false);
     const contactZone = document.getElementById("contact-us");
+    const goToTopDiv = document.getElementById("goTotop");
     if (contactZone) {
       contactZone.scrollIntoView({ behavior: "smooth" });
+      goToTopDiv.style.display = "block";
     }
   };
 
@@ -87,6 +89,14 @@ export default function ButtonAppBar({ token, userRole }) {
     const goToTopDiv = document.getElementById("goTotop");
     if (goToTopDiv && isOpen) goToTopDiv.style.display = "block";
     if (!isOpen) goToTopDiv.style.display = "none";
+  };
+
+  const hambergurLiClickHandler = () => {
+    setIsOpen(false);
+    const goToTopDiv = document.getElementById("goTotop");
+    if (goToTopDiv) {
+      goToTopDiv.style.display = "block";
+    }
   };
 
   //connecting RTK
@@ -210,7 +220,7 @@ export default function ButtonAppBar({ token, userRole }) {
               item.url !== "/contact" ? (
                 <Link
                   className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
-                  onClick={() => setIsOpen(false)}
+                  onClick={hambergurLiClickHandler}
                   key={item.title}
                   href={`${item.url}`}
                 >

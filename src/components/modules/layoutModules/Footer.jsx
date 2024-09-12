@@ -272,20 +272,15 @@ function Footer() {
           </Container>
         ))}
       </Box>
-      <Typography
-        sx={{
-          width: "fit-content",
-          m: "40px auto 0",
-          color: "#525252",
-          fontWeight: "bold",
-          fontSize: "12px",
-          textAlign: "center",
-        }}
-        variant="h6"
-        component="h6"
-      >
-        ساخته شده با 💜 توسط تیم توسعه دهنده canicode &copy; | از 2023
-      </Typography>
+      <div className="flex flex-col w-full justify-center items-center mt-10 lg:flex-row">
+        <h5 className="w-fit mx-auto font-regular text-sm text-detail text-center lg:mr-0">
+          ساخته شده با 💜 توسط تیم توسعه دهنده canicode &copy; | از 2023
+        </h5>
+        <h4 className="font-demibold text-sm text-center text-detail mt-3 lg:my-0">
+          تمامی حقوق مادی و معنوی این وبسایت متعلق به شرکت پاکان ایده پردازان
+          پارت می باشد &copy;
+        </h4>
+      </div>
     </Container>
   );
 }

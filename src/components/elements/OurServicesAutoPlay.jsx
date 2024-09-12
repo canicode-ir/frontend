@@ -50,13 +50,12 @@ function OurServicesAutoPlay({ ourServicesData }) {
       }}
       pagination={true}
       modules={[EffectCoverflow, Pagination]}
-      className="py-10"
     >
       {ourServicesData.map((service) => (
         <SwiperSlide
           key={service.id}
           className="flex flex-col w-[300px] justify-center items-center shadow-normal 
-          rounded-lg bg-center bg-cover"
+          rounded-lg"
         >
           <Image
             className="w-full aspect-video rounded-t-lg"

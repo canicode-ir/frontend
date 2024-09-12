@@ -68,7 +68,7 @@ export default function OurServicesSwiper() {
 
   return (
     <>
-      <div className="flex w-[95%] h-[550px] mx-auto mt-10 min-[600px]:hidden">
+      <div className="flex w-[95%] h-[550px] mx-auto min-[600px]:hidden">
         <Swiper
           effect={"cube"}
           grabCursor={true}
