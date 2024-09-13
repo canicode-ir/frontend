@@ -1,11 +1,10 @@
 //Components
 import PaymentStatus from "../../components/templates/paymentStatus/PaymentStatus";
 
-function page({ searchParams }) {
-  console.log(searchParams);
+function page({ params, searchParams }) {
   return (
     <div>
-      <PaymentStatus />
+      <PaymentStatus params={params} searchParams={searchParams} />
     </div>
   );
 }

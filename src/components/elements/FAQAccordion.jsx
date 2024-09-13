@@ -6,10 +6,11 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Link from "next/link";
-import Image from "next/image";
+import PropTypes from "prop-types"; // Import PropTypes
 
 function FAQAccordion({ data }) {
   const [open, setOpen] = React.useState(false);
+
   return (
     <Accordion
       sx={{
@@ -29,18 +30,19 @@ function FAQAccordion({ data }) {
           height: "50px",
           padding: 0,
           margin: 0,
-          justifyContent: "between",
+          justifyContent: "space-between", // Fixed here
           alignItems: "center",
         }}
       >
         <div
-          className="w-[4px] h-[40px] bg-indigo200 ml-2 mr-1 rounded-tl-2xl rounded-bl-2xl 
-          open:bg-indigo500 open:ring-2 ring-indigo100 transition-all duration-500"
-          open={open}
+          className={`w-[4px] h-[40px] bg-indigo200 ml-2 mr-1 rounded-tl-2xl rounded-bl-2xl 
+          ${
+            open ? "bg-indigo500 ring-2 ring-indigo100" : ""
+          } transition-all duration-500`}
         ></div>
-        <p className="flex items-center justify-center font-extrabold text-[13px] text-title min-[500px]:text-[15px]">
+        <h3 className="flex items-center justify-center font-extrabold text-[13px] text-title min-[500px]:text-[15px]">
           {data.question}
-        </p>
+        </h3>
       </AccordionSummary>
       <AccordionDetails>
         <p className="text-justify font-regular text-detail text-sm">
@@ -76,4 +78,21 @@ function FAQAccordion({ data }) {
     </Accordion>
   );
 }
+
+FAQAccordion.propTypes = {
+  data: PropTypes.shape({
+    question: PropTypes.string.isRequired,
+    answer: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    spotPlayerLinks: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+        img: PropTypes.node.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+};
+
 export default FAQAccordion;
