@@ -1,13 +1,23 @@
-"use client";
+//Components
+import UnverifiedPayment from "../../modules/payment/UnverifiedPayment";
+import VerifiedPayment from "../../modules/payment/VerifiedPayment";
 
 function PaymentStatus({ searchParams, userProfile }) {
   const { amount, status } = searchParams;
   const transactionNumber = searchParams.in;
-  console.log(userProfile);
+  const transactionData = userProfile && {
+    amount,
+    transactionNumber,
+    userProfile,
+  };
 
   return (
-    <div>
-      <h1>پرداخت با موفقیت انجام شده است</h1>
+    <div className="flex flex-col justify-between items-center px-4 lg:px-0">
+      {amount && status === "true" && transactionNumber ? (
+        <VerifiedPayment data={transactionData} />
+      ) : (
+        <UnverifiedPayment />
+      )}
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import axios from "axios";
 import { BASE_URL } from "../../services/api";
+import { Suspense } from "react";
 
 //Components
 import PaymentStatus from "../../components/templates/paymentStatus/PaymentStatus";
+import Loading from "../../components/elements/Loading";
 
 async function getUserProfile() {
   const cookieStore = cookies();
@@ -41,11 +42,9 @@ async function page({ searchParams }) {
 
   return (
     <div>
-      <PaymentStatus
-        authToken={authToken}
-        searchParams={searchParams}
-        userProfile={userProfile}
-      />
+      <Suspense fallback={<Loading />}>
+        <PaymentStatus searchParams={searchParams} userProfile={userProfile} />
+      </Suspense>
     </div>
   );
 }
