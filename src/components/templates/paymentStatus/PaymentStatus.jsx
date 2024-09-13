@@ -1,3 +1,5 @@
+"use client";
+
 function PaymentStatus({ params, searchParams }) {
   console.log(params, searchParams);
 
