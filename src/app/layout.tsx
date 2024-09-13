@@ -5,9 +5,6 @@ import Layout from "@/components/layout/Layout";
 import GoToTopDiv from '../components/elements/GoTotopDiv'
 import Providers from '../../redux/Providers'
 
-//Providers
-// import Providers from '../../redux/Providers'
-
 export const metadata: Metadata = {
   title: 'آکادمی برنامه نویسی کَن آی کُد',
   description: "اولین ارائه دهنده متد آموزش معکوس در حوزه برنامه نویسی وب",
