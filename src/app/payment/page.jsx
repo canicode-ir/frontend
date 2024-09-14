@@ -37,13 +37,18 @@ async function page({ searchParams }) {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
   const userProfile = authToken && (await getUserProfile());
+  const URLHasSearchParams = Object.keys(searchParams).length;
 
   if (!authToken) redirect("/userAuthentication");
 
   return (
     <div>
       <Suspense fallback={<Loading />}>
-        <PaymentStatus searchParams={searchParams} userProfile={userProfile} />
+        <PaymentStatus
+          searchParams={searchParams}
+          userProfile={userProfile}
+          URLHasSearchParams={URLHasSearchParams}
+        />
       </Suspense>
     </div>
   );

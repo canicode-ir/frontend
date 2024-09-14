@@ -3,7 +3,7 @@ import UnverifiedPayment from "../../modules/payment/UnverifiedPayment";
 import VerifiedPayment from "../../modules/payment/VerifiedPayment";
 import ToastContainerComponent from "../../elements/ToastContainer";
 
-function PaymentStatus({ searchParams, userProfile }) {
+function PaymentStatus({ searchParams, userProfile, URLHasSearchParams }) {
   const { amount, status } = searchParams;
   const transactionNumber = searchParams.in;
   const transactionData = userProfile && {
@@ -17,7 +17,11 @@ function PaymentStatus({ searchParams, userProfile }) {
       {amount && status === "true" && transactionNumber ? (
         <VerifiedPayment data={transactionData} />
       ) : (
-        <UnverifiedPayment />
+        <UnverifiedPayment
+          URLHasSearchParams={URLHasSearchParams}
+          searchParams={searchParams}
+          data={transactionData}
+        />
       )}
       <ToastContainerComponent />
     </div>
