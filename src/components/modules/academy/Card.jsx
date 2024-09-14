@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../../../services/api";
@@ -27,8 +27,10 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 
-function Card({ course }) {
+function Card({ course, coursesParticipatedIds }) {
+  const [isBoughtCourse, setIsBoughtCourse] = useState(false);
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -266,7 +268,7 @@ function Card({ course }) {
               <DeleteIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
               <span>حذف از سبد خرید</span>
             </button>
-          ) : (
+          ) : !isBoughtCourse ? (
             <button
               className="w-fit flex justify-center items-center bg-indigo600 font-bold 
           text-white text-[13px] p-2 rounded-md duration-500 hover:opacity-70"
@@ -274,6 +276,15 @@ function Card({ course }) {
             >
               <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
               ثبت نام
+            </button>
+          ) : (
+            <button
+              className="w-fit flex justify-center items-center bg-white font-bold ring-1 ring-indigo500
+          text-indigo700 text-[14px] p-2 rounded-md duration-500 hover:opacity-70"
+              onClick={() => router.push("/client-dashboard")}
+            >
+              <SmartDisplayIcon fontSize="small" sx={{ ml: 0.3 }} />
+              مشاهده دوره
             </button>
           )}
           <button

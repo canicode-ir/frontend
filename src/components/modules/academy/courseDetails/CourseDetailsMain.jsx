@@ -34,6 +34,7 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 
 //Functions
 import { addCommas } from "../../../../helpers/functions";
@@ -53,10 +54,12 @@ function CourseDetailsMain({
   name,
   level,
   _id,
+  coursesParticipated,
 }) {
   const [showCourseDescription, setShowCourseDescription] = useState(true);
   const [showCourseTitles, setShowCourseTitles] = useState(false);
   const [showCourseFAQ, setShowCourseFAQ] = useState(false);
+  const [isBoughtCourse, setIsBoughtCourse] = useState(false);
   const showSections = {
     setShowCourseDescription,
     setShowCourseTitles,
@@ -185,9 +188,13 @@ function CourseDetailsMain({
     }
   };
 
+  const coursesParticipatedIds =
+    authToken && coursesParticipated.map((course) => course._id);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserCart());
+    if (authToken) setIsBoughtCourse(coursesParticipatedIds.includes(_id));
   }, []);
 
   return (
@@ -297,13 +304,24 @@ function CourseDetailsMain({
               </>
             ) : (
               <>
-                <button
-                  className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+                {!isBoughtCourse ? (
+                  <button
+                    className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
              hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
-                  onClick={addCourseToCart}
-                >
-                  ثبت نام در دوره
-                </button>
+                    onClick={addCourseToCart}
+                  >
+                    ثبت نام در دوره
+                  </button>
+                ) : (
+                  <button
+                    className="w-fit flex justify-center items-center bg-white font-bold ring-1 ring-indigo500
+          text-indigo700 text-[14px] p-2 rounded-md duration-500 hover:opacity-70"
+                    onClick={() => router.push("/client-dashboard")}
+                  >
+                    <SmartDisplayIcon fontSize="small" sx={{ ml: 0.3 }} />
+                    مشاهده دوره
+                  </button>
+                )}
                 <div className="flex justify-center items-center">
                   <p className="font-black ml-1 text-slate800 text-lg">
                     {addCommas(priceAfterDiscount)}

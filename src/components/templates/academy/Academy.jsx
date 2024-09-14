@@ -11,7 +11,7 @@ import CourseFilter from "../../modules/academy/CourseFilter";
 //Images & Icons
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 
-const Academy = ({ courses }) => {
+const Academy = ({ courses, coursesParticipated, authToken }) => {
   const [isAllCourses, setIsAllCourses] = useState(true);
   const [isJuniorCourses, setIsJuniorCourses] = useState(false);
   const [isMidLevelCourses, setIsMidLevelCourses] = useState(false);
@@ -23,6 +23,11 @@ const Academy = ({ courses }) => {
   const [seniorCourses, setSeniorCourses] = useState([]);
   const [bootcampCourses, setIsBootcampCourses] = useState([]);
   const pathName = usePathname();
+
+  const coursesParticipatedIds =
+    authToken &&
+    coursesParticipated &&
+    coursesParticipated.map((course) => course._id);
 
   const showCourses = {
     setIsAllCourses,
@@ -75,23 +80,50 @@ const Academy = ({ courses }) => {
         lg:p-0 min-[1000px]:mt-10"
       >
         {isAllCourses
-          ? courses.map((course) => <Card key={course._id} course={course} />)
+          ? courses.map((course) => (
+              <Card
+                key={course._id}
+                course={course}
+                coursesParticipatedIds={coursesParticipatedIds}
+                authToken={authToken}
+              />
+            ))
           : isJuniorCourses && juniorCourses.length > 0
           ? juniorCourses.map((course) => (
-              <Card key={course._id} course={course} />
+              <Card
+                key={course._id}
+                course={course}
+                coursesParticipatedIds={coursesParticipatedIds}
+                authToken={authToken}
+              />
             ))
           : isMidLevelCourses && midLevelCourses.length > 0
           ? midLevelCourses.map((course) => (
-              <Card key={course._id} course={course} />
+              <Card
+                key={course._id}
+                course={course}
+                coursesParticipatedIds={coursesParticipatedIds}
+                authToken={authToken}
+              />
             ))
           : isSeniorcourses && seniorCourses.length > 0
           ? seniorCourses.map((course) => (
-              <Card key={course._id} course={course} />
+              <Card
+                key={course._id}
+                course={course}
+                coursesParticipatedIds={coursesParticipatedIds}
+                authToken={authToken}
+              />
             ))
           : isBootcamp &&
             bootcampCourses.length > 0 &&
             bootcampCourses.map((course) => (
-              <Card key={course._id} course={course} />
+              <Card
+                key={course._id}
+                course={course}
+                coursesParticipatedIds={coursesParticipatedIds}
+                authToken={authToken}
+              />
             ))}
         <ToastContainerComponent />
       </div>
