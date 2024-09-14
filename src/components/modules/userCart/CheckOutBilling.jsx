@@ -104,6 +104,30 @@ function CheckOutBilling({ orders, totalPrice, token }) {
     }
   };
 
+  const deleteCart = async (e) => {
+    e.preventDefault();
+    if (token) {
+      try {
+        await axios.delete(
+          `${BASE_URL}cart/courses`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+          {}
+        );
+        dispatch(fetchUserCart());
+        notify("سبد خرید به صورت کامل پاک شد", "success");
+        setTimeout(() => {
+          router.replace("/");
+        }, 3000);
+      } catch (error) {
+        notify("خطایی در سیستم رخ داده است، لطفاً مجدد امتحان کنید", "error");
+      }
+    }
+  };
+
   return (
     <main
       className="flex flex-col w-full justify-between items-center mt-7 p-4
@@ -191,6 +215,7 @@ function CheckOutBilling({ orders, totalPrice, token }) {
               p: 0.8,
               "&:hover": { border: "none", bgcolor: "#f87171", color: "white" },
             }}
+            onClick={deleteCart}
           >
             <ClearIcon fontSize="small" />
           </IconButton>

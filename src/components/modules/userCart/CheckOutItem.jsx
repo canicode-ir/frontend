@@ -58,7 +58,7 @@ function CheckOutItem({
         <Image
           className={`${
             name === "bootcamp"
-              ? "w-[30%] aspect-video rounded-lg shadow-normal"
+              ? "w-full aspect-video rounded-lg shadow-normal"
               : "w-[40px] p-1"
           } aspect-square`}
           src={`${imageUrl}${image}`}
@@ -88,13 +88,37 @@ function CheckOutItem({
             ? "سطح مقدماتی"
             : level === "mid-level"
             ? "سطح میدلول"
-            : level === "advanced-level"
-            ? "سطح ارشد"
-            : "بوت کمپ فرانت"}
+            : "سطح ارشد"}
         </span>
         <h5 className="font-demibold text-sm text-detail min-[390px]:text-[15px]">
           {addCommas(price)} تومان
         </h5>
+      </div>
+      <div
+        className={`${
+          name === "bootcamp" ? "flex" : "hidden"
+        } flex-col w-full justify-center items-center`}
+      >
+        <p
+          className="block w-full mr-1 ml-auto text-center font-bold text-sm 
+        mt-4 text-title min-[350px]:text-md min-[400px]:text-lg"
+        >
+          {title}
+        </p>
+        <div
+          className={`${
+            name === "bootcamp"
+              ? "flex w-full justify-between items-center mt-4"
+              : "hidden"
+          }`}
+        >
+          <span className="bg-indigo50 text-indigo500 text-[11px] p-1 rounded-sm min-[390px]:text-[14px]">
+            بوت کمپ فرانت اند
+          </span>
+          <h5 className="font-demibold text-sm text-detail min-[390px]:text-[15px]">
+            {addCommas(price)} تومان
+          </h5>
+        </div>
       </div>
       <div
         className={`w-full h-[1px] opacity-40 mt-4 rounded-full bg-slate300`}
