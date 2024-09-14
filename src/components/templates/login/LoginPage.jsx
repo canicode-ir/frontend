@@ -3,11 +3,10 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 //Components
 import { FieldLevelValidationExample } from "../../modules/userAuthentication/LoginForm";
+import ToastContainerComponent from "../../elements/ToastContainer";
 
 //Images & Icons
 import logo from "../../../../public/logo/transparentLogo.svg";
@@ -41,23 +40,7 @@ export default function LoginPage() {
       <Box sx={style}>
         <FieldLevelValidationExample />
       </Box>
-      <ToastContainer
-        style={{
-          width: "fit-content",
-          margin: "80px 0 0 auto",
-          boxShadow: "none",
-        }}
-        closeButton={false}
-        autoClose={2000}
-        bodyStyle={{
-          width: "fit-content",
-          color: "",
-          fontFamily: "dana",
-        }}
-        progressStyle={{
-          backgroundColor: "rgba(26, 103, 103, 0.2)",
-        }}
-      />
+      <ToastContainerComponent />
     </div>
   );
 }

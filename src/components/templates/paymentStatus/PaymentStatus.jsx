@@ -1,6 +1,7 @@
 //Components
 import UnverifiedPayment from "../../modules/payment/UnverifiedPayment";
 import VerifiedPayment from "../../modules/payment/VerifiedPayment";
+import ToastContainerComponent from "../../elements/ToastContainer";
 
 function PaymentStatus({ searchParams, userProfile }) {
   const { amount, status } = searchParams;
@@ -12,12 +13,13 @@ function PaymentStatus({ searchParams, userProfile }) {
   };
 
   return (
-    <div className="flex flex-col justify-between items-center px-4 lg:px-0">
+    <div className="relative flex flex-col justify-between items-center px-4 lg:px-0">
       {amount && status === "true" && transactionNumber ? (
         <VerifiedPayment data={transactionData} />
       ) : (
         <UnverifiedPayment />
       )}
+      <ToastContainerComponent />
     </div>
   );
 }

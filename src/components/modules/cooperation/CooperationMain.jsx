@@ -1,7 +1,6 @@
 //Components
 import CooperationForm from "./CooperationForm";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import ToastContainerComponent from "../../elements/ToastContainer";
 
 //Images & Icons
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
@@ -27,24 +26,7 @@ function CooperationMain() {
         </p>
       </div>
       <CooperationForm />
-      <ToastContainer
-        style={{
-          width: "fit-content",
-          margin: "80px 0 0 auto",
-          boxShadow: "none",
-        }}
-        closeButton={false}
-        autoClose={5000}
-        bodyStyle={{
-          width: "fit-content",
-          color: "",
-          fontFamily: "dana",
-          margin: "0 auto",
-        }}
-        progressStyle={{
-          backgroundColor: "rgba(26, 103, 103, 0.2)",
-        }}
-      />
+      <ToastContainerComponent />
     </>
   );
 }
