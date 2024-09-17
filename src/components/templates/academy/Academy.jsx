@@ -24,11 +24,6 @@ const Academy = ({ courses, coursesParticipated, authToken }) => {
   const [bootcampCourses, setIsBootcampCourses] = useState([]);
   const pathName = usePathname();
 
-  const coursesParticipatedIds =
-    authToken &&
-    coursesParticipated &&
-    coursesParticipated.map((course) => course._id);
-
   const showCourses = {
     setIsAllCourses,
     setIsJuniorCourses,
@@ -49,6 +44,12 @@ const Academy = ({ courses, coursesParticipated, authToken }) => {
     const bootcamps = courses.filter((course) => course.level === "bootcamp");
     setIsBootcampCourses(bootcamps);
   }, []);
+
+  const coursesParticipatedIds =
+    authToken &&
+    coursesParticipated &&
+    coursesParticipated.length &&
+    coursesParticipated.map((course) => course._id);
 
   return (
     <>

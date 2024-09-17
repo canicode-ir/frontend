@@ -58,7 +58,7 @@ export default async function Home() {
       <OurServices />
       <WebsiteSamples courses={courses}/>
       <RoadMap />
-      <Academy courses={courses} coursesParticipated={coursesParticipated}/>
+      <Academy authToken={authToken} courses={courses} coursesParticipated={coursesParticipated}/>
     </main>
   );
 }

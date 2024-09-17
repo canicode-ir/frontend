@@ -133,6 +133,14 @@ function Card({ course, coursesParticipatedIds }) {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserCart());
+    const id = course._id;
+    if (
+      coursesParticipatedIds &&
+      coursesParticipatedIds.length &&
+      coursesParticipatedIds.includes(id)
+    ) {
+      setIsBoughtCourse(true);
+    } else setIsBoughtCourse(false);
   }, []);
 
   return (
