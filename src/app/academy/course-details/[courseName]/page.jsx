@@ -57,6 +57,7 @@ async function page({ searchParams }) {
     <div>
       {coursesIds.includes(searchParams.cId) ? (
         <CourseDetails
+          allCourses={courses}
           course={courseData}
           coursesParticipated={coursesParticipated}
         />

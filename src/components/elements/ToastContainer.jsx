@@ -18,6 +18,7 @@ function ToastContainerComponent() {
       bodyStyle={{
         width: "fit-content",
         fontFamily: "dana",
+        direction: "rtl",
       }}
       progressStyle={{
         backgroundColor: "rgba(26, 103, 103, 0.2)",

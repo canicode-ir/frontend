@@ -1,41 +1,37 @@
-"use client";
-
 import axios from "axios";
 import { BASE_URL } from "../../services/api";
 import Cookies from "js-cookie";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 function page() {
-  const logOutHandler = async (e) => {
-    e.preventDefault();
-    const token = Cookies.get("token");
-    try {
-      await axios.put(
-        `${BASE_URL}user/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
-      Cookies.remove("token");
-      window.location.href = "/";
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+  const cookieStore = cookies();
+  const authToken = cookieStore.get("token")?.value;
+  if (!authToken) redirect("/userAuthentication");
 
-  return (
-    <div>
-      <button
-        className="w-fit p-2 bg-red400 font-bold text-sm text-white rounded-sm"
-        onClick={logOutHandler}
-      >
-        خروج از حساب کاربری
-      </button>
-    </div>
-  );
+  // const logOutHandler = async (e) => {
+  //   e.preventDefault();
+  //   const cookieStore = cookies();
+  //   const token = cookieStore.get("token")?.value;
+  //   try {
+  //     await axios.put(
+  //       `${BASE_URL}user/logout`,
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     Cookies.remove("token");
+  //     window.location.href = "/";
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
+
+  return <div></div>;
 }
 
 export default page;

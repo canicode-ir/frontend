@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -36,6 +36,8 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import buttonLoading from "../../../../../public/general/buttonLoading.gif";
+import AdjustIcon from "@mui/icons-material/Adjust";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 //Functions
 import { addCommas } from "../../../../helpers/functions";
@@ -56,8 +58,12 @@ function CourseDetailsMain({
   level,
   _id,
   coursesParticipated,
+  allCourses,
 }) {
   const [showCourseDescription, setShowCourseDescription] = useState(true);
+  const [requiredCourse, setRequiredCourse] = useState({});
+  const searchParams = useSearchParams();
+
   const [showCourseTitles, setShowCourseTitles] = useState(false);
   const [showCourseFAQ, setShowCourseFAQ] = useState(false);
   const [isBoughtCourse, setIsBoughtCourse] = useState(false);
@@ -83,7 +89,7 @@ function CourseDetailsMain({
 
   const [expandMore, setExpandMore] = useState(false);
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
-  const studentsCount = 34;
+  const studentsCount = salesCount + 13;
   const titlesCount = headlines.length;
   const episodesArrayCount = headlines.map((item) => item.episode.length);
   const totalEpisodesCount = episodesArrayCount.reduce(
@@ -200,6 +206,16 @@ function CourseDetailsMain({
     }
   };
 
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const coursesParticipatedIds =
     authToken && coursesParticipated.map((course) => course._id);
 
@@ -207,6 +223,22 @@ function CourseDetailsMain({
     window.scrollTo(0, 0);
     dispatch(fetchUserCart());
     if (authToken) setIsBoughtCourse(coursesParticipatedIds.includes(_id));
+    const requiredCourseObj = allCourses.find((course) =>
+      name === "htmlcss" && name === "bootcamp"
+        ? null
+        : name === "javascript"
+        ? course.name === "htmlcss"
+        : name === "reactjs"
+        ? course.name === "javascript"
+        : name === "nextjs"
+        ? course.name === "reactjs"
+        : name === "tailwindcss"
+        ? course.name === "reactjs"
+        : name === "materialUi"
+        ? course.name === "reactjs"
+        : course.name === "javascript"
+    );
+    setRequiredCourse(requiredCourseObj);
   }, []);
 
   return (
@@ -241,7 +273,8 @@ function CourseDetailsMain({
         />
         <div
           id="course-mainDetails"
-          className="flex flex-col justify-center items-center mt-5 px-4 min-[900px]:mt-0 min-[900px]:p-0"
+          className="flex flex-col justify-center items-center mt-5 px-4 min-[900px]:mt-0
+           min-[900px]:p-0 min-[900px]:mb-auto"
         >
           <h2
             className="font-fat w-full text-center text-title text-md min-[320px]:text-lg min-[600px]:text-2xl 
@@ -249,8 +282,8 @@ function CourseDetailsMain({
           >
             {title}
           </h2>
-          <div className="relative flex w-full mt-3 text-justify justify-center items-center text-detail text-sm min-[320px]:text-md">
-            <p className="px-2 font-regular min-[600px]:text-lg min-[900px]:text-md">
+          <div className="relative flex w-full mt-3 text-justify justify-center items-center">
+            <p className="px-2 font-demibold text-detail text-sm leading-6 min-[900px]:text-[15px]">
               {expandMore ? description : description.substring(0, 175)}
             </p>
             {!expandMore && (
@@ -261,7 +294,7 @@ function CourseDetailsMain({
             <div className="w-[35%] h-[1px] bg-gray200 ml-auto"></div>
             <div
               className="absolute flex w-[50px] h-[50px] rounded-full bg-white shadow-normal cursor-pointer 
-            outline outline-offset-4 outline-2 outline-white justify-cente items-center"
+            outline outline-offset-4 outline-2 outline-white justify-center items-center"
               onClick={() => setExpandMore(!expandMore)}
             >
               {expandMore ? (
@@ -278,7 +311,56 @@ function CourseDetailsMain({
             </div>
             <div className="w-[35%] h-[1px] bg-gray200 mr-auto"></div>
           </div>
-          <div className="flex w-full justify-between items-center mt-10">
+          <div
+            className="flex w-full mt-10 mx-auto justify-between items-center
+             bg-indigo50 rounded-lg p-1"
+            id="course-level"
+          >
+            <span className="font-regular text-indigo800 text-sm p-1 bg-white rounded-md">
+              <AdjustIcon fontSize="small" sx={{ ml: 0.3 }} />
+              {level === "starter"
+                ? "سطح جونیور"
+                : level === "mid-level"
+                ? "سطح میدلول"
+                : level === "advanced-level"
+                ? "سطح سنیور"
+                : "بوت کمپ فرانت اند"}
+            </span>
+            <span
+              className="w-fit mr-auto bg-white font-regular text-sm 
+            text-indigo800 rounded-md p-1 cursor-pointer transition-all duration-500 hover:scale-[1.04]"
+              onClick={() =>
+                name !== "htmlcss" &&
+                name !== "bootcamp" &&
+                Object.keys(requiredCourse).length &&
+                router.push(
+                  `/academy/course-details/${requiredCourse.name}` +
+                    "?" +
+                    createQueryString("cId", `${requiredCourse._id}`)
+                )
+              }
+            >
+              <PlayArrowIcon fontSize="small" sx={{ ml: 0.3 }} />
+              {name === "htmlcss"
+                ? "این دوره پیش نیازی ندارد"
+                : name === "bootcamp"
+                ? "همه چی از صفر تا پیشرفته"
+                : `پیش نیاز: دوره ${
+                    name === "javascript"
+                      ? "HTML و CSS"
+                      : name === "reactjs"
+                      ? "جاوااسکریپت"
+                      : name === "nextjs"
+                      ? "ری اکت"
+                      : name === "tailwindcss"
+                      ? "ری اکت"
+                      : name === "materialUi"
+                      ? "ری اکت"
+                      : "جاوااسکریپت"
+                  }`}
+            </span>
+          </div>
+          <div className="flex w-full justify-between items-center mt-5">
             {!authToken ? (
               <>
                 <button
@@ -300,7 +382,7 @@ function CourseDetailsMain({
                 </button>
                 <div className="flex justify-center items-center">
                   <p className="font-black ml-1 text-slate800 text-lg">
-                    {addCommas(priceAfterDiscount)}
+                    {addCommas(price)}
                   </p>
                   <span className="text-slate500">تومان</span>
                 </div>
@@ -319,7 +401,7 @@ function CourseDetailsMain({
                 </button>
                 <div className="flex justify-center items-center">
                   <p className="font-black ml-1 text-slate800 text-lg">
-                    {addCommas(priceAfterDiscount)}
+                    {addCommas(price)}
                   </p>
                   <span className="text-slate500">تومان</span>
                 </div>
@@ -356,7 +438,7 @@ function CourseDetailsMain({
                 )}
                 <div className="flex justify-center items-center">
                   <p className="font-black ml-1 text-slate800 text-lg">
-                    {addCommas(priceAfterDiscount)}
+                    {addCommas(price)}
                   </p>
                   <span className="text-slate500">تومان</span>
                 </div>
