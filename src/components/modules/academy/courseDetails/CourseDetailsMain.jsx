@@ -35,6 +35,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
+import buttonLoading from "../../../../../public/general/buttonLoading.gif";
 
 //Functions
 import { addCommas } from "../../../../helpers/functions";
@@ -60,6 +61,7 @@ function CourseDetailsMain({
   const [showCourseTitles, setShowCourseTitles] = useState(false);
   const [showCourseFAQ, setShowCourseFAQ] = useState(false);
   const [isBoughtCourse, setIsBoughtCourse] = useState(false);
+  const [cardButtonIsLoading, setCardButtonIsLoading] = useState(false);
   const showSections = {
     setShowCourseDescription,
     setShowCourseTitles,
@@ -135,33 +137,43 @@ function CourseDetailsMain({
 
   const addCourseToCart = async (e) => {
     e.preventDefault();
+    setCardButtonIsLoading(true);
     const token = Cookies.get("token");
     const id = _id;
-    if (token) {
-      try {
-        await axios.post(
-          `${BASE_URL}cart/${id}`,
-          {
-            courseId: id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    setTimeout(async () => {
+      if (token) {
+        try {
+          await axios.post(
+            `${BASE_URL}cart/${id}`,
+            {
+              courseId: id,
             },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          dispatch(fetchUserCart());
+          setTimeout(() => {
+            setCardButtonIsLoading(false);
+          }, 500);
+          notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
+        } catch (error) {
+          if (error.response.status === 400) {
+            notify("دوره در سبد خرید موجود است", "error");
+          } else {
+            notify("لطفاً مجدد تلاش فرمایید", "error");
           }
-        );
-        dispatch(fetchUserCart());
-        notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
-      } catch (error) {
-        if (error.response.status === 400) {
-          notify("دوره در سبد خرید موجود است", "error");
-        } else {
-          notify("لطفاً مجدد تلاش فرمایید", "error");
         }
+      } else {
+        setCardButtonIsLoading(true);
+        router.push("/userAuthentication");
+        setTimeout(() => {
+          setCardButtonIsLoading(false);
+        }, 500);
       }
-    } else {
-      router.push("/userAuthentication");
-    }
+    }, 1000);
   };
 
   const deleteCourseFromCart = async (e) => {
@@ -270,11 +282,21 @@ function CourseDetailsMain({
             {!authToken ? (
               <>
                 <button
-                  className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+                  className="w-[120px] bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
              hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
                   onClick={addCourseToCart}
                 >
-                  ثبت نام در دوره
+                  {!cardButtonIsLoading ? (
+                    "ثبت نام در دوره"
+                  ) : (
+                    <Image
+                      className="w-5 mx-auto"
+                      src={buttonLoading}
+                      width={600}
+                      height={600}
+                      alt="loading"
+                    />
+                  )}
                 </button>
                 <div className="flex justify-center items-center">
                   <p className="font-black ml-1 text-slate800 text-lg">
@@ -306,11 +328,21 @@ function CourseDetailsMain({
               <>
                 {!isBoughtCourse ? (
                   <button
-                    className="bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
+                    className="w-[120px] bg-gradient-to-l from-blue700 to-blue500 px-1 py-2 rounded-lg font-extrabold text-white
              hover:bg-gradient-to-b hover:ring-4 ring-blue200 transition-all duration-500"
                     onClick={addCourseToCart}
                   >
-                    ثبت نام در دوره
+                    {!cardButtonIsLoading ? (
+                      "ثبت نام در دوره"
+                    ) : (
+                      <Image
+                        className="w-5 mx-auto"
+                        src={buttonLoading}
+                        width={600}
+                        height={600}
+                        alt="loading"
+                      />
+                    )}
                   </button>
                 ) : (
                   <button

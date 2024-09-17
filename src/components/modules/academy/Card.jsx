@@ -28,9 +28,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
+import SchoolIcon from "@mui/icons-material/School";
+import buttonLoading from "../../../../public/general/buttonLoading.gif";
 
 function Card({ course, coursesParticipatedIds }) {
   const [isBoughtCourse, setIsBoughtCourse] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [cardButtonIsLoading, setCardButtonIsLoading] = useState(false);
   const imageUrl = "https://canicode-app.storage.iran.liara.space/";
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -58,33 +62,43 @@ function Card({ course, coursesParticipatedIds }) {
 
   const addCourseToCart = async (e) => {
     e.preventDefault();
+    setCardButtonIsLoading(true);
     const token = Cookies.get("token");
     const id = course._id;
-    if (token) {
-      try {
-        await axios.post(
-          `${BASE_URL}cart/${id}`,
-          {
-            courseId: id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    setTimeout(async () => {
+      if (token) {
+        try {
+          await axios.post(
+            `${BASE_URL}cart/${id}`,
+            {
+              courseId: id,
             },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          dispatch(fetchUserCart());
+          setTimeout(() => {
+            setCardButtonIsLoading(false);
+          }, 500);
+          notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
+        } catch (error) {
+          if (error.response.status === 400) {
+            notify("دوره در سبد خرید موجود است", "error");
+          } else {
+            notify("لطفاً مجدد تلاش فرمایید", "error");
           }
-        );
-        dispatch(fetchUserCart());
-        notify("دوره با موفقیت به سبد خرید افزوده شد", "success");
-      } catch (error) {
-        if (error.response.status === 400) {
-          notify("دوره در سبد خرید موجود است", "error");
-        } else {
-          notify("لطفاً مجدد تلاش فرمایید", "error");
         }
+      } else {
+        setCardButtonIsLoading(true);
+        router.push("/userAuthentication");
+        setTimeout(() => {
+          setCardButtonIsLoading(false);
+        }, 500);
       }
-    } else {
-      router.push("/userAuthentication");
-    }
+    }, 1000);
   };
 
   const deleteCourseFromCart = async (e) => {
@@ -141,6 +155,9 @@ function Card({ course, coursesParticipatedIds }) {
     ) {
       setIsBoughtCourse(true);
     } else setIsBoughtCourse(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }, []);
 
   return (
@@ -224,7 +241,31 @@ function Card({ course, coursesParticipatedIds }) {
           ></div>
         </div>
         <Acordion {...course} />
-        <div className="flex w-full justify-between items-center mt-7 px-1 text-[13px]">
+        <div
+          className={`flex w-fit mt-4 ml-auto ${
+            isLoading ? "bg-indigo500" : "bg-indigo50"
+          } text-sm text-indigo800 p-1
+          rounded-md`}
+          id="sales-count"
+        >
+          <span className="flex font-regular justify-center items-center">
+            {!isLoading ? (
+              <>
+                <SchoolIcon fontSize="small" sx={{ ml: 0.3 }} />
+                {`${course.salesCount + 13} هنرجو در این دوره ثبت نام کرده اند`}
+              </>
+            ) : (
+              <Image
+                className="w-5"
+                src={buttonLoading}
+                width={600}
+                height={600}
+                alt="loading"
+              />
+            )}
+          </span>
+        </div>
+        <div className="flex w-full justify-between items-center mt-4 px-1 text-[13px]">
           <div className="flex items-center">
             <GraphicEqIcon fontSize="small" sx={{ m: "0 0 0 3px" }} />
             <span>مدت آموزش:</span>
@@ -258,12 +299,24 @@ function Card({ course, coursesParticipatedIds }) {
         >
           {!authToken ? (
             <button
-              className="w-fit flex justify-center items-center bg-indigo600 font-bold 
+              className="w-[90px] flex justify-center items-center bg-indigo600 font-bold 
           text-white text-[13px] p-2 rounded-md duration-500 hover:opacity-70"
               onClick={addCourseToCart}
             >
-              <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
-              ثبت نام
+              {!cardButtonIsLoading ? (
+                <>
+                  <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+                  ثبت نام
+                </>
+              ) : (
+                <Image
+                  className="w-5"
+                  src={buttonLoading}
+                  width={600}
+                  height={600}
+                  alt="loading"
+                />
+              )}
             </button>
           ) : cartItems.orders &&
             isInCartCoursesIds.length > 0 &&
@@ -278,12 +331,24 @@ function Card({ course, coursesParticipatedIds }) {
             </button>
           ) : !isBoughtCourse ? (
             <button
-              className="w-fit flex justify-center items-center bg-indigo600 font-bold 
+              className="w-[90px] flex justify-center items-center bg-indigo600 font-bold 
           text-white text-[13px] p-2 rounded-md duration-500 hover:opacity-70"
               onClick={addCourseToCart}
             >
-              <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
-              ثبت نام
+              {!cardButtonIsLoading ? (
+                <>
+                  <PlaylistAddIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+                  ثبت نام
+                </>
+              ) : (
+                <Image
+                  className="w-5"
+                  src={buttonLoading}
+                  width={600}
+                  height={600}
+                  alt="loading"
+                />
+              )}
             </button>
           ) : (
             <button
