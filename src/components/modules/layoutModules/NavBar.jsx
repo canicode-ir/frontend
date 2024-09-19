@@ -30,6 +30,8 @@ import TransitionsModal from "../../elements/Modal";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
+import FilterTiltShiftIcon from "@mui/icons-material/FilterTiltShift";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
@@ -40,36 +42,41 @@ export default function ButtonAppBar({ token, userRole }) {
   const pathName = usePathname();
 
   const navItems = [
-    { title: "homePage", name: "صفحه اصلی", url: "/", icon: <HomeIcon /> },
+    {
+      title: "homePage",
+      name: "صفحه اصلی",
+      url: "/",
+      icon: <HomeIcon fontSize="small" />,
+    },
     {
       title: "aboutus",
       name: "درباره ما",
       url: "/aboutus",
-      icon: <Diversity2Icon />,
+      icon: <Diversity2Icon fontSize="small" />,
     },
     {
       title: "academy",
       name: "دوره ها آموزشی",
       url: "/academy",
-      icon: <SchoolIcon />,
+      icon: <SchoolIcon fontSize="small" />,
     },
     {
       title: "projects",
       name: "فرم درخواست همکاری",
       url: "/cooperation",
-      icon: <WorkspacesIcon />,
+      icon: <WorkspacesIcon fontSize="small" />,
     },
     {
       title: "contactus",
       name: "تماس با ما",
       url: "/contact",
-      icon: <ContactSupportIcon />,
+      icon: <ContactSupportIcon fontSize="small" />,
     },
     // {
     //   title: "articles",
     //   name: "مقالات آموزشی",
     //   url: "/articles",
-    //   icon: <NewspaperIcon />,
+    //   icon: <NewspaperIcon fontSize="small" sx={{color: '#d6d3d1'}}/>,
     // },
   ];
 
@@ -96,6 +103,15 @@ export default function ButtonAppBar({ token, userRole }) {
     const goToTopDiv = document.getElementById("goTotop");
     if (goToTopDiv) {
       goToTopDiv.style.display = "block";
+    }
+  };
+
+  const goToUserDashboard = (token) => {
+    setIsOpen(false);
+    if (token) {
+      router.push("/client-dashboard");
+    } else {
+      router.push("/userAuthentication");
     }
   };
 
@@ -211,15 +227,16 @@ export default function ButtonAppBar({ token, userRole }) {
           </Toolbar>
         </AppBar>
         <Container
-          className="hidden open:absolute open:flex w-[240px] h-screen translate-x-full mr-0 justify-center bg-white overflow-y-auto
-        items-center duration-700 ease-in open:translate-x-0 open:border-l-[2px] border-gray300 min-[1000px]:hidden"
+          className="open:absolute open:flex flex-col w-[240px] h-0 open:h-dvh translate-x-full mr-0 justify-center
+          overflow-y-auto backdrop-filter backdrop-blur-lg bg-indigo500/10
+        transition-all duration-500 ease-in open:translate-x-0 open:border-l-[2px] border-gray300 min-[1000px]:hidden"
           open={isOpen}
         >
-          <ul className="flex flex-col w-fit justify-center items-center mx-auto mb-auto mt-5">
+          <ul className="flex flex-col w-fit h-fit justify-center items-center ml-auto mt-5">
             {navItems.map((item) =>
               item.url !== "/contact" ? (
                 <Link
-                  className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
+                  className="w-fit font-bold text-sm ml-auto text-white p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
                   onClick={hambergurLiClickHandler}
                   key={item.title}
                   href={`${item.url}`}
@@ -229,7 +246,7 @@ export default function ButtonAppBar({ token, userRole }) {
               ) : (
                 <li
                   key={item.title}
-                  className="w-fit font-extrabold text-gray600 p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
+                  className="w-fit font-bold text-sm ml-auto text-white p-1 rounded-min-[1000px] ml-auto my-3 hover:opacity-70"
                   onClick={scrollToContact}
                 >
                   {item.icon} {item.name}
@@ -237,6 +254,25 @@ export default function ButtonAppBar({ token, userRole }) {
               )
             )}
           </ul>
+          <div className="w-full h-[1px] bg-indigo50 mt-5"></div>
+          <section className="flex flex-col w-full mt-5" id="isUserLoggedIn">
+            <button
+              className="w-full backdrop-filter backdrop-blur-sm bg-indigo700/30 p-2 rounded-lg text-center 
+              text-white transition-all duration-500 hover:scale-[0.97] hover:opacity-70"
+              onClick={goToUserDashboard}
+            >
+              <PersonPinIcon fontSize="small" sx={{ ml: 0.3 }} />
+              {token ? "ورود به پنل کاربری" : "وارد پنل کاربری خود شوید"}
+            </button>
+          </section>
+          <h5 className="w-full mt-5 mb-auto font-regular text-center p-2 rounded-lg text-[14px] text-gray800 backdrop-filter backdrop-blur-sm bg-white/30">
+            <FilterTiltShiftIcon
+              className="animate-spin"
+              fontSize="small"
+              sx={{ ml: 0.3 }}
+            />
+            پشتیبان تلفنی: 09331651902
+          </h5>
         </Container>
       </Box>
       <TransitionsModal isOpen={isOpen} setIsOpen={setIsOpen} />

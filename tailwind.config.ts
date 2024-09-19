@@ -281,6 +281,7 @@ const config: Config = {
       inset: 'inset 0px 0px 4px 1px rgba(0, 0, 0, .152)',
       specific: '0 0 2px #155e75',
       specificOnFocus: '0 0 20px 4px #d1d5db',
+      lightGray: "5px 5px 5px 0px rgba(147,173,169,1)",
     },
   },
   plugins: [],
