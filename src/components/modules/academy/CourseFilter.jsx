@@ -14,8 +14,42 @@ export default function ScrollableTabsButtonAuto({
 }) {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const goToCourseFilter = (e) => {
+    e.preventDefault();
+    const academy = document.getElementById("academy");
+    if (academy) {
+      academy.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleChange = (e, newValue) => {
     setValue(newValue);
+
+    // Using setTimeout to delay scrolling
+    setTimeout(() => {
+      goToCourseFilter(e);
+    }, 0); // Adjust time as necessary (0 allows the state to update)
+
+    switch (newValue) {
+      case 0:
+        showAllCourses();
+        break;
+      case 1:
+        showBootcamps();
+        break;
+      case 2:
+        showJuniorCourses();
+        break;
+      case 3:
+        showMidLevelCourses();
+        break;
+      case 4:
+        showSeniorCourses();
+        break;
+      default:
+        null;
+        break;
+    }
   };
 
   const showAllCourses = () => {
@@ -59,27 +93,11 @@ export default function ScrollableTabsButtonAuto({
   };
 
   const tabs = [
-    { id: "allCourses", label: "همه دوره ها", handler: showAllCourses },
-    {
-      id: "bootcamp",
-      label: "بوت کمپ فرانت اند",
-      handler: showBootcamps,
-    },
-    {
-      id: "juniorCourses",
-      label: "دوره ها مقدماتی",
-      handler: showJuniorCourses,
-    },
-    {
-      id: "midLevelCourses",
-      label: "دوره ها میدلول",
-      handler: showMidLevelCourses,
-    },
-    {
-      id: "seniorCourses",
-      label: "دوره ها متخصص فرانت",
-      handler: showSeniorCourses,
-    },
+    { label: "همه دوره ها" },
+    { label: "بوت کمپ فرانت اند" },
+    { label: "دوره ها مقدماتی" },
+    { label: "دوره ها میدلول" },
+    { label: "دوره ها متخصص فرانت" },
   ];
 
   return (
@@ -110,11 +128,10 @@ export default function ScrollableTabsButtonAuto({
         aria-label="scrollable auto tabs example"
         TabScrollButtonProps={{ sx: { color: "#3730a3" } }}
       >
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <Tab
-            key={tab.id}
+            key={index}
             label={tab.label}
-            onClick={tab.handler}
             sx={{
               fontFamily: "dana",
               fontWeight: "110",

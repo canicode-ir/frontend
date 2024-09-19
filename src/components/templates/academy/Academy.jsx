@@ -54,6 +54,7 @@ const Academy = ({ courses, coursesParticipated, authToken }) => {
   return (
     <>
       <div
+        id="academy"
         className={`flex flex-col justify-between items-center ${
           pathName === "/academy" ? "mt-10" : "mt-20"
         } ml-auto px-6 lg:p-0`}
