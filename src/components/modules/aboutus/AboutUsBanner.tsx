@@ -15,7 +15,7 @@ function AboutUsBanner() {
               درباره کَن آی کُد:{" "}
             </h5>
           </div>
-          <p className='text-justify py-2 font-regular text-detail text-md mt-5 md:text-lg'>
+          <p className='text-justify py-2 px-2 font-regular text-detail text-md mt-5 md:text-lg'>
             <b className='text-transparent bg-gradient-to-l from-indigo800 to-indigo600 ml-1
             bg-clip-text font-demibold text-lg'>آکادمی کَن آی کُد</b>
             با هدف ایجاد بستری مطمئن، کارآمد و امن در حوزه آموزش برنامه نویسی وب در سال 1402 تاسیس شد. همچنین، این آکادمی در انجام پروژه های برون سپاری شده نیز فعالیت می کند.
@@ -31,7 +31,7 @@ function AboutUsBanner() {
               هدف کَن آی کُد:{" "}
             </h5>
           </div>
-          <p className='text-justify py-2 font-regular text-detail text-md mt-5 md:text-lg'>
+          <p className='text-justify py-2 px-2 font-regular text-detail text-md mt-5 md:text-lg'>
             هدف اصلی ما در این آکادمی، ارائه به روز ترین و کاربردی ترین دوره های آموزش برنامه نویسی به صورت آنلاین و کاملاً پروژه محور با توجه به نیاز بازار کار می باشد. 
           </p> 
       </div>
@@ -44,7 +44,7 @@ function AboutUsBanner() {
               مسوولیت کَن آی کُد: {" "}
             </h5>
           </div>
-          <p className='text-justify py-2 font-regular text-detail text-md mt-5 md:text-lg'>
+          <p className='text-justify py-2 px-2 font-regular text-detail text-md mt-5 md:text-lg'>
             امّا مسوولیت این آکادمی، در واقع همان ایده ایست که این استارتاپ را بوجود آورده است. با اینکه افراد متخصص هم می توانند از آموزش های سطح ارشد ما استفاده کنند؛ 
             اما هدف اصلی از ایجاد این آکادمی، جوان ها و نوجوانانی هستند که درصد زیادی از جامعه را در بر می گیرند، با توجه به میزان بیکاری در سطح جامعه، مسوولیت خود دانستیم تا استارتاپی را 
             بوجود بیاوریم که افراد بتوانند در این حوزه بسیار پرکاربرد آموزش اصولی و هدفمند دریافت کنند و همچنین از همین سنین درآمد خود را داشته باشند. 
@@ -59,7 +59,7 @@ function AboutUsBanner() {
               چشم انداز و نقشه راه کَن آی کُد:{" "}
             </h5>
           </div>
-          <p className='text-justify py-2 font-regular text-detail text-md mt-5 md:text-lg'>
+          <p className='text-justify py-2 px-2 font-regular text-detail text-md mt-5 md:text-lg'>
             تمام تلاش ما این است تا بتوانیم برای قشر جوان و نوجوان بستر درآمدی را بوجود بیاوریم تا سهم کوچکی از کاهش نرخ بیکاری در آینده کشور عزیزمان ایران داشته باشیم.
             پیش بینی ما برای سال آینده یعنی، سال 1404 اینست که حداقل 100 نفر فرد متخصص ارشد به این حوزه معرفی کنیم.
           </p> 

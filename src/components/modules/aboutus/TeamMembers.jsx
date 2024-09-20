@@ -16,7 +16,7 @@ function TeamMembers() {
             اعضاء استارتاپ کَن آی کُد:{" "}
           </h5>
         </div>
-        <p className="w-full text-justify py-2 font-regular text-detail text-md mt-5 md:text-lg">
+        <p className="w-full text-justify py-2 px-2 font-regular text-detail text-md mt-5 md:text-lg">
           در حال حاضر افراد زیر در آکادمی کَن آی کُد مشغول به فعالیت در بخش های
           مختلف اجرایی هستند.
         </p>
