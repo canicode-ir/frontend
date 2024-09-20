@@ -4,6 +4,9 @@ import Cookies from "js-cookie";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+//Components
+import ClientDashboard from "../../components/templates/client-dashboard/ClientDashboard";
+
 function page() {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
@@ -31,7 +34,11 @@ function page() {
   //   }
   // };
 
-  return <div></div>;
+  return (
+    <div>
+      <ClientDashboard />
+    </div>
+  );
 }
 
 export default page;

@@ -3,7 +3,6 @@ import Today from '../modules/layoutModules/Today'
 import Footer from "../modules/layoutModules/Footer";
 import { cookies } from 'next/headers';
 import { BASE_URL } from '../../services/api';
-import Cookies from "js-cookie";
 
 //Components
 import InstagramQR from '../elements/InstagramQR';

@@ -1,3 +1,7 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 //Icons
 import TodayIcon from "@mui/icons-material/Today";
 
@@ -25,17 +29,23 @@ function Today() {
   // Construct the desired format
   const formattedDate = `${weekday}، ${day} ${month} ${year}`;
 
+  const pathName = usePathname();
+
   return (
-    <div
-      className="flex w-full justify-between items-center p-3 bg-purple50 rounded-b-lg text-sm
+    <>
+      {pathName !== "/client-dashboard" && (
+        <div
+          className="flex w-full justify-between items-center p-3 bg-purple50 rounded-b-lg text-sm
     font-demibold text-indigo700"
-    >
-      <span>
-        <TodayIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
-        تاریخ امروز:{" "}
-      </span>
-      <span>{formattedDate}</span>
-    </div>
+        >
+          <span>
+            <TodayIcon fontSize="small" sx={{ m: "0 0 0 5px" }} />
+            تاریخ امروز:{" "}
+          </span>
+          <span>{formattedDate}</span>
+        </div>
+      )}
+    </>
   );
 }
 

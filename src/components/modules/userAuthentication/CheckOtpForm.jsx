@@ -57,6 +57,7 @@ export default function CheckOtpForm() {
       Cookies.set("token", token, { expires: 7 });
       window.location.href = "/client-dashboard";
     } catch (error) {
+      console.log(error.response.message);
       setLoading(false);
       if (error.response.status === 400) {
         notify("!کد ارسالی و یا شماره موبایل را اشتباه وارد کرده اید", "error");
