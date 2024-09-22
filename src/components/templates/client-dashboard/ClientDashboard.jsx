@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { styled, useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +20,6 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -38,6 +38,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import FeedIcon from "@mui/icons-material/Feed";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import HubIcon from "@mui/icons-material/Hub";
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 //Components
 import ToastContainerComponent from "../../elements/ToastContainer";
@@ -132,31 +137,84 @@ const Drawer = styled(MuiDrawer, {
 const navItems = [
   {
     title: "homePage",
-    name: "صفحه اصلی",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        صفحه اصلی
+      </span>
+    ),
     url: "/",
     icon: <HomeIcon fontSize="small" />,
   },
   {
     title: "aboutus",
-    name: "درباره ما",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        درباره ما
+      </span>
+    ),
     url: "/aboutus",
     icon: <Diversity2Icon fontSize="small" />,
   },
   {
     title: "academy",
-    name: "دوره ها آموزشی",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        دوره های آموزشی
+      </span>
+    ),
     url: "/academy",
     icon: <SchoolIcon fontSize="small" />,
   },
   {
     title: "articles",
-    name: "مقالات آموزشی (به زودی)",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        مقالات (به زودی ...)
+      </span>
+    ),
     url: "#",
     icon: <FeedIcon fontSize="small" />,
   },
 ];
 
-const dashboardNavItems = [{}];
+const dashboardNavItems = [
+  {
+    title: "dashboard-main-page",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        دفترکار
+      </span>
+    ),
+    icon: <HubIcon fontSize="small" />,
+  },
+  {
+    title: "participated-courses",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        دوره های خریداری شده
+      </span>
+    ),
+    icon: <OndemandVideoIcon fontSize="small" />,
+  },
+  {
+    title: "licences",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        لایسنس ها
+      </span>
+    ),
+    icon: <QrCodeScannerIcon fontSize="small" />,
+  },
+  {
+    title: "user-payments",
+    name: (
+      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
+        لیست پرداختی ها
+      </span>
+    ),
+    icon: <ReceiptLongIcon fontSize="small" />,
+  },
+];
 
 /////Today-Date
 const date = new Date();
@@ -339,69 +397,11 @@ export default function MiniDrawer({ userProfile, authToken }) {
           </DrawerHeader>
           <Divider />
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  sx={[
-                    {
-                      minHeight: 48,
-                      px: 2.5,
-                    },
-                    open
-                      ? {
-                          justifyContent: "initial",
-                        }
-                      : {
-                          justifyContent: "center",
-                        },
-                  ]}
-                >
-                  <ListItemIcon
-                    sx={[
-                      {
-                        minWidth: 0,
-                        justifyContent: "center",
-                      },
-                      open
-                        ? {
-                            mr: 1,
-                          }
-                        : {
-                            mr: "auto",
-                          },
-                    ]}
-                  >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={text}
-                    sx={[
-                      open
-                        ? {
-                            opacity: 1,
-                          }
-                        : {
-                            opacity: 0,
-                          },
-                    ]}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List
-            sx={{
-              display: "block",
-              "@media(min-width: 1300px)": { display: "none" },
-            }}
-          >
-            {navItems.map((item, index) => (
+            {dashboardNavItems.map((item, index) => (
               <ListItem
-                key={item.name}
+                key={item.title}
                 disablePadding
                 sx={{ display: "block" }}
-                onClick={() => (window.location.href = item.url)}
               >
                 <ListItemButton
                   sx={[
@@ -450,58 +450,140 @@ export default function MiniDrawer({ userProfile, authToken }) {
                 </ListItemButton>
               </ListItem>
             ))}
+          </List>
+          <Divider />
+          <List
+            sx={{
+              display: "block",
+              "@media(min-width: 1300px)": { display: "none" },
+            }}
+          >
+            {navItems.map((item, index) => (
+              <ListItem
+                key={item.title}
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={() => (window.location.href = item.url)}
+              >
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                    justifyContent: `${open ? "initial" : "center"}`,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: "center",
+                      mr: `${open ? "10px" : "auto"}`,
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.name}
+                    sx={{
+                      opacity: `${open ? 1 : 0}`,
+                      fontFamily: "dana",
+                      fontWeight: 120,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
             <ListItemButton
               sx={{
-                width: `${open ? "90%" : "100%"}`,
+                width: "100%",
                 m: "0 auto",
                 borderRadius: "8px",
-                color: "white",
+                color: "#f87171",
                 fontFamily: "dana",
                 fontWeight: "110",
-                bgcolor: `${open ? "#f87171" : ""}`,
-                "&:hover": { opacity: 0.8 },
-                transition: "all .3s ease",
               }}
               onClick={open ? logOutHandler : null}
             >
               <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 1,
-                      }
-                    : {
-                        mr: "auto",
-                      },
-                ]}
+                sx={{
+                  minWidth: 0,
+                  justifyContent: "center",
+                  mr: `${open ? "10px" : "auto"}`,
+                }}
               >
                 <PowerSettingsNewIcon
                   fontSize="small"
-                  sx={{ ml: 0.5, color: `${open ? "white" : "#f87171"}` }}
+                  sx={{ ml: 0.5, color: "#f87171" }}
                 />
               </ListItemIcon>
               <ListItemText
-                primary="خروج از پنل کاربری"
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
-                      }
-                    : {
-                        opacity: 0,
-                      },
-                ]}
+                primary=<span className="font-demibold text-sm text-red400">
+                  خروج از پنل کاربری
+                </span>
+                sx={{ opacity: `${open ? 1 : 0}` }}
               />
             </ListItemButton>
           </List>
+          <Divider className="block min-[1300px]:hidden" />
+          <List
+            sx={{
+              display: "block",
+            }}
+          >
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  px: 2.5,
+                  justifyContent: `${open ? "initial" : "center"}`,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    justifyContent: "center",
+                    mr: `${open ? "10px" : "auto"}`,
+                  }}
+                >
+                  <SupportAgentIcon
+                    fontSize="small"
+                    sx={{ color: "#0284c7" }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primary=<Link
+                    className="font-demibold text-sm text-sky600"
+                    href="https://t.me/websitesupport_724"
+                  >
+                    پشتیبان تلگرام
+                  </Link>
+                  sx={{
+                    opacity: `${open ? 1 : 0}`,
+                    fontFamily: "dana",
+                    fontWeight: 120,
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </List>
         </Drawer>
-        <div component="main" sx={{ flexGrow: 1 }}>
+        <div component="main" className="w-full">
           <DrawerHeader />
-          <div component="user-details"></div>
+          {!open && (
+            <div
+              id="user-details"
+              className="w-full flex bg-indigo50 justify-between items-center px-2 py-4 text-sm text-indigo800 rounded-b-lg"
+            >
+              <div className="flex w-fit items-center">
+                <h2 className="font-demibold text-[13px] min-[390px]:text-sm">
+                  نام و نام خانوادگی: {userProfile.fullName}
+                </h2>
+                <h2 className="hidden font-demibold mr-4 min-[560px]:block">
+                  شماره همراه: {userProfile.mobile}
+                </h2>
+              </div>
+              <span className="font-regular text-[11px]">{formattedDate}</span>
+            </div>
+          )}
         </div>
       </Box>
       <ToastContainerComponent />
