@@ -1,13 +1,24 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { styled, useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchUserCart,
+  selectUserCartItems,
+} from "../../../../redux/features/cartSlice";
+import axios from "axios";
+import { BASE_URL } from "../../../services/api";
+
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -20,11 +31,25 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import HomeIcon from "@mui/icons-material/Home";
+import Diversity2Icon from "@mui/icons-material/Diversity2";
+import SchoolIcon from "@mui/icons-material/School";
+import PersonIcon from "@mui/icons-material/Person";
+import FeedIcon from "@mui/icons-material/Feed";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+
+//Components
+import ToastContainerComponent from "../../elements/ToastContainer";
+
+//Images
+import logo from "../../../../public/logo/whiteTransparent.svg";
 
 //Utils and Functions
 import Rtl from "../../../utils/Rtl";
+import { notify } from "../../../utils/Toast";
 
-const drawerWidth = 180;
+const drawerWidth = 220;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -104,9 +129,70 @@ const Drawer = styled(MuiDrawer, {
   ],
 }));
 
-export default function MiniDrawer() {
+const navItems = [
+  {
+    title: "homePage",
+    name: "صفحه اصلی",
+    url: "/",
+    icon: <HomeIcon fontSize="small" />,
+  },
+  {
+    title: "aboutus",
+    name: "درباره ما",
+    url: "/aboutus",
+    icon: <Diversity2Icon fontSize="small" />,
+  },
+  {
+    title: "academy",
+    name: "دوره ها آموزشی",
+    url: "/academy",
+    icon: <SchoolIcon fontSize="small" />,
+  },
+  {
+    title: "articles",
+    name: "مقالات آموزشی (به زودی)",
+    url: "#",
+    icon: <FeedIcon fontSize="small" />,
+  },
+];
+
+const dashboardNavItems = [{}];
+
+/////Today-Date
+const date = new Date();
+// Define options for formatting
+const weekdayOptions = { weekday: "long", timeZone: "Asia/Tehran" };
+const dayOptions = { day: "numeric", timeZone: "Asia/Tehran" };
+const monthOptions = { month: "long", timeZone: "Asia/Tehran" };
+const yearOptions = { year: "numeric", timeZone: "Asia/Tehran" };
+// Create formatters for each component
+const weekdayFormatter = new Intl.DateTimeFormat("fa-IR", weekdayOptions);
+const dayFormatter = new Intl.DateTimeFormat("fa-IR", dayOptions);
+const monthFormatter = new Intl.DateTimeFormat("fa-IR", monthOptions);
+const yearFormatter = new Intl.DateTimeFormat("fa-IR", yearOptions);
+// Get each component
+const weekday = weekdayFormatter.format(date);
+const day = dayFormatter.format(date);
+const month = monthFormatter.format(date);
+const year = yearFormatter.format(date);
+
+// Construct the desired format
+const formattedDate = `${weekday}، ${day} ${month} ${year}`;
+
+export default function MiniDrawer({ userProfile, authToken }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+  const token = authToken;
+
+  //Connecting RTK
+  const { cartItems, loading, error } = useSelector(selectUserCartItems);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchUserCart());
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -116,40 +202,130 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  const logOutHandler = async (e) => {
+    e.preventDefault();
+    notify("در حال خروج، شکیبا باشید", "success");
+    setTimeout(async () => {
+      try {
+        await axios.put(
+          `${BASE_URL}user/logout`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+        notify("در حال انتقال به صفحه اصلی", "success");
+        Cookies.remove("token");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+      }
+    }, 1000);
+  };
+
   return (
     <Rtl>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ position: "relative", display: "flex" }}>
         <CssBaseline />
         <AppBar
           className="bg-gradient-to-l from-indigo500 via-indigo400 to-indigo500"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
           position="fixed"
           open={open}
         >
-          <Toolbar className="flex w-full justify-center items-center">
+          <Toolbar>
             <IconButton
-              className="ml-auto mr-0 w-fit"
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
               sx={[
                 {
-                  marginRight: 5,
+                  width: "fit-content",
+                  mr: "auto",
+                  ml: "0",
                 },
                 open && { display: "none" },
               ]}
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              className="mx-auto w-fit"
-              variant="h6"
-              noWrap
-              component="div"
-            >
-              Mini variant drawer
-            </Typography>
           </Toolbar>
+          <div className="hidden w-fit ml-auto mr-0 my-0 justify-center items-center min-[1300px]:flex">
+            <ul className="flex w-fit justify-center items-center mx-auto">
+              {navItems.map((item) =>
+                item.url !== "/contact" ? (
+                  <button
+                    className="w-fit font-extrabold text-white text-[14px] ml-3 duration-300 
+                      last:ml-0 p-1 rounded-min-[1000px] hover:opacity-70"
+                    key={item.title}
+                    onClick={() => (window.location.href = item.url)}
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <li
+                    key={item.title}
+                    className="w-fit font-extrabold text-white text-[14px] ml-3 duration-300 cursor-pointer 
+                      last:ml-0 p-1 rounded-min-[1000px] hover:opacity-70"
+                    onClick={scrollToContact}
+                  >
+                    {item.name}
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
+          <Image
+            className="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] 
+            min-[415px]:w-[130px] cursor-pointer min-[350px]:block max-[560px]:open:hidden"
+            onClick={() => router.push("/")}
+            src={logo}
+            width={600}
+            height={600}
+            alt="logo"
+            open={open}
+          />
+          <section className="flex w-fit items-center mr-auto ml-7">
+            <div
+              className="relative w-fit flex justify-center items-center transition-all
+             duration-400 backdrop-blur-2xl bg-white/20 hover:bg-white/40 rounded-md min-[1300px]:ml-3"
+            >
+              <Button
+                className="font-title text-inherit text-center"
+                onClick={() => (window.location.href = "/cart")}
+              >
+                <ShoppingCartIcon sx={{ color: "white" }} />
+              </Button>
+              {!loading && cartItems.orders && cartItems.orders.length > 0 && (
+                <span
+                  className="absolute -bottom-2 -right-2 w-6 h-6 flex justify-center items-center
+                bg-indigo500 font-bold text-white text-sm rounded-full"
+                >
+                  {cartItems.orders.length}
+                </span>
+              )}
+            </div>
+            <div
+              className="hidden w-fit flex justify-center items-center transition-all
+             duration-400 p-[6px] backdrop-blur-2xl bg-white/20 rounded-md min-[1300px]:block"
+            >
+              <button className="text-sm font-demibold" onClick={logOutHandler}>
+                <PowerSettingsNewIcon />
+                خروج
+              </button>
+            </div>
+          </section>
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
@@ -188,7 +364,7 @@ export default function MiniDrawer() {
                       },
                       open
                         ? {
-                            mr: 3,
+                            mr: 1,
                           }
                         : {
                             mr: "auto",
@@ -214,9 +390,19 @@ export default function MiniDrawer() {
             ))}
           </List>
           <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          <List
+            sx={{
+              display: "block",
+              "@media(min-width: 1300px)": { display: "none" },
+            }}
+          >
+            {navItems.map((item, index) => (
+              <ListItem
+                key={item.name}
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={() => (window.location.href = item.url)}
+              >
                 <ListItemButton
                   sx={[
                     {
@@ -240,17 +426,17 @@ export default function MiniDrawer() {
                       },
                       open
                         ? {
-                            mr: 3,
+                            mr: 1,
                           }
                         : {
                             mr: "auto",
                           },
                     ]}
                   >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    {item.icon}
                   </ListItemIcon>
                   <ListItemText
-                    primary={text}
+                    primary={item.name}
                     sx={[
                       open
                         ? {
@@ -264,42 +450,61 @@ export default function MiniDrawer() {
                 </ListItemButton>
               </ListItem>
             ))}
+            <ListItemButton
+              sx={{
+                width: `${open ? "90%" : "100%"}`,
+                m: "0 auto",
+                borderRadius: "8px",
+                color: "white",
+                fontFamily: "dana",
+                fontWeight: "110",
+                bgcolor: `${open ? "#f87171" : ""}`,
+                "&:hover": { opacity: 0.8 },
+                transition: "all .3s ease",
+              }}
+              onClick={open ? logOutHandler : null}
+            >
+              <ListItemIcon
+                sx={[
+                  {
+                    minWidth: 0,
+                    justifyContent: "center",
+                  },
+                  open
+                    ? {
+                        mr: 1,
+                      }
+                    : {
+                        mr: "auto",
+                      },
+                ]}
+              >
+                <PowerSettingsNewIcon
+                  fontSize="small"
+                  sx={{ ml: 0.5, color: `${open ? "white" : "#f87171"}` }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="خروج از پنل کاربری"
+                sx={[
+                  open
+                    ? {
+                        opacity: 1,
+                      }
+                    : {
+                        opacity: 0,
+                      },
+                ]}
+              />
+            </ListItemButton>
           </List>
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <div component="main" sx={{ flexGrow: 1 }}>
           <DrawerHeader />
-          <Typography sx={{ marginBottom: 2 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
-            rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
-            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-          </Typography>
-          <Typography sx={{ marginBottom: 2 }}>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare
-            suspendisse sed nisi lacus sed viverra tellus. Purus sit amet
-            volutpat consequat mauris. Elementum eu facilisis sed odio morbi.
-            Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt
-            ornare massa eget egestas purus viverra accumsan in. In hendrerit
-            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam
-            aliquam sem et tortor. Habitant morbi tristique senectus et.
-            Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean
-            euismod elementum nisi quis eleifend. Commodo viverra maecenas
-            accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography>
-        </Box>
+          <div component="user-details"></div>
+        </div>
       </Box>
+      <ToastContainerComponent />
     </Rtl>
   );
 }
