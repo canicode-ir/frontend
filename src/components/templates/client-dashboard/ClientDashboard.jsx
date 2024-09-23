@@ -42,6 +42,7 @@ import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 
 //Components
 import ToastContainerComponent from "../../elements/ToastContainer";
@@ -50,6 +51,7 @@ import CoursesDashboard from "../../modules/client-dashboard/CoursesDashboard";
 import LicencesDashboard from "../../modules/client-dashboard/LicencesDashboard";
 import PaymentsDashboard from "../../modules/client-dashboard/PaymentsDashboard";
 import Loading from "../../elements/Loading";
+import buttonLoading from "../../../../public/general/buttonLoading.gif";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
@@ -211,6 +213,10 @@ export default function MiniDrawer({ userProfile, authToken }) {
     React.useState(false);
   const [isInPaymentsDashboard, setIsInPaymentsDashboard] =
     React.useState(false);
+  const [isBootCampStudent, setIsBootCampStudent] = React.useState(false);
+  const [isAdvancedStudent, setIsAdvancedStudent] = React.useState(false);
+  const [isMidLevelStudent, setIsMidLevelStudent] = React.useState(false);
+  const [isStarterStudent, setIsStarterStudent] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   const token = authToken;
@@ -222,7 +228,29 @@ export default function MiniDrawer({ userProfile, authToken }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserCart());
-    setIsInMainDashboard(!isInMainDashboard);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsInMainDashboard(true);
+      setIsInCoursesDashboard(false);
+      setIsInLicencesDashboard(false);
+      setIsInPaymentsDashboard(false);
+    }, 1000);
+    const studentLevel = userProfile.course_participate.map(
+      (course) => course.level
+    );
+    studentLevel.some(
+      (level) => level === "bootcamp" && setIsBootCampStudent(true)
+    );
+    studentLevel.some(
+      (level) => level === "starter" && setIsStarterStudent(true)
+    );
+    studentLevel.some(
+      (level) => level === "mid-level" && setIsMidLevelStudent(true)
+    );
+    studentLevel.some(
+      (level) => level === "advanced-level" && setIsAdvancedStudent(true)
+    );
   }, []);
 
   const handleDrawerOpen = () => {
@@ -245,6 +273,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            withCredentials: true,
           }
         );
         notify("در حال انتقال به صفحه اصلی", "success");
@@ -258,9 +287,16 @@ export default function MiniDrawer({ userProfile, authToken }) {
     }, 1000);
   };
 
+  const changeRouteHandler = (e, item) => {
+    e.preventDefault();
+    window.location.href = item.url;
+    setOpen(false);
+  };
+
   const goToMainDashboard = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setOpen(false);
     setTimeout(() => {
       setIsLoading(false);
       setIsInMainDashboard(true);
@@ -272,6 +308,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
   const goToCoursesDashboard = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setOpen(false);
     setTimeout(() => {
       setIsLoading(false);
       setIsInCoursesDashboard(true);
@@ -283,6 +320,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
   const goToLicencesDashboard = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setOpen(false);
     setTimeout(() => {
       setIsLoading(false);
       setIsInLicencesDashboard(true);
@@ -294,6 +332,8 @@ export default function MiniDrawer({ userProfile, authToken }) {
   const goToPaymentsDashboard = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setOpen(false);
+
     setTimeout(() => {
       setIsLoading(false);
       setIsInPaymentsDashboard(true);
@@ -336,7 +376,14 @@ export default function MiniDrawer({ userProfile, authToken }) {
 
   return (
     <Rtl>
-      <Box sx={{ position: "relative", display: "flex" }}>
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          background: "linear-gradient(to bottom, #1e1b4b, #3730a3, #4f46e5)",
+          height: "100vh",
+        }}
+      >
         <CssBaseline />
         <AppBar
           className="bg-gradient-to-l from-indigo500 via-indigo400 to-indigo500"
@@ -407,11 +454,8 @@ export default function MiniDrawer({ userProfile, authToken }) {
               className="relative w-fit flex justify-center items-center transition-all
              duration-400 backdrop-blur-2xl bg-white/20 hover:bg-white/40 rounded-md min-[1300px]:ml-3"
             >
-              <Button
-                className="font-title text-inherit text-center"
-                onClick={() => (window.location.href = "/cart")}
-              >
-                <ShoppingCartIcon sx={{ color: "white" }} />
+              <Button onClick={() => (window.location.href = "/cart")}>
+                <ShoppingCartIcon fontSize="medium" sx={{ color: "white" }} />
               </Button>
               {!loading && cartItems.orders && cartItems.orders.length > 0 && (
                 <span
@@ -424,12 +468,19 @@ export default function MiniDrawer({ userProfile, authToken }) {
             </div>
             <div
               className="hidden w-fit flex justify-center items-center transition-all
-             duration-400 p-[6px] backdrop-blur-2xl bg-white/20 rounded-md min-[1300px]:block"
+             duration-400 backdrop-blur-2xl bg-white/20 hover:bg-white/40 rounded-md min-[1300px]:block"
             >
-              <button className="text-sm font-demibold" onClick={logOutHandler}>
-                <PowerSettingsNewIcon />
+              <Button
+                sx={{
+                  fontFamily: "dana",
+                  fontWeight: "70",
+                  color: "whitesmoke",
+                }}
+                onClick={logOutHandler}
+              >
+                <PowerSettingsNewIcon fontSize="small" sx={{ mr: 0.3 }} />
                 خروج
-              </button>
+              </Button>
             </div>
           </section>
         </AppBar>
@@ -513,12 +564,12 @@ export default function MiniDrawer({ userProfile, authToken }) {
               "@media(min-width: 1300px)": { display: "none" },
             }}
           >
-            {navItems.map((item, index) => (
+            {navItems.map((item) => (
               <ListItem
                 key={item.title}
                 disablePadding
                 sx={{ display: "block" }}
-                onClick={() => (window.location.href = item.url)}
+                onClick={(e) => changeRouteHandler(e, item)}
               >
                 <ListItemButton
                   sx={{
@@ -624,13 +675,16 @@ export default function MiniDrawer({ userProfile, authToken }) {
         <div
           component="main"
           className="w-full bg-gradient-to-b from-indigo950 via-indigo800 to-indigo600
-           h-screen py-6 px-4"
+           h-screen py-6 px-4 lg:max-w-[900px]"
         >
           <DrawerHeader />
+          <span className="font-regular text-[13px] text-gray200 mr-1">
+            {formattedDate}
+          </span>
           <div
             id="user-details"
             className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
-               px-2 py-4 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
+               px-2 py-4 mt-5 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
             open={open}
           >
             <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
@@ -643,9 +697,46 @@ export default function MiniDrawer({ userProfile, authToken }) {
                 {userProfile.mobile}
               </h2>
             </div>
-            {/* <span className="hidden font-regular text-[10px] min-[380px]:block">
-              {formattedDate}
-            </span> */}
+          </div>
+          <div
+            id="user-details"
+            className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
+               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
+            open={open}
+          >
+            <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
+              {!userProfile.course_participate.length ? (
+                <span className="mx-auto text-sm font-light">
+                  شما در هیچ دوره ای شرکت نکرده اید
+                </span>
+              ) : (
+                <>
+                  <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
+                    <HistoryEduIcon fontSize="small" sx={{ mr: 0.3 }} />
+                    سطح آموزشی شما
+                  </h2>
+                  {isLoading ? (
+                    <Image
+                      className="w-5"
+                      src={buttonLoading}
+                      height={600}
+                      width={600}
+                      alt="loading"
+                    />
+                  ) : (
+                    <h2 className="block font-light mr-4">
+                      {isBootCampStudent
+                        ? "بوت کمپ"
+                        : isAdvancedStudent
+                          ? "سنیور"
+                          : isMidLevelStudent
+                            ? "میدلول"
+                            : "جونیور"}
+                    </h2>
+                  )}
+                </>
+              )}
+            </div>
           </div>
           {isLoading ? (
             <Loading />
