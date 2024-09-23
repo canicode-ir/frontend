@@ -29,8 +29,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import HomeIcon from "@mui/icons-material/Home";
 import Diversity2Icon from "@mui/icons-material/Diversity2";
 import SchoolIcon from "@mui/icons-material/School";
@@ -43,9 +41,15 @@ import HubIcon from "@mui/icons-material/Hub";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 
 //Components
 import ToastContainerComponent from "../../elements/ToastContainer";
+import MainDashboard from "../../modules/client-dashboard/MainDashboard";
+import CoursesDashboard from "../../modules/client-dashboard/CoursesDashboard";
+import LicencesDashboard from "../../modules/client-dashboard/LicencesDashboard";
+import PaymentsDashboard from "../../modules/client-dashboard/PaymentsDashboard";
+import Loading from "../../elements/Loading";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
@@ -177,45 +181,6 @@ const navItems = [
   },
 ];
 
-const dashboardNavItems = [
-  {
-    title: "dashboard-main-page",
-    name: (
-      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
-        دفترکار
-      </span>
-    ),
-    icon: <HubIcon fontSize="small" />,
-  },
-  {
-    title: "participated-courses",
-    name: (
-      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
-        دوره های خریداری شده
-      </span>
-    ),
-    icon: <OndemandVideoIcon fontSize="small" />,
-  },
-  {
-    title: "licences",
-    name: (
-      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
-        لایسنس ها
-      </span>
-    ),
-    icon: <QrCodeScannerIcon fontSize="small" />,
-  },
-  {
-    title: "user-payments",
-    name: (
-      <span className="font-demibold text-detail text-sm min-[1300px]:text-white">
-        لیست پرداختی ها
-      </span>
-    ),
-    icon: <ReceiptLongIcon fontSize="small" />,
-  },
-];
-
 /////Today-Date
 const date = new Date();
 // Define options for formatting
@@ -240,6 +205,13 @@ const formattedDate = `${weekday}، ${day} ${month} ${year}`;
 export default function MiniDrawer({ userProfile, authToken }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [isInMainDashboard, setIsInMainDashboard] = React.useState(false);
+  const [isInCoursesDashboard, setIsInCoursesDashboard] = React.useState(false);
+  const [isInLicencesDashboard, setIsInLicencesDashboard] =
+    React.useState(false);
+  const [isInPaymentsDashboard, setIsInPaymentsDashboard] =
+    React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   const token = authToken;
 
@@ -250,6 +222,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserCart());
+    setIsInMainDashboard(!isInMainDashboard);
   }, []);
 
   const handleDrawerOpen = () => {
@@ -272,7 +245,6 @@ export default function MiniDrawer({ userProfile, authToken }) {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            withCredentials: true,
           }
         );
         notify("در حال انتقال به صفحه اصلی", "success");
@@ -285,6 +257,82 @@ export default function MiniDrawer({ userProfile, authToken }) {
       }
     }, 1000);
   };
+
+  const goToMainDashboard = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsInMainDashboard(true);
+      setIsInCoursesDashboard(false);
+      setIsInLicencesDashboard(false);
+      setIsInPaymentsDashboard(false);
+    }, 1000);
+  };
+  const goToCoursesDashboard = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsInCoursesDashboard(true);
+      setIsInMainDashboard(false);
+      setIsInLicencesDashboard(false);
+      setIsInPaymentsDashboard(false);
+    }, 1000);
+  };
+  const goToLicencesDashboard = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsInLicencesDashboard(true);
+      setIsInCoursesDashboard(false);
+      setIsInMainDashboard(false);
+      setIsInPaymentsDashboard(false);
+    }, 1000);
+  };
+  const goToPaymentsDashboard = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsInPaymentsDashboard(true);
+      setIsInCoursesDashboard(false);
+      setIsInMainDashboard(false);
+      setIsInLicencesDashboard(false);
+    }, 1000);
+  };
+
+  const dashboardNavItems = [
+    {
+      title: "dashboard-main-page",
+      state: isInMainDashboard,
+      name: "داشبورد کاربری",
+      icon: <HubIcon fontSize="small" />,
+      handler: goToMainDashboard,
+    },
+    {
+      title: "participated-courses",
+      state: isInCoursesDashboard,
+      name: "دوره ها خریداری شده",
+      icon: <OndemandVideoIcon fontSize="small" />,
+      handler: goToCoursesDashboard,
+    },
+    {
+      title: "licences",
+      state: isInLicencesDashboard,
+      name: "لایسنس ها",
+      icon: <QrCodeScannerIcon fontSize="small" />,
+      handler: goToLicencesDashboard,
+    },
+    {
+      title: "user-payments",
+      state: isInPaymentsDashboard,
+      name: "پرداختی های شما",
+      icon: <ReceiptLongIcon fontSize="small" />,
+      handler: goToPaymentsDashboard,
+    },
+  ];
 
   return (
     <Rtl>
@@ -417,6 +465,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
                           justifyContent: "center",
                         },
                   ]}
+                  onClick={item.handler}
                 >
                   <ListItemIcon
                     sx={[
@@ -431,12 +480,17 @@ export default function MiniDrawer({ userProfile, authToken }) {
                         : {
                             mr: "auto",
                           },
+                      item.state && { color: "#818cf8" },
                     ]}
                   >
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText
-                    primary={item.name}
+                    primary=<span
+                      className={`font-demibold text-detail text-sm ${item.state && "text-indigo400"}`}
+                    >
+                      {item.name}
+                    </span>
                     sx={[
                       open
                         ? {
@@ -445,6 +499,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
                         : {
                             opacity: 0,
                           },
+                      item.state && { color: "#818cf8" },
                     ]}
                   />
                 </ListItemButton>
@@ -566,23 +621,42 @@ export default function MiniDrawer({ userProfile, authToken }) {
             </ListItem>
           </List>
         </Drawer>
-        <div component="main" className="w-full">
+        <div
+          component="main"
+          className="w-full bg-gradient-to-b from-indigo950 via-indigo800 to-indigo600
+           h-screen py-6 px-4"
+        >
           <DrawerHeader />
-          {!open && (
-            <div
-              id="user-details"
-              className="w-full flex bg-indigo50 justify-between items-center px-2 py-4 text-sm text-indigo800 rounded-b-lg"
-            >
-              <div className="flex w-fit items-center">
-                <h2 className="font-demibold text-[13px] min-[390px]:text-sm">
-                  نام و نام خانوادگی: {userProfile.fullName}
-                </h2>
-                <h2 className="hidden font-demibold mr-4 min-[560px]:block">
-                  شماره همراه: {userProfile.mobile}
-                </h2>
-              </div>
-              <span className="font-regular text-[11px]">{formattedDate}</span>
+          <div
+            id="user-details"
+            className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
+               px-2 py-4 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
+            open={open}
+          >
+            <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
+              <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
+                <PersonIcon fontSize="small" sx={{ mr: 0.3 }} />
+                {userProfile.fullName}
+              </h2>
+              <h2 className="block font-demibold mr-4">
+                <PhoneAndroidIcon fontSize="small" sx={{ mr: 0.3 }} />
+                {userProfile.mobile}
+              </h2>
             </div>
+            {/* <span className="hidden font-regular text-[10px] min-[380px]:block">
+              {formattedDate}
+            </span> */}
+          </div>
+          {isLoading ? (
+            <Loading />
+          ) : isInMainDashboard ? (
+            <MainDashboard />
+          ) : isInCoursesDashboard ? (
+            <CoursesDashboard />
+          ) : isInLicencesDashboard ? (
+            <LicencesDashboard />
+          ) : (
+            <PaymentsDashboard />
           )}
         </div>
       </Box>

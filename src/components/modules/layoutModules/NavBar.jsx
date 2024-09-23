@@ -111,7 +111,7 @@ export default function ButtonAppBar({ token, userRole }) {
   const goToUserDashboard = (token) => {
     setIsOpen(false);
     if (token) {
-      router.push("/client-dashboard");
+      window.location.href = "/client-dashboard";
     } else {
       router.push("/userAuthentication");
     }
@@ -216,7 +216,7 @@ export default function ButtonAppBar({ token, userRole }) {
                 <IconButton
                   className="font-title text-inherit text-center ml-2 duration-400 backdrop-blur-2xl bg-white/20 
             hover:bg-white/40"
-                  onClick={() => router.push("/client-dashboard")}
+                  onClick={() => (window.location.href = "/client-dashboard")}
                 >
                   <PersonIcon />
                 </IconButton>
