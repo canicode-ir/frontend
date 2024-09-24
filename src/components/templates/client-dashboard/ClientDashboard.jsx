@@ -52,6 +52,7 @@ import LicencesDashboard from "../../modules/client-dashboard/LicencesDashboard"
 import PaymentsDashboard from "../../modules/client-dashboard/PaymentsDashboard";
 import Loading from "../../elements/Loading";
 import buttonLoading from "../../../../public/general/buttonLoading.gif";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
@@ -220,6 +221,13 @@ export default function MiniDrawer({ userProfile, authToken }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   const token = authToken;
+
+  //CreatedUser
+  const todayTimeStamps = new Date().getTime();
+  const dateObject = new Date(userProfile.createdAt);
+  const createdAtTimeStamps = dateObject.getTime();
+  const timeStampsHasPassed = todayTimeStamps - createdAtTimeStamps;
+  const daysFromRegister = Math.ceil(timeStampsHasPassed / 1000 / 60 / 60 / 24);
 
   //Connecting RTK
   const { cartItems, loading, error } = useSelector(selectUserCartItems);
@@ -674,17 +682,26 @@ export default function MiniDrawer({ userProfile, authToken }) {
         </Drawer>
         <div
           component="main"
-          className="w-full bg-gradient-to-b from-indigo950 via-indigo800 to-indigo600
-           h-screen py-6 px-4 lg:max-w-[900px]"
+          className={`${open ? "hidden" : "flex flex-col justify-start items-start"} 
+            w-full bg-gradient-to-b from-indigo950 via-indigo800 to-indigo600
+            h-screen py-6 px-4 lg:max-w-[900px]`}
+          open={open}
         >
           <DrawerHeader />
-          <span className="font-regular text-[13px] text-gray200 mr-1">
-            {formattedDate}
-          </span>
+          <div className="flex w-full justify-between items-center px-1 text-[13px] text-gray200">
+            <span className="font-regular">{formattedDate}</span>
+            <span className="font-regular">
+              {daysFromRegister} روز با کَن آی کُد
+            </span>
+          </div>
+          <h4 className="font-bold text-gray100 mr-1 mt-5">
+            <AccountBoxIcon fontSize="small" sx={{ mr: 0.3 }} />
+            اطلاعات کاربر:
+          </h4>
           <div
             id="user-details"
             className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
-               px-2 py-4 mt-5 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
+               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
             open={open}
           >
             <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
@@ -697,11 +714,44 @@ export default function MiniDrawer({ userProfile, authToken }) {
                 {userProfile.mobile}
               </h2>
             </div>
+            <div className="hidden w-full items-center justify-between items-center min-[600px]:w-fit min-[600px]:flex">
+              {!userProfile.course_participate.length ? (
+                <span className="mx-auto text-sm font-light">
+                  شما در هیچ دوره ای شرکت نکرده اید
+                </span>
+              ) : (
+                <>
+                  <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
+                    <HistoryEduIcon fontSize="small" sx={{ mr: 0.3 }} />
+                    سطح آموزشی شما
+                  </h2>
+                  {isLoading ? (
+                    <Image
+                      className="w-5"
+                      src={buttonLoading}
+                      height={600}
+                      width={600}
+                      alt="loading"
+                    />
+                  ) : (
+                    <h2 className="block font-light mr-4">
+                      {isBootCampStudent
+                        ? "بوت کمپ"
+                        : isAdvancedStudent
+                          ? "سنیور"
+                          : isMidLevelStudent
+                            ? "میدلول"
+                            : "جونیور"}
+                    </h2>
+                  )}
+                </>
+              )}
+            </div>
           </div>
           <div
             id="user-details"
             className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
-               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
+               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden min-[600px]:hidden"
             open={open}
           >
             <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
@@ -741,7 +791,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
           {isLoading ? (
             <Loading />
           ) : isInMainDashboard ? (
-            <MainDashboard />
+            <MainDashboard userProfile={userProfile} />
           ) : isInCoursesDashboard ? (
             <CoursesDashboard />
           ) : isInLicencesDashboard ? (
