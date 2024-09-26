@@ -62,7 +62,7 @@ function MainDashboard({
             دوره هایی که شرکت کرده اید |
           </h4>
         </div>
-        {!userProfile.course_participate.length ? (
+        {userProfile.course_participate.length ? (
           <ul className="flex flex-col w-full mt-4">
             {userProfile.course_participate.map((course) => (
               <li
