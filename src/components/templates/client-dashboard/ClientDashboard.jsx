@@ -670,7 +670,7 @@ export default function MiniDrawer({
           component="main"
           className={`${open ? "hidden" : "flex flex-col justify-start items-start"} 
             w-full bg-gradient-to-b from-indigo950 via-indigo800 to-indigo600
-            h-screen py-6 px-4 lg:max-w-[900px]`}
+            h-screen py-6 px-4 lg:max-w-[900px] overflow-scroll md:overflow-hidden`}
           open={open}
         >
           <DrawerHeader />

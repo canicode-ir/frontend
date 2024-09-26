@@ -1,3 +1,8 @@
+import Link from "next/link";
+
+//Components
+import FormDialog from "../../elements/FormDialog";
+
 //Icons and Images
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
@@ -5,6 +10,7 @@ import MessageIcon from "@mui/icons-material/Message";
 import DiscountIcon from "@mui/icons-material/Discount";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import SmsIcon from "@mui/icons-material/Sms";
 
 function MainDashboard({
   userProfile,
@@ -56,7 +62,7 @@ function MainDashboard({
             دوره هایی که شرکت کرده اید |
           </h4>
         </div>
-        {userProfile.course_participate.length ? (
+        {!userProfile.course_participate.length ? (
           <ul className="flex flex-col w-full mt-4">
             {userProfile.course_participate.map((course) => (
               <li
@@ -90,11 +96,22 @@ function MainDashboard({
             ))}
           </ul>
         ) : (
-          <div className="flex w-full justify-center items-center">
+          <div className="flex flex-col w-full justify-center items-center">
             <h5 className="w-fit font-light text-sm text-justify p-3 mt-1 min-[492px]:ml-auto">
               {userProfile.fullName} عزیز 💜 ، شما هنوز در هیچ دوره ای شرکت
-              نکرده اید.
+              نکرده اید. جهت مشاوره آموزشی برای شروع از این طریق با ما در ارتباط
+              باشید.
             </h5>
+            <div className="flex w-full justify-between items-center mt-2">
+              <FormDialog />
+              <Link
+                className="bg-indigo500 px-1 py-[6px] rounded-[7px] text-[14px] mr-auto min-[500px]:ml-auto min-[500px]:mr-2"
+                href="sms:+989331651902?body= سلام و وقت بخیر؛ جهت مشاوره آموزشی پیام میدم."
+              >
+                <SmsIcon fontSize="small" sx={{ mr: 0.6 }} />
+                ارسال پیامک
+              </Link>
+            </div>
           </div>
         )}
         <div

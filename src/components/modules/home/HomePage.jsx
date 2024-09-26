@@ -125,7 +125,8 @@ function HomePage() {
             min-[390px]:w-fit"
             onClick={() => router.push("/academy")}
           >
-            مشاهده دوره ها <OndemandVideoIcon sx={{ m: "0 5px 0 0" }} />
+            مشاهده دوره ها{" "}
+            <OndemandVideoIcon fontSize="small" sx={{ m: "0 5px 0 0" }} />
           </button>
           <FormDialog />
         </div>

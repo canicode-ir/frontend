@@ -1,4 +1,8 @@
+"use client";
+
 import * as React from "react";
+import { usePathname } from "next/navigation";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -39,6 +43,7 @@ export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [courseLevel, setCourseLevel] = React.useState("");
   const { control } = useForm();
+  const pathName = usePathname();
 
   const handleChange = (event) => {
     setCourseLevel(event.target.value);
@@ -110,31 +115,51 @@ export default function FormDialog() {
         id="form-dialog"
         variant="text"
         onClick={handleClickOpen}
-        sx={{
-          display: "felx",
-          width: "100%",
-          mt: 1,
-          p: "12px 10px",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "16px",
-          fontFamily: "dana",
-          fontWeight: "120",
-          fontSize: "15px",
-          bgcolor: "#f3e8ff",
-          color: "#4338ca",
-          "&:hover": {
-            color: "#0284c7",
+        sx={[
+          {
+            display: "felx",
+            justifyContent: "center",
+            alignItems: "center",
+            fontFamily: "dana",
           },
-          "@media (min-width:390px)": {
-            width: "fit-content",
-            mt: 0,
-            mr: 2,
-          },
-        }}
+          pathName === "/client-dashboard"
+            ? {
+                width: "fit-content",
+                p: "6px 4px",
+                fontWeight: "70",
+                fontSize: "13px",
+                color: "whitesmoke",
+                borderRadius: "7px",
+                bgcolor: "#6366f1",
+                "&:hover": {
+                  opacity: "70%",
+                },
+              }
+            : {
+                width: "100%",
+                mt: 1,
+                p: "12px 10px",
+                fontWeight: "120",
+                fontSize: "15px",
+                bgcolor: "#f3e8ff",
+                borderRadius: "16px",
+                color: "#4338ca",
+                "&:hover": {
+                  color: "#0284c7",
+                },
+                "@media (min-width:390px)": {
+                  width: "fit-content",
+                  mt: 0,
+                  mr: 2,
+                },
+              },
+        ]}
       >
         مشاوره استارت
-        <CastForEducationIcon sx={{ mr: 1, p: 0 }} />
+        <CastForEducationIcon
+          fontSize="small"
+          sx={[pathName === "/client-dashboard" ? { ml: 0.3 } : { mr: 1 }]}
+        />
       </Button>
       <Dialog
         open={open}
