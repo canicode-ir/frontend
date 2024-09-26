@@ -1,6 +1,4 @@
-import axios from "axios";
 import { BASE_URL } from "../../services/api";
-import Cookies from "js-cookie";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -38,10 +36,32 @@ async function page() {
   const authToken = cookieStore.get("token")?.value;
   if (!authToken) redirect("/userAuthentication");
   const userProfile = await getUserProfile();
+  const userCourseParticipate = userProfile.course_participate;
+  const userLevel = {
+    isStarter: userCourseParticipate.some(
+      (course) => course.level === "starter"
+    ),
+    isMidLevel: userCourseParticipate.some(
+      (course) => course.level === "mid-level"
+    ),
+    isSenior: userCourseParticipate.some(
+      (course) => course.level === "advanced-level"
+    ),
+    isBootcamp: userCourseParticipate.some(
+      (course) => course.level === "bootcamp"
+    ),
+  };
+  const userPayments = userProfile.payments;
+  const confirmedPayments = userPayments.filter((payment) => !!payment.verify);
+  const notVerifiedPayments = userPayments.filter((payment) => !payment.verify);
 
   return (
     <div>
-      <ClientDashboard userProfile={userProfile} authToken={authToken} />
+      <ClientDashboard
+        userProfile={userProfile}
+        authToken={authToken}
+        userLevel={userLevel}
+      />
     </div>
   );
 }

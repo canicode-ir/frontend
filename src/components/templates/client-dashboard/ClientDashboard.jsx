@@ -205,7 +205,12 @@ const year = yearFormatter.format(date);
 // Construct the desired format
 const formattedDate = `${weekday}، ${day} ${month} ${year}`;
 
-export default function MiniDrawer({ userProfile, authToken }) {
+export default function MiniDrawer({
+  userProfile,
+  authToken,
+  userLevel,
+  userLevel: { isStarter, isMidLevel, isSenior, isBootcamp },
+}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [isInMainDashboard, setIsInMainDashboard] = React.useState(false);
@@ -214,10 +219,6 @@ export default function MiniDrawer({ userProfile, authToken }) {
     React.useState(false);
   const [isInPaymentsDashboard, setIsInPaymentsDashboard] =
     React.useState(false);
-  const [isBootCampStudent, setIsBootCampStudent] = React.useState(false);
-  const [isAdvancedStudent, setIsAdvancedStudent] = React.useState(false);
-  const [isMidLevelStudent, setIsMidLevelStudent] = React.useState(false);
-  const [isStarterStudent, setIsStarterStudent] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
   const token = authToken;
@@ -244,21 +245,6 @@ export default function MiniDrawer({ userProfile, authToken }) {
       setIsInLicencesDashboard(false);
       setIsInPaymentsDashboard(false);
     }, 1000);
-    const studentLevel = userProfile.course_participate.map(
-      (course) => course.level
-    );
-    studentLevel.some(
-      (level) => level === "bootcamp" && setIsBootCampStudent(true)
-    );
-    studentLevel.some(
-      (level) => level === "starter" && setIsStarterStudent(true)
-    );
-    studentLevel.some(
-      (level) => level === "mid-level" && setIsMidLevelStudent(true)
-    );
-    studentLevel.some(
-      (level) => level === "advanced-level" && setIsAdvancedStudent(true)
-    );
   }, []);
 
   const handleDrawerOpen = () => {
@@ -389,7 +375,7 @@ export default function MiniDrawer({ userProfile, authToken }) {
           position: "relative",
           display: "flex",
           background: "linear-gradient(to bottom, #1e1b4b, #3730a3, #4f46e5)",
-          height: "100vh",
+          height: "100%",
         }}
       >
         <CssBaseline />
@@ -735,11 +721,11 @@ export default function MiniDrawer({ userProfile, authToken }) {
                     />
                   ) : (
                     <h2 className="block font-light mr-4">
-                      {isBootCampStudent
+                      {isBootcamp
                         ? "بوت کمپ"
-                        : isAdvancedStudent
+                        : isSenior
                           ? "سنیور"
-                          : isMidLevelStudent
+                          : isMidLevel
                             ? "میدلول"
                             : "جونیور"}
                     </h2>
@@ -775,11 +761,11 @@ export default function MiniDrawer({ userProfile, authToken }) {
                     />
                   ) : (
                     <h2 className="block font-light mr-4">
-                      {isBootCampStudent
+                      {isBootcamp
                         ? "بوت کمپ"
-                        : isAdvancedStudent
+                        : isSenior
                           ? "سنیور"
-                          : isMidLevelStudent
+                          : isMidLevel
                             ? "میدلول"
                             : "جونیور"}
                     </h2>
@@ -791,7 +777,11 @@ export default function MiniDrawer({ userProfile, authToken }) {
           {isLoading ? (
             <Loading />
           ) : isInMainDashboard ? (
-            <MainDashboard userProfile={userProfile} />
+            <MainDashboard
+              userProfile={userProfile}
+              userLevel={userLevel}
+              goToCoursesDashboard={goToCoursesDashboard}
+            />
           ) : isInCoursesDashboard ? (
             <CoursesDashboard />
           ) : isInLicencesDashboard ? (
