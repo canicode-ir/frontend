@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import Image from "next/image";
 import { styled, useTheme } from "@mui/material/styles";
@@ -210,6 +211,7 @@ export default function MiniDrawer({
   authToken,
   userLevel,
   userLevel: { isStarter, isMidLevel, isSenior, isBootcamp },
+  courses,
 }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -221,7 +223,6 @@ export default function MiniDrawer({
     React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
-  const token = authToken;
 
   //CreatedUser
   const todayTimeStamps = new Date().getTime();
@@ -233,6 +234,11 @@ export default function MiniDrawer({
   //Connecting RTK
   const { cartItems, loading, error } = useSelector(selectUserCartItems);
   const dispatch = useDispatch();
+  const selectedCourses = cartItems.orders && cartItems.orders;
+  const isInCartCoursesIds =
+    cartItems.orders &&
+    selectedCourses.length &&
+    selectedCourses.map((item) => item.course._id);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -265,9 +271,8 @@ export default function MiniDrawer({
           {},
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${authToken}`,
             },
-            withCredentials: true,
           }
         );
         notify("در حال انتقال به صفحه اصلی", "success");
@@ -781,6 +786,12 @@ export default function MiniDrawer({
               userProfile={userProfile}
               userLevel={userLevel}
               goToCoursesDashboard={goToCoursesDashboard}
+              cart={cartItems}
+              courses={courses}
+              dispatch={dispatch}
+              cartItems={cartItems}
+              loading={loading}
+              isInCartCoursesIds={isInCartCoursesIds}
             />
           ) : isInCoursesDashboard ? (
             <CoursesDashboard />

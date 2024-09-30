@@ -28,9 +28,6 @@ const moment = require("jalali-moment");
 import axios from "axios";
 import { BASE_URL } from "../../services/api";
 
-//Styles
-import "../elements/styles/formDialog.css";
-
 //Functions
 import { notify } from "../../utils/Toast";
 import { convertPersianToEnglish } from "../../helpers/functions";

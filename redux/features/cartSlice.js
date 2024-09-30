@@ -11,13 +11,17 @@ const initialState = {
 };
 
 const fetchUserCart = createAsyncThunk("fetchUserCart", async () => {
-  const res = await fetch(`${BASE_URL}cart`, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  });
-  const data = await res.json();
-  return data;
+  if (authToken) {
+    const res = await fetch(`${BASE_URL}cart`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    const data = await res.json();
+    return data;
+  } else {
+    throw new Error("you're not logged In");
+  }
 });
 
 const cartSlice = createSlice({

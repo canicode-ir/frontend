@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Academy from "../../components/templates/academy/Academy";
 import { BASE_URL } from "../../services/api";
 
-async function getData() {
+async function getAllCourses() {
   const res = await fetch(`${BASE_URL}course?page=1&limit=20`, {
     cache: "no-store",
   });
@@ -41,7 +41,7 @@ async function getUserProfile() {
 async function page() {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
-  const apiData = await getData();
+  const apiData = await getAllCourses();
   const courses = apiData.result;
   const userProfile = authToken && (await getUserProfile());
   const coursesParticipated = authToken && userProfile.course_participate;

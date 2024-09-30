@@ -5,6 +5,16 @@ import { redirect } from "next/navigation";
 //Components
 import ClientDashboard from "../../components/templates/client-dashboard/ClientDashboard";
 
+async function getAllCourses() {
+  const res = await fetch(`${BASE_URL}course?page=1&limit=20`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
 async function getUserProfile() {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
@@ -51,9 +61,15 @@ async function page() {
       (course) => course.level === "bootcamp"
     ),
   };
+
+  //UserPayments
   const userPayments = userProfile.payments;
   const confirmedPayments = userPayments.filter((payment) => !!payment.verify);
   const notVerifiedPayments = userPayments.filter((payment) => !payment.verify);
+
+  //AllCourses
+  const apiData = await getAllCourses();
+  const courses = apiData.result;
 
   return (
     <div>
@@ -61,6 +77,7 @@ async function page() {
         userProfile={userProfile}
         authToken={authToken}
         userLevel={userLevel}
+        courses={courses}
       />
     </div>
   );
