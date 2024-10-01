@@ -279,7 +279,7 @@ export default function MiniDrawer({
         notify("در حال انتقال به صفحه اصلی", "success");
         Cookies.remove("token");
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/userAuthentication";
         }, 1000);
       } catch (error) {
         console.log(error.response);
