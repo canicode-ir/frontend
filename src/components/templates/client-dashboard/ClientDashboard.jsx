@@ -212,6 +212,7 @@ export default function MiniDrawer({
   userLevel,
   userLevel: { isStarter, isMidLevel, isSenior, isBootcamp },
   courses,
+  coursesByLevel,
 }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -380,7 +381,7 @@ export default function MiniDrawer({
           position: "relative",
           display: "flex",
           background: "linear-gradient(to bottom, #1e1b4b, #3730a3, #4f46e5)",
-          height: "100%",
+          minHeight: "100vh",
         }}
       >
         <CssBaseline />
@@ -674,8 +675,7 @@ export default function MiniDrawer({
         <div
           component="main"
           className={`${open ? "hidden" : "flex flex-col justify-start items-start"} 
-            w-full bg-gradient-to-b from-indigo950 via-indigo800 to-indigo600
-            h-screen py-6 px-4 lg:max-w-[900px] overflow-scroll md:overflow-hidden`}
+            w-full ${isLoading ? "h-screen" : "h-full"} py-6 px-4 lg:max-w-[900px]`}
           open={open}
         >
           <DrawerHeader />
@@ -792,6 +792,7 @@ export default function MiniDrawer({
               cartItems={cartItems}
               loading={loading}
               isInCartCoursesIds={isInCartCoursesIds}
+              coursesByLevel={coursesByLevel}
             />
           ) : isInCoursesDashboard ? (
             <CoursesDashboard />

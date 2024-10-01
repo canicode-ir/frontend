@@ -70,6 +70,15 @@ async function page() {
   //AllCourses
   const apiData = await getAllCourses();
   const courses = apiData.result;
+  const starterCourses = courses.filter((course) => course.level === "starter");
+  const midLevelCourses = courses.filter(
+    (course) => course.level === "mid-level"
+  );
+  const advancedCourses = courses.filter(
+    (course) => course.level === "advanced-level"
+  );
+
+  const coursesByLevel = { starterCourses, midLevelCourses, advancedCourses };
 
   return (
     <div>
@@ -78,6 +87,7 @@ async function page() {
         authToken={authToken}
         userLevel={userLevel}
         courses={courses}
+        coursesByLevel={coursesByLevel}
       />
     </div>
   );
