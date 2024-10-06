@@ -6,7 +6,6 @@ import NextCourseToLearnSuggestion from "./modules/mainDashboardModules/NextCour
 import NextCourseCard from "./modules/mainDashboardModules/NextCourseCard";
 
 //Icons and Images
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import MessageIcon from "@mui/icons-material/Message";
 import DiscountIcon from "@mui/icons-material/Discount";

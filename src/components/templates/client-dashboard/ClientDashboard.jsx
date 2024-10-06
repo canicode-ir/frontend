@@ -40,7 +40,7 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import HubIcon from "@mui/icons-material/Hub";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
@@ -49,11 +49,12 @@ import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import ToastContainerComponent from "../../elements/ToastContainer";
 import MainDashboard from "../../modules/client-dashboard/MainDashboard";
 import CoursesDashboard from "../../modules/client-dashboard/CoursesDashboard";
-import LicencesDashboard from "../../modules/client-dashboard/LicencesDashboard";
+import ResumeMaker from "../../modules/client-dashboard/ResumeMaker";
 import PaymentsDashboard from "../../modules/client-dashboard/PaymentsDashboard";
 import Loading from "../../elements/Loading";
 import buttonLoading from "../../../../public/general/buttonLoading.gif";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import InstagramQR from "../../elements/InstagramQR";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
@@ -218,7 +219,7 @@ export default function MiniDrawer({
   const [open, setOpen] = React.useState(false);
   const [isInMainDashboard, setIsInMainDashboard] = React.useState(false);
   const [isInCoursesDashboard, setIsInCoursesDashboard] = React.useState(false);
-  const [isInLicencesDashboard, setIsInLicencesDashboard] =
+  const [isInResumeMakerDashboard, setIsInResumeMakerDashboard] =
     React.useState(false);
   const [isInPaymentsDashboard, setIsInPaymentsDashboard] =
     React.useState(false);
@@ -249,7 +250,7 @@ export default function MiniDrawer({
       setIsLoading(false);
       setIsInMainDashboard(true);
       setIsInCoursesDashboard(false);
-      setIsInLicencesDashboard(false);
+      setIsInResumeMakerDashboard(false);
       setIsInPaymentsDashboard(false);
     }, 1000);
   }, []);
@@ -301,7 +302,7 @@ export default function MiniDrawer({
       setIsLoading(false);
       setIsInMainDashboard(true);
       setIsInCoursesDashboard(false);
-      setIsInLicencesDashboard(false);
+      setIsInResumeMakerDashboard(false);
       setIsInPaymentsDashboard(false);
     }, 1000);
   };
@@ -313,17 +314,17 @@ export default function MiniDrawer({
       setIsLoading(false);
       setIsInCoursesDashboard(true);
       setIsInMainDashboard(false);
-      setIsInLicencesDashboard(false);
+      setIsInResumeMakerDashboard(false);
       setIsInPaymentsDashboard(false);
     }, 1000);
   };
-  const goToLicencesDashboard = (e) => {
+  const goToResumeMakerDashboard = (e) => {
     e.preventDefault();
     setIsLoading(true);
     setOpen(false);
     setTimeout(() => {
       setIsLoading(false);
-      setIsInLicencesDashboard(true);
+      setIsInResumeMakerDashboard(true);
       setIsInCoursesDashboard(false);
       setIsInMainDashboard(false);
       setIsInPaymentsDashboard(false);
@@ -339,7 +340,7 @@ export default function MiniDrawer({
       setIsInPaymentsDashboard(true);
       setIsInCoursesDashboard(false);
       setIsInMainDashboard(false);
-      setIsInLicencesDashboard(false);
+      setIsInResumeMakerDashboard(false);
     }, 1000);
   };
 
@@ -359,11 +360,11 @@ export default function MiniDrawer({
       handler: goToCoursesDashboard,
     },
     {
-      title: "licences",
-      state: isInLicencesDashboard,
-      name: "لایسنس ها",
-      icon: <QrCodeScannerIcon fontSize="small" />,
-      handler: goToLicencesDashboard,
+      title: "resume-maker",
+      state: isInResumeMakerDashboard,
+      name: "رزومه ساز شما",
+      icon: <AssignmentIndIcon fontSize="small" />,
+      handler: goToResumeMakerDashboard,
     },
     {
       title: "user-payments",
@@ -496,7 +497,7 @@ export default function MiniDrawer({
           </DrawerHeader>
           <Divider />
           <List>
-            {dashboardNavItems.map((item, index) => (
+            {dashboardNavItems.map((item) => (
               <ListItem
                 key={item.title}
                 disablePadding
@@ -540,7 +541,7 @@ export default function MiniDrawer({
                     primary=<span
                       className={`font-demibold text-detail text-sm ${item.state && "text-indigo400"}`}
                     >
-                      {item.name}
+                      {item.name} {item.title === "resume-maker" ? "🔥" : ""}
                     </span>
                     sx={[
                       open
@@ -796,8 +797,8 @@ export default function MiniDrawer({
             />
           ) : isInCoursesDashboard ? (
             <CoursesDashboard />
-          ) : isInLicencesDashboard ? (
-            <LicencesDashboard />
+          ) : isInResumeMakerDashboard ? (
+            <ResumeMaker />
           ) : (
             <PaymentsDashboard />
           )}

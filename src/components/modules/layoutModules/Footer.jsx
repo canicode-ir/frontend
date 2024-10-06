@@ -184,8 +184,8 @@ function Footer() {
                                 link.id === "instagram"
                                   ? "from-indigo600 to-indigo400"
                                   : link.id === "telegram"
-                                  ? "from-sky600 to-sky400"
-                                  : ""
+                                    ? "from-sky600 to-sky400"
+                                    : ""
                               } p-1 rounded-md hover:opacity-70`
                         } 
                     transition-all duration-300`}
@@ -204,8 +204,8 @@ function Footer() {
                             link.type === "section"
                               ? "text-gray700"
                               : link.id === "support"
-                              ? "text-gray600"
-                              : "text-white"
+                                ? "text-gray600"
+                                : "text-white"
                           } text-md font-regular
                         group-hover:${
                           link.type === "section" ? "text-white" : ""

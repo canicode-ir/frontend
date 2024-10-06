@@ -87,6 +87,29 @@ function NextCourseToLearnSuggestion({
           {fullName} عزیز، شما دانشجو بوت کمپ فرانت اند هستید، نیازی به تهیه
           سایر دوره ها ندارید. ✌
         </p>
+      ) : isSenior &&
+        remainedMidLevelCourses.length &&
+        remainedAdvancedCourses.length ? (
+        <>
+          {remainedMidLevelCourses.map((course) => (
+            <NextCourseCard
+              key={course._id}
+              {...course}
+              cartItems={cartItems}
+              isInCartCoursesIds={isInCartCoursesIds}
+              dispatch={dispatch}
+            />
+          ))}
+          {remainedAdvancedCourses.map((course) => (
+            <NextCourseCard
+              key={course._id}
+              {...course}
+              cartItems={cartItems}
+              isInCartCoursesIds={isInCartCoursesIds}
+              dispatch={dispatch}
+            />
+          ))}
+        </>
       ) : isSenior && remainedAdvancedCourses.length ? (
         remainedAdvancedCourses.map((course) => (
           <NextCourseCard
@@ -102,6 +125,29 @@ function NextCourseToLearnSuggestion({
           {fullName} عزیز سطح آموزشی شما، متخصص ارشد فرانت اند می باشد.
           بنابراین؛ نیازی به تهیه دوره دیگری ندارید. 🤞
         </p>
+      ) : isMidLevel &&
+        remainedStarterCourses.length &&
+        remainedMidLevelCourses.length ? (
+        <>
+          {remainedStarterCourses.map((course) => (
+            <NextCourseCard
+              key={course._id}
+              {...course}
+              cartItems={cartItems}
+              isInCartCoursesIds={isInCartCoursesIds}
+              dispatch={dispatch}
+            />
+          ))}
+          {remainedMidLevelCourses.map((course) => (
+            <NextCourseCard
+              key={course._id}
+              {...course}
+              cartItems={cartItems}
+              isInCartCoursesIds={isInCartCoursesIds}
+              dispatch={dispatch}
+            />
+          ))}
+        </>
       ) : isMidLevel && remainedMidLevelCourses.length ? (
         <>
           {remainedMidLevelCourses.map((course) => (
