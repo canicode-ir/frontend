@@ -18,6 +18,14 @@ function NextCourseToLearnSuggestion({
   const [remainedMidLevelCourses, setRemainedMidLevelCourses] = useState([]);
   const [remainedAdvancedCourses, setRemainedAdvancedCourses] = useState([]);
 
+  console.log({
+    data: {
+      remainedStarterCourses,
+      remainedMidLevelCourses,
+      remainedAdvancedCourses,
+    },
+  });
+
   const starterCoursesCount = starterCourses.length;
   const midLevelCoursesCount = midLevelCourses.length;
   const advancedLevelCoursesCount = advancedCourses.length;
@@ -43,7 +51,9 @@ function NextCourseToLearnSuggestion({
         (course) => !participatedStarterCoursesIds.includes(course._id)
       );
       setRemainedStarterCourses(notInvolvedStarterCourses);
-    } else if (
+    }
+
+    if (
       isMidLevel &&
       midLevelCoursesCount !== midLevelCoursesParticipatedCount
     ) {
@@ -54,7 +64,9 @@ function NextCourseToLearnSuggestion({
         (course) => !participatedMidLevelCoursesIds.includes(course._id)
       );
       setRemainedMidLevelCourses(notInvolvedStarterCourses);
-    } else if (
+    }
+
+    if (
       isSenior &&
       advancedLevelCoursesCount !== advancedCoursesParticipatedCount
     ) {
@@ -65,7 +77,7 @@ function NextCourseToLearnSuggestion({
         (course) => !participatedAdvancedCoursesIds.includes(course._id)
       );
       setRemainedAdvancedCourses(notInvolvedStarterCourses);
-    } else null;
+    }
   }, []);
 
   return (

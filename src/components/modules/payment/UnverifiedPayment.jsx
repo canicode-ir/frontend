@@ -79,7 +79,7 @@ function UnverifiedPayment({
               <button
                 className="bg-gradient-to-r from-indigo500 to-indigo700 py-[5px] px-4 cursor-pointer transition-all duration-500
         font-bold text-white rounded-lg ring-2 ring-indigo500 hover:ring-4 hover:ring-indigo50"
-                onClick={() => router.replace("/client-dashboard")}
+                onClick={() => (window.location.href = "/client-dashboard")}
               >
                 <AssignmentIndIcon fontSize="small" sx={{ ml: 0.3 }} />
                 پنل کاربری
@@ -87,7 +87,7 @@ function UnverifiedPayment({
               <button
                 className="bg-white py-[5px] px-4 font-bold text-indigo700 cursor-pointer transition-all duration-500
         ring-2 ring-indigo500 rounded-lg hover:opacity-50"
-                onClick={() => router.replace("/")}
+                onClick={() => (window.location.href = "/")}
               >
                 <HomeIcon fontSize="small" sx={{ ml: 0.3 }} />
                 صفحه اصلی

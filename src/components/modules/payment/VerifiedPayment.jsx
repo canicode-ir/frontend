@@ -141,18 +141,18 @@ function VerifiedPayment({
                 course.name === "htmlcss"
                   ? "from-red600 to-red400"
                   : course.name === "javascript"
-                  ? "from-yellow600 to-yellow400"
-                  : course.name === "reactjs"
-                  ? "from-sky600 to-sky400"
-                  : course.name === "nextjs"
-                  ? "from-slate700 to-slate500"
-                  : course.name === "tailwindcss"
-                  ? "from-emerald700 to-emerald500"
-                  : course.name === "materialUi"
-                  ? "from-blue600 to-blue400"
-                  : course.name === "github"
-                  ? "from-gray600 to-gray400"
-                  : "from-indigo700 to-indigo400"
+                    ? "from-yellow600 to-yellow400"
+                    : course.name === "reactjs"
+                      ? "from-sky600 to-sky400"
+                      : course.name === "nextjs"
+                        ? "from-slate700 to-slate500"
+                        : course.name === "tailwindcss"
+                          ? "from-emerald700 to-emerald500"
+                          : course.name === "materialUi"
+                            ? "from-blue600 to-blue400"
+                            : course.name === "github"
+                              ? "from-gray600 to-gray400"
+                              : "from-indigo700 to-indigo400"
               } text-white text-sm cursor-pointer hover:scale-[0.98] hover:grayscale`}
                   key={course._id}
                 >
@@ -170,7 +170,7 @@ function VerifiedPayment({
             <button
               className="bg-gradient-to-r from-indigo500 to-indigo700 py-[5px] px-4 cursor-pointer transition-all duration-500
         font-bold text-white rounded-lg ring-2 ring-indigo500 hover:ring-4 hover:ring-indigo50"
-              onClick={() => router.replace("/client-dashboard")}
+              onClick={() => (window.location.href = "/client-dashboard")}
             >
               <AssignmentIndIcon fontSize="small" sx={{ ml: 0.3 }} />
               پنل کاربری
@@ -178,7 +178,7 @@ function VerifiedPayment({
             <button
               className="bg-white py-[5px] px-4 font-bold text-indigo700 cursor-pointer transition-all duration-500
         ring-2 ring-indigo500 rounded-lg hover:opacity-50"
-              onClick={() => router.replace("/")}
+              onClick={() => (window.location.href = "/")}
             >
               <HomeIcon fontSize="small" sx={{ ml: 0.3 }} />
               صفحه اصلی
