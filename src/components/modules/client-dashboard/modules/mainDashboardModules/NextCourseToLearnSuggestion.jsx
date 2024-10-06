@@ -92,18 +92,15 @@ function NextCourseToLearnSuggestion({
         </p>
       ) : isMidLevel && remainedMidLevelCourses.length ? (
         <>
-          {midLevelCourses.map(
-            (course) =>
-              course.name !== "reactjs" && (
-                <NextCourseCard
-                  key={course._id}
-                  {...course}
-                  cartItems={cartItems}
-                  isInCartCoursesIds={isInCartCoursesIds}
-                  dispatch={dispatch}
-                />
-              )
-          )}
+          {remainedMidLevelCourses.map((course) => (
+            <NextCourseCard
+              key={course._id}
+              {...course}
+              cartItems={cartItems}
+              isInCartCoursesIds={isInCartCoursesIds}
+              dispatch={dispatch}
+            />
+          ))}
           {advancedCourses.map((course) => (
             <NextCourseCard
               key={course._id}
@@ -126,18 +123,15 @@ function NextCourseToLearnSuggestion({
         ))
       ) : isStarter && remainedStarterCourses.length ? (
         <>
-          {starterCourses.map(
-            (course) =>
-              course.name !== "javascript" && (
-                <NextCourseCard
-                  key={course._id}
-                  {...course}
-                  cartItems={cartItems}
-                  isInCartCoursesIds={isInCartCoursesIds}
-                  dispatch={dispatch}
-                />
-              )
-          )}
+          {remainedStarterCourses.map((course) => (
+            <NextCourseCard
+              key={course._id}
+              {...course}
+              cartItems={cartItems}
+              isInCartCoursesIds={isInCartCoursesIds}
+              dispatch={dispatch}
+            />
+          ))}
           {midLevelCourses.map((course) => (
             <NextCourseCard
               key={course._id}
