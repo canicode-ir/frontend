@@ -27,6 +27,7 @@ function VerifiedPayment({
     userProfile: { fullName, mobile, course_participate },
   },
 }) {
+  console.log(amount, transactionNumber);
   const [isLoading, setIsLoading] = useState(false);
   const dataToShow = [
     {

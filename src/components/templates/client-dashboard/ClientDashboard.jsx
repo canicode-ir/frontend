@@ -796,7 +796,7 @@ export default function MiniDrawer({
               coursesByLevel={coursesByLevel}
             />
           ) : isInCoursesDashboard ? (
-            <CoursesDashboard />
+            <CoursesDashboard userProfile={userProfile} />
           ) : isInResumeMakerDashboard ? (
             <ResumeMaker />
           ) : (

@@ -17,15 +17,7 @@ function NextCourseToLearnSuggestion({
   const [remainedStarterCourses, setRemainedStarterCourses] = useState([]);
   const [remainedMidLevelCourses, setRemainedMidLevelCourses] = useState([]);
   const [remainedAdvancedCourses, setRemainedAdvancedCourses] = useState([]);
-
-  console.log({
-    data: {
-      remainedStarterCourses,
-      remainedMidLevelCourses,
-      remainedAdvancedCourses,
-    },
-  });
-
+  
   const starterCoursesCount = starterCourses.length;
   const midLevelCoursesCount = midLevelCourses.length;
   const advancedLevelCoursesCount = advancedCourses.length;
