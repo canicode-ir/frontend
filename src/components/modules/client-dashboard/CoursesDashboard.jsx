@@ -20,7 +20,7 @@ function CoursesDashboard({
         <BubbleChartIcon fontSize="small" sx={{ mr: 0.3 }} />
         دوره هایی که شرکت کرده اید:
       </h4>
-      {!course_participate.length ? (
+      {course_participate.length ? (
         <ul className="flex flex-col w-full mt-2 justify-between items-center">
           {course_participate.map((course) => (
             <CourseLicenseAccordion
