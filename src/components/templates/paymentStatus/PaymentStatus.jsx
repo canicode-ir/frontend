@@ -13,8 +13,6 @@ function PaymentStatus({ searchParams, userProfile, URLHasSearchParams }) {
       userProfile,
     };
 
-  console.log(transactionData);
-
   return (
     <div className="relative flex flex-col justify-between items-center px-4 lg:px-0">
       {amount && status === "true" && transactionNumber ? (
