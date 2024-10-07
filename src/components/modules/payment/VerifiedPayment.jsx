@@ -26,9 +26,10 @@ function VerifiedPayment({
     transactionNumber,
     userProfile: { fullName, mobile, course_participate },
   },
+  data,
 }) {
   console.log(amount, transactionNumber);
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const dataToShow = [
     {
@@ -98,6 +99,10 @@ function VerifiedPayment({
       sessionStorage.removeItem("isReloaded");
     };
   }, [router]);
+
+  if (!data) {
+    return <Loading />;
+  }
 
   return (
     <>
