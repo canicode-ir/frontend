@@ -28,6 +28,7 @@ function VerifiedPayment({
   },
 }) {
   console.log(amount, transactionNumber);
+  
   const [isLoading, setIsLoading] = useState(false);
   const dataToShow = [
     {

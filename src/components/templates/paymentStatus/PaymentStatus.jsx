@@ -6,11 +6,14 @@ import ToastContainerComponent from "../../elements/ToastContainer";
 function PaymentStatus({ searchParams, userProfile, URLHasSearchParams }) {
   const { amount, status } = searchParams;
   const transactionNumber = searchParams.in;
-  const transactionData = userProfile && {
-    amount,
-    transactionNumber,
-    userProfile,
-  };
+  const transactionData = userProfile &&
+    searchParams && {
+      amount,
+      transactionNumber,
+      userProfile,
+    };
+
+  console.log(transactionData);
 
   return (
     <div className="relative flex flex-col justify-between items-center px-4 lg:px-0">
