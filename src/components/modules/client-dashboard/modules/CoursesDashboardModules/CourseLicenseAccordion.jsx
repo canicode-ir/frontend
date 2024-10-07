@@ -23,14 +23,14 @@ ${
 shadow-inset my-2 items-center p-2 rounded-lg transition-all duration-600 
 hover:cursor-pointer hover:bg-gradient-to-b`}
     >
-      <div className="flex w-full justify-center items-center min-[370px]:justify-between">
-        <h3 className="font-demibold text-[13px] min-[400px]:text-sm">
+      <div className="flex w-full justify-between items-center">
+        <h3 className="font-demibold text-[12px] min-[500px]:text-sm">
           <QrCodeIcon fontSize="small" sx={{ mr: 1 }} />
           {title}
         </h3>
         <span
           className="hidden font-light text-[10px] text-white
-        min-[370px]:block min-[380px]:text-[12px]"
+        min-[380px]:block min-[400px]:text-[12px]"
         >
           {level === "starter"
             ? "مقدماتی"
@@ -41,7 +41,6 @@ hover:cursor-pointer hover:bg-gradient-to-b`}
                 : "بوت کمپ"}
         </span>
       </div>
-      <div></div>
     </li>
   );
 }
