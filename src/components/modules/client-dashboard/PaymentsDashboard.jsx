@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 //Components
 import FormDialog from "../../elements/FormDialog";
 import PaymentCard from "./modules/paymentsDashboardModules/PaymentCard";
+import PaymentSearchBox from "../../elements/PaymentSearchBox";
 
 //Icons and Images
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
@@ -15,17 +17,31 @@ function PaymentsDashboard({
   userProfile: { payments, fullName },
   userPaymentsData: { notVerifiedPayments, confirmedPayments },
 }) {
+  const [allPayments, setAllPayments] = useState(true);
+  const [verifiedPayments, setVerifiedPayments] = useState(false);
+
+  const handlers = { setAllPayments, setVerifiedPayments };
+
   return (
     <div className="w-full flex flex-col justify-start items-center text-white mt-7">
       <h4 className="font-bold text-gray100 mr-1 ml-auto mt-5">
         <BubbleChartIcon fontSize="small" sx={{ mr: 0.3 }} />
         لیست پرداختی های شما:
       </h4>
+      <PaymentSearchBox {...handlers} />
       {payments.length ? (
         <ul className="flex flex-col w-full justify-between items-center mt-2 py-4">
-          {payments.map((payment) => (
-            <PaymentCard key={payment._id} {...payment} />
-          ))}
+          {allPayments
+            ? payments.map((payment) => (
+                <PaymentCard key={payment._id} {...payment} />
+              ))
+            : verifiedPayments
+              ? confirmedPayments.map((payment) => (
+                  <PaymentCard key={payment._id} {...payment} />
+                ))
+              : notVerifiedPayments.map((payment) => (
+                  <PaymentCard key={payment._id} {...payment} />
+                ))}
         </ul>
       ) : (
         <div
