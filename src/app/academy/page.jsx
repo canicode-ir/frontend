@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import Academy from "../../components/templates/academy/Academy";
 import { BASE_URL } from "../../services/api";
-import { redirect } from "next/navigation";
 
 async function getAllCourses() {
   const res = await fetch(`${BASE_URL}course?page=1&limit=20`, {
@@ -42,7 +41,6 @@ async function getUserProfile() {
 async function page() {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
-  if (!authToken) redirect("/userAuthentication");
 
   const apiData = await getAllCourses();
   const courses = apiData.result;

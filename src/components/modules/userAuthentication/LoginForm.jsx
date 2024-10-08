@@ -87,10 +87,10 @@ export const FieldLevelValidationExample = () => {
     setLoading(!loading);
     try {
       await axios.post(`${BASE_URL}auth/login`, data);
-      setLoading(false);
       router.replace(
         "/userCheckOtp" + "?" + createQueryString("phone", data.mobile)
       );
+      setLoading(false);
     } catch (error) {
       if (error.response.status === 400) {
         setLoading(false);

@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { BASE_URL } from "../../../../services/api";
-import { redirect } from "next/navigation";
 
 //Components
 import CourseDetails from "../../../../components/templates/courseDetails/CourseDetails";
@@ -45,7 +44,6 @@ async function getUserProfile() {
 async function page({ searchParams }) {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
-  if (!authToken) redirect("/userAuthentication");
 
   const apiData = await getData();
   const courses = apiData.result;

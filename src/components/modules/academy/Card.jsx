@@ -93,10 +93,13 @@ function Card({ course, coursesParticipatedIds }) {
         }
       } else {
         setCardButtonIsLoading(true);
-        router.push("/userAuthentication");
+        notify("ابتدا وارد پنل کاربری خود شوید", "error");
         setTimeout(() => {
           setCardButtonIsLoading(false);
         }, 500);
+        setTimeout(() => {
+          router.push("/userAuthentication");
+        }, 1000);
       }
     }, 1000);
   };
@@ -137,9 +140,8 @@ function Card({ course, coursesParticipatedIds }) {
             "?" +
             createQueryString("cId", `${course._id}`),
         });
-        console.log("content shared successfully");
       } catch (error) {
-        alert("Web Share API is not supported in your browser!");
+        alert("از ارسال اطلاعات دوره، منصرف شدم 🤷‍♀️");
       }
     }
   };
@@ -175,8 +177,8 @@ function Card({ course, coursesParticipatedIds }) {
               {course.level === "starter"
                 ? "سطح جونیور"
                 : course.level === "mid-level"
-                ? "سطح میدلول"
-                : "سطح سنیور"}
+                  ? "سطح میدلول"
+                  : "سطح سنیور"}
             </span>
           )}
           <IconButton
@@ -198,16 +200,16 @@ function Card({ course, coursesParticipatedIds }) {
             course.name === "htmlcss"
               ? "ring-red400"
               : course.name === "javascript"
-              ? "ring-yellow500"
-              : course.name === "reactjs"
-              ? "ring-sky400"
-              : course.name === "nextjs"
-              ? "ring-gray800"
-              : course.name === "tailwindcss"
-              ? "ring-teal600"
-              : course.name === "materialUi"
-              ? "ring-blue600"
-              : "ring-stone700"
+                ? "ring-yellow500"
+                : course.name === "reactjs"
+                  ? "ring-sky400"
+                  : course.name === "nextjs"
+                    ? "ring-gray800"
+                    : course.name === "tailwindcss"
+                      ? "ring-teal600"
+                      : course.name === "materialUi"
+                        ? "ring-blue600"
+                        : "ring-stone700"
           } 
             outline outline-offset-2 outline-3 outline-white`
                 : "relative w-[75%] bg-white rounded-lg z-[1] outline outline-offset-2 outline-1 outline-white min-[500px]:w-[300px] min-[700px]:w-[70%]"
@@ -225,18 +227,18 @@ function Card({ course, coursesParticipatedIds }) {
               course.name === "htmlcss"
                 ? "bg-gradient-to-r from-red400 to-red600"
                 : course.name === "javascript"
-                ? "bg-gradient-to-r from-amber300 to-yellow600"
-                : course.name === "reactjs"
-                ? "bg-gradient-to-r from-sky400 to-sky600"
-                : course.name === "nextjs"
-                ? "bg-gradient-to-r from-gray600 to-gray800"
-                : course.name === "tailwindcss"
-                ? "bg-gradient-to-r from-teal600 to-teal800"
-                : course.name === "materialUi"
-                ? "bg-gradient-to-r from-blue600 to-blue800"
-                : course.name === "github"
-                ? "bg-gradient-to-r from-stone600 to-stone800"
-                : "bg-gradient-to-r from-sky600 via-sky800 to-violet600"
+                  ? "bg-gradient-to-r from-amber300 to-yellow600"
+                  : course.name === "reactjs"
+                    ? "bg-gradient-to-r from-sky400 to-sky600"
+                    : course.name === "nextjs"
+                      ? "bg-gradient-to-r from-gray600 to-gray800"
+                      : course.name === "tailwindcss"
+                        ? "bg-gradient-to-r from-teal600 to-teal800"
+                        : course.name === "materialUi"
+                          ? "bg-gradient-to-r from-blue600 to-blue800"
+                          : course.name === "github"
+                            ? "bg-gradient-to-r from-stone600 to-stone800"
+                            : "bg-gradient-to-r from-sky600 via-sky800 to-violet600"
             } z-0 rounded-lg`}
           ></div>
         </div>

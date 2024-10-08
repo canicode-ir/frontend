@@ -1,6 +1,5 @@
 import { BASE_URL } from '../services/api';
 import { cookies } from "next/headers";
-import { redirect } from 'next/navigation';
 
 //Components
 import Academy from '../components/templates/academy/Academy';
@@ -46,7 +45,6 @@ async function getUserProfile() {
 export default async function Home() {
   const cookieStore = cookies();
   const authToken = cookieStore.get("token")?.value;
-  if(!authToken) redirect('/userAuthentication');
 
   const apiData = await getData();
   const courses = apiData.result;

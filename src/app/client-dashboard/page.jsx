@@ -35,9 +35,11 @@ async function getUserProfile() {
       return res.json();
     } catch (error) {
       console.log(error);
+      return null; // Return null in case of an error
     }
   } else {
     console.log("No token found");
+    return null; // Return null when there's no token
   }
 }
 
@@ -46,6 +48,10 @@ async function page() {
   const authToken = cookieStore.get("token")?.value;
   if (!authToken) redirect("/userAuthentication");
   const userProfile = await getUserProfile();
+  if (!userProfile) {
+    redirect("/"); // redirect to an error page or handle it
+    return; // ensure to return after redirect
+  }
   const userCourseParticipate = userProfile.course_participate;
   const userLevel = {
     isStarter: userCourseParticipate.some(

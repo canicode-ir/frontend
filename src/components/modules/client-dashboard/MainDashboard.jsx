@@ -31,11 +31,11 @@ function MainDashboard({
         <BubbleChartIcon fontSize="small" sx={{ mr: 0.3 }} />
         دفتر کار شما:
       </h4>
-      <div className="flex flex-col w-full justify-between items-center md:flex-row">
+      <div className="flex flex-col w-full justify-between items-center min-[900px]:flex-row">
         <div
           id="manager-posts"
           className="w-full flex flex-col backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
-               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl md:w-[50%]"
+               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl min-[900px]:w-full ml-2 max-[900px]:mx-0"
         >
           <h6 className="font-demibold text-md ml-auto min-[400px]:mx-auto">
             <MessageIcon fontSize="small" sx={{ mr: 0.6 }} />
@@ -59,7 +59,7 @@ function MainDashboard({
         <div
           id="manager-discount-code"
           className="w-full flex flex-col backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
-               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl md:w-[50%] md:mr-2"
+               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl min-[900px]:w-full"
         >
           <h6 className="font-demibold text-md ml-auto min-[400px]:mx-auto">
             <DiscountIcon fontSize="small" sx={{ mr: 0.6 }} />

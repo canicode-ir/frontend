@@ -676,6 +676,7 @@ export default function MiniDrawer({
         <div
           component="main"
           className={`${open ? "hidden" : "flex flex-col justify-start items-start"} 
+          min-[600px]:flex min-[600px]:flex-col min-[600px]:justify-start min-[600px]:items-start 
             w-full ${isLoading ? "h-screen" : "h-full"} py-6 px-4 lg:max-w-[900px]`}
           open={open}
         >
@@ -696,7 +697,7 @@ export default function MiniDrawer({
                px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
             open={open}
           >
-            <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
+            <div className="flex w-full items-center justify-between items-center min-[700px]:w-fit">
               <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
                 <PersonIcon fontSize="small" sx={{ mr: 0.3 }} />
                 {userProfile.fullName}
@@ -706,7 +707,7 @@ export default function MiniDrawer({
                 {userProfile.mobile}
               </h2>
             </div>
-            <div className="hidden w-full items-center justify-between items-center min-[600px]:w-fit min-[600px]:flex">
+            <div className="hidden w-full items-center justify-between items-center min-[700px]:w-fit min-[700px]:flex">
               {!userProfile.course_participate.length ? (
                 <span className="mx-auto text-sm font-light">
                   شما در هیچ دوره ای شرکت نکرده اید
@@ -743,10 +744,10 @@ export default function MiniDrawer({
           <div
             id="user-details"
             className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
-               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden min-[600px]:hidden"
+               px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden min-[700px]:hidden"
             open={open}
           >
-            <div className="flex w-full items-center justify-between items-center min-[600px]:w-fit">
+            <div className="flex w-full items-center justify-between items-center min-[700px]:w-fit">
               {!userProfile.course_participate.length ? (
                 <span className="mx-auto text-sm font-light">
                   شما در هیچ دوره ای شرکت نکرده اید
