@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 //Components
-import CourseLicenseAccordion from "../../modules/client-dashboard/modules/CoursesDashboardModules/CourseLicenseAccordion";
+import CourseLicenseAccordion from "./modules/coursesDashboardModules/CourseLicenseAccordion";
 import FormDialog from "../../elements/FormDialog";
 
 //Icons and Images

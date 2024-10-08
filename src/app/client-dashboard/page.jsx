@@ -72,6 +72,7 @@ async function page() {
   const userPayments = userProfile.payments;
   const confirmedPayments = userPayments.filter((payment) => !!payment.verify);
   const notVerifiedPayments = userPayments.filter((payment) => !payment.verify);
+  const userPaymentsData = { confirmedPayments, notVerifiedPayments };
 
   //AllCourses
   const apiData = await getAllCourses();
@@ -94,6 +95,7 @@ async function page() {
         userLevel={userLevel}
         courses={courses}
         coursesByLevel={coursesByLevel}
+        userPaymentsData={userPaymentsData}
       />
     </div>
   );

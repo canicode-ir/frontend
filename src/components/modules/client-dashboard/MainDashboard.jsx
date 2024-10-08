@@ -42,10 +42,10 @@ function MainDashboard({
             پیام مدیر برای شما |
           </h6>
           <p className="mt-2 font-light text-[12px] px-1 ml-auto min-[400px]:mx-auto">
-            {cart.orders.length
+            {cart.orders && cart.orders.length
               ? `${cart.orders.length} دوره در سبد خرید موجود است.`
               : "پیامی از سمت مدیر برای شما ارسال نشده است."}
-            {cart.orders.length > 0 && (
+            {cart.orders && cart.orders.length > 0 && (
               <button
                 className="font-demibold text-white rounded-md mr-2 bg-gradient-to-l
                  from-indigo800 via-indigo700 to-indigo600 p-1 transition-all duration-500 hover:bg-gradient-to-r"

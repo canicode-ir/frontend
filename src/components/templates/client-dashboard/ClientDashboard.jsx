@@ -211,9 +211,10 @@ export default function MiniDrawer({
   userProfile,
   authToken,
   userLevel,
-  userLevel: { isStarter, isMidLevel, isSenior, isBootcamp },
+  userLevel: { isMidLevel, isSenior, isBootcamp },
   courses,
   coursesByLevel,
+  userPaymentsData,
 }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -801,7 +802,10 @@ export default function MiniDrawer({
           ) : isInResumeMakerDashboard ? (
             <ResumeMaker />
           ) : (
-            <PaymentsDashboard />
+            <PaymentsDashboard
+              userProfile={userProfile}
+              userPaymentsData={userPaymentsData}
+            />
           )}
         </div>
       </Box>
