@@ -56,6 +56,7 @@ import Loading from "../../elements/Loading";
 import buttonLoading from "../../../../public/general/buttonLoading.gif";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import InstagramQR from "../../elements/InstagramQR";
+import ClientDashboardAside from "../../modules/client-dashboard/ClientDashboardAside";
 
 //Images
 import logo from "../../../../public/logo/whiteTransparent.svg";
@@ -704,14 +705,14 @@ export default function MiniDrawer({
         </Drawer>
         <div
           component="main"
-          className={`flex flex-col w-full
-           py-6 px-4 ${isLoading ? "h-screen" : "h-full"}`}
+          className={`flex flex-col w-full 
+           py-6 px-4 ${isLoading ? "h-screen" : "h-full"} lg:mt-[60px] lg:flex-row`}
         >
           <DrawerHeader />
           <section
             className={`${open ? "hidden" : "flex flex-col justify-start items-start"} w-full 
           min-[600px]:flex min-[600px]:flex-col min-[600px]:justify-start min-[600px]:items-start 
-          lg:max-w-[60%]`}
+          lg:max-w-[58%]`}
             open={open}
           >
             <div className="flex w-full justify-between items-center px-1 text-[13px] text-gray200">
@@ -840,6 +841,7 @@ export default function MiniDrawer({
               />
             )}
           </section>
+          <ClientDashboardAside />
         </div>
       </Box>
       <ToastContainerComponent />

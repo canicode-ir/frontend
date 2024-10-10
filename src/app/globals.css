@@ -292,3 +292,20 @@ blockquote {
   .manager-posts {
     animation: colorChanger 1s infinite;
   }
+
+  /* width */
+  .custom-scroll::-webkit-scrollbar {
+	width: 5px;
+  }
+  
+  /* Track */
+  .custom-scroll::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px grey;
+	border-radius: 10px;
+  }
+  
+  /* Handle */
+  .custom-scroll::-webkit-scrollbar-thumb {
+	background: #818cf8;
+	border-radius: 10px;
+  }

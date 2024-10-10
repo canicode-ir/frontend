@@ -25,6 +25,7 @@ interface ControlledAccordionsProps {
   ref_id: string;
   verify: boolean; // Adjust type as needed
   _id: string;
+  payments: any;
 }
 
 export default function ControlledAccordions({
@@ -35,9 +36,9 @@ export default function ControlledAccordions({
     orders,
     ref_id,
     verify,
+    payments
 }: ControlledAccordionsProps) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
-  console.log(orders);
 
   /////Today-Date
 const date = new Date(createdAt);
@@ -82,9 +83,9 @@ const paymentDetails = [
 ]
 
   return (
-    <div className='block mb-3 w-full rounded-md backdrop-filter 
+    <div className={`block mb-3 ${payments.length > 6 ? "w-[97%]" : 'w-full'} ml-auto rounded-md backdrop-filter 
     backdrop-blur-md odd:bg-indigo500/50 even:bg-indigo800/50 transition-all duration-300 hover:opacity-70 hover:ring-2
-    ring-indigo200'>
+    ring-indigo200`}>
       <Accordion expanded={expanded === 'panel1'} sx={{bgcolor: 'transparent'}} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize='small' sx={{color: 'whitesmoke'}}/>}

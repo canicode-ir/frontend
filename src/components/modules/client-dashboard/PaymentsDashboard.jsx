@@ -20,8 +20,6 @@ function PaymentsDashboard({
   const [allPayments, setAllPayments] = useState(true);
   const [verifiedPayments, setVerifiedPayments] = useState(false);
 
-  console.log(confirmedPayments);
-
   const handlers = { setAllPayments, setVerifiedPayments };
 
   return (
@@ -32,17 +30,32 @@ function PaymentsDashboard({
       </h4>
       <PaymentSearchBox {...handlers} />
       {payments.length ? (
-        <ul className="flex flex-col w-full justify-between items-center mt-2 py-4">
+        <ul
+          className="custom-scroll flex flex-col w-full h-auto max-h-96 
+          justify-between items-center mt-6 overflow-y-auto"
+        >
           {allPayments
             ? payments.map((payment) => (
-                <PaymentCard key={payment._id} {...payment} />
+                <PaymentCard
+                  key={payment._id}
+                  {...payment}
+                  payments={payments}
+                />
               ))
             : verifiedPayments
               ? confirmedPayments.map((payment) => (
-                  <PaymentCard key={payment._id} {...payment} />
+                  <PaymentCard
+                    key={payment._id}
+                    {...payment}
+                    payments={payments}
+                  />
                 ))
               : notVerifiedPayments.map((payment) => (
-                  <PaymentCard key={payment._id} {...payment} />
+                  <PaymentCard
+                    key={payment._id}
+                    {...payment}
+                    payments={payments}
+                  />
                 ))}
         </ul>
       ) : (
