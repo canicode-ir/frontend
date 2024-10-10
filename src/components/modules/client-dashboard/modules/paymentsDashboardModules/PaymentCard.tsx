@@ -37,6 +37,7 @@ export default function ControlledAccordions({
     verify,
 }: ControlledAccordionsProps) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
+  console.log(orders);
 
   /////Today-Date
 const date = new Date(createdAt);

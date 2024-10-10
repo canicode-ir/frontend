@@ -44,6 +44,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
+import BrowserUpdatedIcon from "@mui/icons-material/BrowserUpdated";
 
 //Components
 import ToastContainerComponent from "../../elements/ToastContainer";
@@ -224,6 +225,8 @@ export default function MiniDrawer({
     React.useState(false);
   const [isInPaymentsDashboard, setIsInPaymentsDashboard] =
     React.useState(false);
+  const [isInSpotplayerDashboard, setIsInSpotplayerDashboard] =
+    React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
 
@@ -253,6 +256,7 @@ export default function MiniDrawer({
       setIsInCoursesDashboard(false);
       setIsInResumeMakerDashboard(false);
       setIsInPaymentsDashboard(false);
+      setIsInSpotplayerDashboard(false);
     }, 1000);
   }, []);
 
@@ -302,6 +306,7 @@ export default function MiniDrawer({
     setTimeout(() => {
       setIsLoading(false);
       setIsInMainDashboard(true);
+      setIsInSpotplayerDashboard(false);
       setIsInCoursesDashboard(false);
       setIsInResumeMakerDashboard(false);
       setIsInPaymentsDashboard(false);
@@ -314,6 +319,7 @@ export default function MiniDrawer({
     setTimeout(() => {
       setIsLoading(false);
       setIsInCoursesDashboard(true);
+      setIsInSpotplayerDashboard(false);
       setIsInMainDashboard(false);
       setIsInResumeMakerDashboard(false);
       setIsInPaymentsDashboard(false);
@@ -326,6 +332,7 @@ export default function MiniDrawer({
     setTimeout(() => {
       setIsLoading(false);
       setIsInResumeMakerDashboard(true);
+      setIsInSpotplayerDashboard(false);
       setIsInCoursesDashboard(false);
       setIsInMainDashboard(false);
       setIsInPaymentsDashboard(false);
@@ -339,10 +346,24 @@ export default function MiniDrawer({
     setTimeout(() => {
       setIsLoading(false);
       setIsInPaymentsDashboard(true);
+      setIsInSpotplayerDashboard(false);
       setIsInCoursesDashboard(false);
       setIsInMainDashboard(false);
       setIsInResumeMakerDashboard(false);
     }, 1000);
+  };
+
+  const goToSpotplayerDashboard = (e) => {
+    e.preventDefault();
+    setOpen(false);
+
+    setTimeout(() => {
+      setIsInSpotplayerDashboard(true);
+      const spotPlayerSection = document.getElementById("spot-player");
+      if (spotPlayerSection) {
+        spotPlayerSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500);
   };
 
   const dashboardNavItems = [
@@ -373,6 +394,13 @@ export default function MiniDrawer({
       name: "پرداختی های شما",
       icon: <ReceiptLongIcon fontSize="small" />,
       handler: goToPaymentsDashboard,
+    },
+    {
+      title: "spot-player",
+      state: isInSpotplayerDashboard,
+      name: "دانلود اسپات پلیر",
+      icon: <BrowserUpdatedIcon fontSize="small" />,
+      handler: goToSpotplayerDashboard,
     },
   ];
 
@@ -676,137 +704,142 @@ export default function MiniDrawer({
         </Drawer>
         <div
           component="main"
-          className={`${open ? "hidden" : "flex flex-col justify-start items-start"} 
-          min-[600px]:flex min-[600px]:flex-col min-[600px]:justify-start min-[600px]:items-start 
-            w-full ${isLoading ? "h-screen" : "h-full"} py-6 px-4 lg:max-w-[900px]`}
-          open={open}
+          className={`flex flex-col w-full
+           py-6 px-4 ${isLoading ? "h-screen" : "h-full"}`}
         >
           <DrawerHeader />
-          <div className="flex w-full justify-between items-center px-1 text-[13px] text-gray200">
-            <span className="font-regular">{formattedDate}</span>
-            <span className="font-regular">
-              {daysFromRegister} روز با کَن آی کُد
-            </span>
-          </div>
-          <h4 className="font-bold text-gray100 mr-1 mt-5">
-            <AccountBoxIcon fontSize="small" sx={{ mr: 0.3 }} />
-            اطلاعات کاربر:
-          </h4>
-          <div
-            id="user-details"
-            className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
+          <section
+            className={`${open ? "hidden" : "flex flex-col justify-start items-start"} w-full 
+          min-[600px]:flex min-[600px]:flex-col min-[600px]:justify-start min-[600px]:items-start 
+          lg:max-w-[60%]`}
+            open={open}
+          >
+            <div className="flex w-full justify-between items-center px-1 text-[13px] text-gray200">
+              <span className="font-regular">{formattedDate}</span>
+              <span className="font-regular">
+                {daysFromRegister} روز با کَن آی کُد
+              </span>
+            </div>
+            <h4 className="font-bold text-gray100 mr-1 mt-5">
+              <AccountBoxIcon fontSize="small" sx={{ mr: 0.3 }} />
+              اطلاعات کاربر:
+            </h4>
+            <div
+              id="user-details"
+              className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
                px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden"
-            open={open}
-          >
-            <div className="flex w-full items-center justify-between items-center min-[700px]:w-fit">
-              <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
-                <PersonIcon fontSize="small" sx={{ mr: 0.3 }} />
-                {userProfile.fullName}
-              </h2>
-              <h2 className="block font-demibold mr-4">
-                <PhoneAndroidIcon fontSize="small" sx={{ mr: 0.3 }} />
-                {userProfile.mobile}
-              </h2>
-            </div>
-            <div className="hidden w-full items-center justify-between items-center min-[700px]:w-fit min-[700px]:flex">
-              {!userProfile.course_participate.length ? (
-                <span className="mx-auto text-sm font-light">
-                  شما در هیچ دوره ای شرکت نکرده اید
-                </span>
-              ) : (
-                <>
-                  <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
-                    <HistoryEduIcon fontSize="small" sx={{ mr: 0.3 }} />
-                    سطح آموزشی شما
-                  </h2>
-                  {isLoading ? (
-                    <Image
-                      className="w-5"
-                      src={buttonLoading}
-                      height={600}
-                      width={600}
-                      alt="loading"
-                    />
-                  ) : (
-                    <h2 className="block font-light mr-4">
-                      {isBootcamp
-                        ? "بوت کمپ"
-                        : isSenior
-                          ? "سنیور"
-                          : isMidLevel
-                            ? "میدلول"
-                            : "جونیور"}
+              open={open}
+            >
+              <div className="flex w-full items-center justify-between items-center min-[700px]:w-fit">
+                <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
+                  <PersonIcon fontSize="small" sx={{ mr: 0.3 }} />
+                  {userProfile.fullName}
+                </h2>
+                <h2 className="block font-demibold mr-4">
+                  <PhoneAndroidIcon fontSize="small" sx={{ mr: 0.3 }} />
+                  {userProfile.mobile}
+                </h2>
+              </div>
+              <div className="hidden w-full items-center justify-between items-center min-[700px]:w-fit min-[700px]:flex">
+                {!userProfile.course_participate.length ? (
+                  <span className="mx-auto text-sm font-light">
+                    شما در هیچ دوره ای شرکت نکرده اید
+                  </span>
+                ) : (
+                  <>
+                    <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
+                      <HistoryEduIcon fontSize="small" sx={{ mr: 0.3 }} />
+                      سطح آموزشی شما
                     </h2>
-                  )}
-                </>
-              )}
+                    {isLoading ? (
+                      <Image
+                        className="w-5"
+                        src={buttonLoading}
+                        height={600}
+                        width={600}
+                        alt="loading"
+                      />
+                    ) : (
+                      <h2 className="block font-light mr-4">
+                        {isBootcamp
+                          ? "بوت کمپ"
+                          : isSenior
+                            ? "سنیور"
+                            : isMidLevel
+                              ? "میدلول"
+                              : "جونیور"}
+                      </h2>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-          <div
-            id="user-details"
-            className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
+            <div
+              id="user-details"
+              className="w-full flex backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center
                px-2 py-4 mt-2 text-sm text-slate200 rounded-2xl max-[550px]:open:hidden min-[700px]:hidden"
-            open={open}
-          >
-            <div className="flex w-full items-center justify-between items-center min-[700px]:w-fit">
-              {!userProfile.course_participate.length ? (
-                <span className="mx-auto text-sm font-light">
-                  شما در هیچ دوره ای شرکت نکرده اید
-                </span>
-              ) : (
-                <>
-                  <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
-                    <HistoryEduIcon fontSize="small" sx={{ mr: 0.3 }} />
-                    سطح آموزشی شما
-                  </h2>
-                  {isLoading ? (
-                    <Image
-                      className="w-5"
-                      src={buttonLoading}
-                      height={600}
-                      width={600}
-                      alt="loading"
-                    />
-                  ) : (
-                    <h2 className="block font-light mr-4">
-                      {isBootcamp
-                        ? "بوت کمپ"
-                        : isSenior
-                          ? "سنیور"
-                          : isMidLevel
-                            ? "میدلول"
-                            : "جونیور"}
+              open={open}
+            >
+              <div className="flex w-full items-center justify-between items-center min-[700px]:w-fit">
+                {!userProfile.course_participate.length ? (
+                  <span className="mx-auto text-sm font-light">
+                    شما در هیچ دوره ای شرکت نکرده اید
+                  </span>
+                ) : (
+                  <>
+                    <h2 className="flex items-center font-demibold text-[13px] min-[430px]:text-sm">
+                      <HistoryEduIcon fontSize="small" sx={{ mr: 0.3 }} />
+                      سطح آموزشی شما
                     </h2>
-                  )}
-                </>
-              )}
+                    {isLoading ? (
+                      <Image
+                        className="w-5"
+                        src={buttonLoading}
+                        height={600}
+                        width={600}
+                        alt="loading"
+                      />
+                    ) : (
+                      <h2 className="block font-light mr-4">
+                        {isBootcamp
+                          ? "بوت کمپ"
+                          : isSenior
+                            ? "سنیور"
+                            : isMidLevel
+                              ? "میدلول"
+                              : "جونیور"}
+                      </h2>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-          {isLoading ? (
-            <Loading />
-          ) : isInMainDashboard ? (
-            <MainDashboard
-              userProfile={userProfile}
-              userLevel={userLevel}
-              goToCoursesDashboard={goToCoursesDashboard}
-              cart={cartItems}
-              courses={courses}
-              dispatch={dispatch}
-              cartItems={cartItems}
-              loading={loading}
-              isInCartCoursesIds={isInCartCoursesIds}
-              coursesByLevel={coursesByLevel}
-            />
-          ) : isInCoursesDashboard ? (
-            <CoursesDashboard userProfile={userProfile} />
-          ) : isInResumeMakerDashboard ? (
-            <ResumeMaker />
-          ) : (
-            <PaymentsDashboard
-              userProfile={userProfile}
-              userPaymentsData={userPaymentsData}
-            />
-          )}
+            {isLoading ? (
+              <Loading />
+            ) : isInMainDashboard ? (
+              <MainDashboard
+                userProfile={userProfile}
+                userLevel={userLevel}
+                goToCoursesDashboard={goToCoursesDashboard}
+                cart={cartItems}
+                courses={courses}
+                dispatch={dispatch}
+                cartItems={cartItems}
+                loading={loading}
+                isInCartCoursesIds={isInCartCoursesIds}
+                coursesByLevel={coursesByLevel}
+              />
+            ) : isInCoursesDashboard ? (
+              <CoursesDashboard userProfile={userProfile} />
+            ) : isInResumeMakerDashboard ? (
+              <ResumeMaker />
+            ) : (
+              <PaymentsDashboard
+                userProfile={userProfile}
+                userPaymentsData={userPaymentsData}
+              />
+            )}
+          </section>
         </div>
       </Box>
       <ToastContainerComponent />

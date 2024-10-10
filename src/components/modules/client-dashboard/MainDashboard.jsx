@@ -31,7 +31,7 @@ function MainDashboard({
         <BubbleChartIcon fontSize="small" sx={{ mr: 0.3 }} />
         دفتر کار شما:
       </h4>
-      <div className="flex flex-col w-full justify-between items-center min-[900px]:flex-row">
+      <div className="flex flex-col w-full justify-between items-center min-[1212px]:flex-row">
         <div
           id="manager-posts"
           className="w-full flex flex-col backdrop-filter backdrop-blur-md bg-white/10 justify-between items-center

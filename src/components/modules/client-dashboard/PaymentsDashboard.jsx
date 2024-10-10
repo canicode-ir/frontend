@@ -20,6 +20,8 @@ function PaymentsDashboard({
   const [allPayments, setAllPayments] = useState(true);
   const [verifiedPayments, setVerifiedPayments] = useState(false);
 
+  console.log(confirmedPayments);
+
   const handlers = { setAllPayments, setVerifiedPayments };
 
   return (
